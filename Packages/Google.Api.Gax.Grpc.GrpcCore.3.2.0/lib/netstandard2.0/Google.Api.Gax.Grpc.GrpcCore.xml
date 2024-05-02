@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Google.Api.Gax.Grpc.GrpcCore</name>
+    </assembly>
+    <members>
+        <member name="T:Google.Api.Gax.Grpc.GrpcCore.GrpcCoreAdapter">
+            <summary>
+            Implementation of <see cref="T:Google.Api.Gax.Grpc.GrpcAdapter"/> for Grpc.Core.
+            </summary>
+        </member>
+        <member name="P:Google.Api.Gax.Grpc.GrpcCore.GrpcCoreAdapter.Instance">
+            <summary>
+            Returns the singleton instance of this class.
+            </summary>
+        </member>
+        <member name="M:Google.Api.Gax.Grpc.GrpcCore.GrpcCoreAdapter.CreateChannelImpl(System.String,Grpc.Core.ChannelCredentials,Google.Api.Gax.Grpc.GrpcChannelOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Api.Gax.Grpc.GrpcCore.GrpcCoreAdapter.ConvertOptions(Google.Api.Gax.Grpc.GrpcChannelOptions)">
+            <summary>
+            Converts a <see cref="T:Google.Api.Gax.Grpc.GrpcChannelOptions"/> (defined in Google.Api.Gax.Grpc) into a list
+            of <see cref="T:Grpc.Core.ChannelOption"/> (defined in Grpc.Core).
+            </summary>
+            <param name="options">The options to convert. Must not be null.</param>
+            <returns>The converted list of options.</returns>
+        </member>
+    </members>
+</doc>

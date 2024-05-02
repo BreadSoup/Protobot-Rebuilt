@@ -1,0 +1,2845 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Google.Cloud.Firestore</name>
+    </assembly>
+    <members>
+        <member name="T:Google.Cloud.Firestore.Blob">
+            <summary>
+            An immutable sequence of bytes.
+            </summary>
+            <remarks>
+            Although this is a struct, it's effectively just a wrapper around a Protobuf ByteString.
+            <c>default(Blob)</c> acts as if it had been constructed with <see cref="P:Google.Protobuf.ByteString.Empty"/>.
+            </remarks>
+        </member>
+        <member name="P:Google.Cloud.Firestore.Blob.ByteString">
+            <summary>
+            The underlying Protobuf ByteString.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.Blob.Length">
+            <summary>
+            The length of the blob, in bytes.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.Blob.Item(System.Int32)">
+            <summary>
+            Returns the byte at index <paramref name="index"/>.
+            </summary>
+            <param name="index">The index in the blob to return. Must be greater than or equal to 0, and less than <see cref="P:Google.Cloud.Firestore.Blob.Length"/>.</param>
+            <returns>The byte at index <paramref name="index"/>.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Blob.FromByteString(Google.Protobuf.ByteString)">
+            <summary>
+            Constructs a new <see cref="T:Google.Cloud.Firestore.Blob"/> wrapping the given <see cref="P:Google.Cloud.Firestore.Blob.ByteString"/>.
+            </summary>
+            <param name="byteString">The ByteString to wrap. Must not be null.</param>
+            <returns>A new blob wrapping <paramref name="byteString"/>.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Blob.CopyFrom(System.Byte[])">
+            <summary>
+            Constructs a new <see cref="T:Google.Cloud.Firestore.Blob"/> by copying the current content of <paramref name="bytes"/>.
+            </summary>
+            <param name="bytes">Byte array to copy.</param>
+            <returns>A new blob containing a copy of <paramref name="bytes"/>.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Blob.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.Blob.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.Blob.Equals(Google.Cloud.Firestore.Blob)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.Blob.op_Equality(Google.Cloud.Firestore.Blob,Google.Cloud.Firestore.Blob)">
+            <summary>
+            Operator overload to compare two Blob values for equality.
+            </summary>
+            <param name="lhs">Left value to compare</param>
+            <param name="rhs">Right value to compare</param>
+            <returns>true if <paramref name="lhs"/> is equal to <paramref name="rhs"/>; otherwise false.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Blob.op_Inequality(Google.Cloud.Firestore.Blob,Google.Cloud.Firestore.Blob)">
+            <summary>
+            Operator overload to compare two Blob values for inequality.
+            </summary>
+            <param name="lhs">Left value to compare</param>
+            <param name="rhs">Right value to compare</param>
+            <returns>false if <paramref name="lhs"/> is equal to <paramref name="rhs"/>; otherwise true.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Blob.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Google.Cloud.Firestore.CollectionReference">
+            <summary>
+            A reference to a collection in a Firestore database. The existence of
+            this object does not imply that the collection currently exists in storage.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.CollectionReference.Id">
+            <summary>
+            The final part of the complete collection path; this is the identity of
+            the collection relative to its parent document.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.CollectionReference.Path">
+            <summary>
+            The complete collection path, including project and database ID.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.CollectionReference.Parent">
+            <summary>
+            The parent document, or null if this is a root collection.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.CollectionReference.Document">
+            <summary>
+            Creates a <see cref="T:Google.Cloud.Firestore.DocumentReference"/> for a direct child document of this collection with a random ID.
+            This performs no server-side operations; it only generates the appropriate <c>DocumentReference</c>.
+            </summary>
+            <returns>A <see cref="T:Google.Cloud.Firestore.DocumentReference"/> to a child document of this collection with a random ID.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.CollectionReference.Document(System.String)">
+            <summary>
+            Creates a <see cref="T:Google.Cloud.Firestore.DocumentReference"/> for a child document of this reference.
+            </summary>
+            <param name="path">The path to the document, relative to this collection. Must not be null, and must contain
+            an odd number of slash-separated path elements.</param>
+            <returns>A <see cref="T:Google.Cloud.Firestore.DocumentReference"/> for the specified document.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.CollectionReference.AddAsync(System.Object,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously creates a document with the given data in this collection. The document has a randomly generated ID.
+            </summary>
+            <remarks>
+            If the <see cref="T:Google.Cloud.Firestore.WriteResult"/> for the operation is required, use <see cref="M:Google.Cloud.Firestore.DocumentReference.CreateAsync(System.Object,System.Threading.CancellationToken)"/>
+            instead of this method.
+            </remarks>
+            <param name="documentData">The data for the document. Must not be null.</param>
+            <param name="cancellationToken">A cancellation token to monitor for the asynchronous operation.</param>
+            <returns>The reference for the newly-created document.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.CollectionReference.ListDocumentsAsync">
+            <summary>
+            Lists the documents in this collection. The results include documents which don't exist in their own right, but which have
+            nested documents which do exist.
+            </summary>
+            <returns>A lazily-iterated sequence of document references within this collection.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.CollectionReference.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.CollectionReference.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.CollectionReference.Equals(Google.Cloud.Firestore.CollectionReference)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.CollectionReference.ToString">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.CollectionReference.CompareTo(Google.Cloud.Firestore.CollectionReference)">
+            <inheritdoc />
+        </member>
+        <member name="T:Google.Cloud.Firestore.ConverterRegistry">
+            <summary>
+            Registry of custom converters. This is used to avoid requiring Firestore-specific attributes on types
+            which may be intended to be non-Firestore-specific. The registry may be specified when creating a <see cref="T:Google.Cloud.Firestore.FirestoreDb"/>
+            via <see cref="P:Google.Cloud.Firestore.FirestoreDbBuilder.ConverterRegistry"/>.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.ConverterRegistry.Add``1(Google.Cloud.Firestore.IFirestoreConverter{``0})">
+            <summary>
+            Adds the given converter to the registry.
+            </summary>
+            <typeparam name="T">The </typeparam>
+            <param name="converter">The converter to add.</param>
+            <exception cref="T:System.ArgumentException">There is already a converter in the registry for the given type.</exception>
+        </member>
+        <member name="M:Google.Cloud.Firestore.ConverterRegistry.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="T:Google.Cloud.Firestore.Converters.AnonymousTypeConverter">
+            <summary>
+            A converter for an anonymous type. Currently this only performs serialization, not deserialization.
+            Using anonymous types for deserialization would be unusual in terms of the C# required, but not
+            entirely infeasible. We can implement this if we're ever asked for it.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Converters.ArrayConverter">
+            <summary>
+            Converter for array types. Serialization is handled by the base class; only custom deserialization is required.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Converters.AttributedIdAssigner.MaybeCreateAssigner(System.Type)">
+            <summary>
+            Returns an "ID assigner" suitable for the given BCL type, or null if the type isn't decorated with FirestoreDataAttribute,
+            or doesn't have any FirestoreDocumentId attributes.
+            </summary>
+            <param name="type">The type to inspect for ID properties.</param>
+            <returns>An assigner, or null if the type doesn't need any ID assignments performed on it.</returns>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Converters.AttributedTimestampAssigner">
+            <summary>
+            Copies a snapshot's create/update/read timestamps to attributed properties.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Converters.AttributedTimestampAssigner.MaybeCreateAssigner(System.Type)">
+            <summary>
+            Returns an action (potentially multicast) to copy timestamps from a document snapshot to object properties.
+            </summary>
+            <param name="type">The type to inspect for ID properties.</param>
+            <returns>An assigner, or null if the type doesn't need any timestamp assignments performed on it.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Converters.AttributedTypeConverter.ForType(System.Type)">
+            <summary>
+            Factory method to construct a converter for an attributed type.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.Converters.AttributedTypeConverter.AttributedProperty.FirestoreName">
+            <summary>
+            The name to use in Firestore serialization/deserialization. Defaults to the property
+            name, but may be specified in <see cref="T:Google.Cloud.Firestore.FirestorePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Converters.ConverterBase">
+            <summary>
+            A base class for many converters, allowing them to simply override the method for the one
+            deserialization case required. Serializing to a single value has to be implemented; serializing
+            to a map will fail with an exception unless <see cref="M:Google.Cloud.Firestore.Converters.ConverterBase.SerializeMap(Google.Cloud.Firestore.SerializationContext,System.Object,System.Collections.Generic.IDictionary{System.String,Google.Cloud.Firestore.V1.Value})"/>
+            is overridden.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Converters.ConverterCache">
+            <summary>
+            A cache for serializers based on the target type. Some are prepopulated (e.g. for protos and
+            primitives); one for anonymous and attributed types are added on demand.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Converters.ConverterCache.TryGetStringDictionaryValueType(System.Type)">
+            <summary>
+            If <paramref name="type"/> implements (or is) <see cref="T:System.Collections.Generic.IDictionary`2"/> with TKey equal to string, returns TValue.
+            Otherwise, returns null.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Converters.ConverterCache.TryGetListType(System.Type)">
+            <summary>
+            If <paramref name="targetType"/> is a type that implements <see cref="T:System.Collections.Generic.IEnumerable`1"/>, we check to see if <see cref="T:System.Collections.Generic.List`1"/> is
+            compatible with the target type. 
+            </summary>
+            <param name="targetType"></param>
+            <returns>null if <paramref name="targetType"/> cannot be implemented via <see cref="T:System.Collections.Generic.List`1"/>; the list type otherwise.</returns>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Converters.CustomConverter`1">
+            <summary>
+            A converter that wraps a user-specified <see cref="T:Google.Cloud.Firestore.IFirestoreConverter`1"/>.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Converters.DictionaryConverter`1">
+            <summary>
+            Base class for dictionary-based map values.
+            </summary>
+            <typeparam name="TValue">Type of values in the dictionary.</typeparam>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Converters.EnumConverter">
+            <summary>
+            A converter for a specific enum type.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Converters.IFirestoreInternalConverter">
+            <summary>
+            Internal interface all converters support.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Converters.IFirestoreInternalConverter.DeserializeValue(Google.Cloud.Firestore.DeserializationContext,Google.Cloud.Firestore.V1.Value)">
+            <summary>
+            Deserializes a single (possibly map- or list-based) Firestore value to a POCO.
+            </summary>
+            <param name="context">The context for the deserialization operation. Never null.</param>
+            <param name="value">The Firestore value to deserialize. Never null.</param>
+            <returns>The deserialized value. Should never be null.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Converters.IFirestoreInternalConverter.DeserializeMap(Google.Cloud.Firestore.DeserializationContext,System.Collections.Generic.IDictionary{System.String,Google.Cloud.Firestore.V1.Value})">
+            <summary>
+            Deserializes a map (as a dictionary of name/value pairs) to a POCO.
+            </summary>
+            <param name="context">The context for the deserialization operation. Never null.</param>
+            <param name="values">The name/value pairs to deserialize. Never null.</param>
+            <returns>The deserialized value. Should never be null.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Converters.IFirestoreInternalConverter.Serialize(Google.Cloud.Firestore.SerializationContext,System.Object)">
+            <summary>
+            Serializes a single POCO to a Firestore representation.
+            </summary>
+            <param name="context"></param>
+            <param name="value">The value to serialize. Never null.</param>
+            <returns>The serialized value. Should never be null.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Converters.IFirestoreInternalConverter.SerializeMap(Google.Cloud.Firestore.SerializationContext,System.Object,System.Collections.Generic.IDictionary{System.String,Google.Cloud.Firestore.V1.Value})">
+            <summary>
+            Populates a map based on the serialized form of a POCO.
+            </summary>
+            <remarks>
+            Logically this could return a dictionary instead, but it's more efficient to populate an existing map.
+            </remarks>
+            <param name="context"></param>
+            <param name="value">The value to serialize. Never null.</param>
+            <param name="map">The map to populate. Never null.</param>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Converters.ListConverter">
+            <summary>
+            Converter for <see cref="T:System.Collections.IList"/>-based types. (Note that this doesn't handle types that
+            implement the generic <see cref="T:System.Collections.Generic.IList`1"/> interface without the non-generic one.)
+            This type handles deserialization; the base type handles serialization.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Converters.ListConverterBase">
+            <summary>
+            Base class for types that always serialize to a list value. This type handles serialization
+            by assuming the type implements <see cref="T:System.Collections.IEnumerable"/> and simply serializing each element; derived types
+            need to perform deserialization.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Converters.MapConverterBase">
+            <summary>
+            Base class for types that always serialize to a map value.
+            Derived classes need to implement deserialization as well as overriding
+            <see cref="M:Google.Cloud.Firestore.Converters.ConverterBase.SerializeMap(Google.Cloud.Firestore.SerializationContext,System.Object,System.Collections.Generic.IDictionary{System.String,Google.Cloud.Firestore.V1.Value})"/>,
+            which is called by this class's implementation of <see cref="M:Google.Cloud.Firestore.Converters.MapConverterBase.Serialize(Google.Cloud.Firestore.SerializationContext,System.Object)"/>.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Converters.SequenceConverter">
+            <summary>
+            List converter that only supports serialization. This is used by
+            <see cref="T:Google.Cloud.Firestore.Converters.ConverterCache"/> as a final option when we know something can
+            be iterated over, but that's all. We can't deserialize to it, but that may well be okay.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Converters.ValueTupleConverter.MaybeCreateConverter(System.Reflection.PropertyInfo)">
+            <summary>
+            Creates a converter for the given property if it is a suitable property for a value tuple conversion.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.DeserializationContext">
+            <summary>
+            Provides context for deserialization operations.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DeserializationContext.Database">
+            <summary>
+            The database containing the document being deserialized. This is never null.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DeserializationContext.DocumentReference">
+            <summary>
+            The document being deserialized. This is never null.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DeserializationContext.Snapshot">
+            <summary>
+            The document snapshot being deserialized. This is never null.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DeserializationContext.#ctor(Google.Cloud.Firestore.DocumentSnapshot)">
+            <summary>
+            Constructs a new context.
+            </summary>
+            <param name="snapshot">The document snapshot being deserialized. Must not be null.</param>
+        </member>
+        <member name="T:Google.Cloud.Firestore.DocumentChange">
+            <summary>
+            A DocumentChange represents a change to the documents matching a query. It contains the document
+            affected and a the type of change that occurred (added, modifed, or removed).
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.DocumentChange.Type">
+            <summary>
+            An enumeration of snapshot change types.
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.DocumentChange.Type.Added">
+            <summary>
+            Indicates a new document was added to the set of documents matching the query.
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.DocumentChange.Type.Removed">
+            <summary>
+            Indicates a document within the query was removed (either deleted or no longer matches the query.
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.DocumentChange.Type.Modified">
+            <summary>
+            Indicates a document within the query was modified.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentChange.Document">
+            <summary>
+            The newly added or modified document, or the document that was deleted.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentChange.ChangeType">
+            <summary>
+            The type of change that was observed.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentChange.OldIndex">
+            <summary>
+            The index of the changed document in the result set immediately prior to this DocumentChange
+            (i.e. supposing that all prior DocumentChange objects have been applied), or null
+            if the change type is <see cref="F:Google.Cloud.Firestore.DocumentChange.Type.Added"/>. The index will never be negative.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentChange.NewIndex">
+            <summary>
+            The index of the changed document in the result set immediately after this DocumentChange
+            (i.e. supposing that all prior DocumentChange objects and this one have been applied),
+            null if the change type is <see cref="F:Google.Cloud.Firestore.DocumentChange.Type.Removed"/>. The index will never be negative.    
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentChange.Equals(Google.Cloud.Firestore.DocumentChange)">
+            <summary>
+            Compares this snapshot with another for equality. Only the document data and document reference
+            are considered; the timestamps are ignored.
+            </summary>
+            <param name="other">The snapshot to compare this one with</param>
+            <returns><c>true</c> if this snapshot is equal to <paramref name="other"/>; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentChange.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentChange.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="T:Google.Cloud.Firestore.DocumentReference">
+            <summary>
+            A reference to a document in a Firestore database. The existence of
+            this object does not imply that the document currently exists in storage.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentReference.Database">
+            <summary>
+            The database which contains the document.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentReference.Id">
+            <summary>
+            The final part of the complete document path; this is the identity of
+            the document relative to its parent collection.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentReference.Path">
+            <summary>
+            The complete document path, including project and database ID.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentReference.Parent">
+            <summary>
+            The parent collection. Never null.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.Collection(System.String)">
+            <summary>
+            Creates a <see cref="T:Google.Cloud.Firestore.CollectionReference"/> for a child collection of this document.
+            </summary>
+            <param name="path">The path to the collection, relative to this document. Must not be null, and must contain
+            an odd number of slash-separated path elements.</param>
+            <returns>A <see cref="T:Google.Cloud.Firestore.CollectionReference"/> for the specified collection.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.Equals(Google.Cloud.Firestore.DocumentReference)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.ToString">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.CompareTo(Google.Cloud.Firestore.DocumentReference)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.CreateAsync(System.Object,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously creates a document on the server with the given data. The document must not exist beforehand.
+            </summary>
+            <param name="documentData">The data for the document. Must not be null.</param>
+            <param name="cancellationToken">A cancellation token to monitor for the asynchronous operation.</param>
+            <returns>The write result of the server operation.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.DeleteAsync(Google.Cloud.Firestore.Precondition,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously deletes the document referred to by this path, with an optional precondition.
+            </summary>
+            <remarks>
+            If no precondition is specified and the document doesn't exist, this returned task will succeed. If a precondition
+            is specified and not met, the returned task will fail with an <see cref="T:Grpc.Core.RpcException"/>.
+            </remarks>
+            <param name="precondition">Optional precondition for deletion. May be null, in which case the deletion is unconditional.</param>
+            <param name="cancellationToken">A cancellation token to monitor for the asynchronous operation.</param>
+            <returns>The write result of the server operation.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.UpdateAsync(System.Collections.Generic.IDictionary{System.String,System.Object},Google.Cloud.Firestore.Precondition,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously performs a set of updates on the document referred to by this path, with an optional precondition.
+            </summary>
+            <param name="updates">The updates to perform on the document, keyed by the dot-separated field path to update. Fields not present in this dictionary are not updated. Must not be null or empty.</param>
+            <param name="precondition">Optional precondition for updating the document. May be null, which is equivalent to <see cref="P:Google.Cloud.Firestore.Precondition.MustExist"/>.</param>
+            <param name="cancellationToken">A cancellation token to monitor for the asynchronous operation.</param>
+            <returns>The write result of the server operation.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.UpdateAsync(System.String,System.Object,Google.Cloud.Firestore.Precondition,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously performs a single field update on the document referred to by this path, with an optional precondition.
+            </summary>
+            <param name="field">The dot-separated name of the field to update. Must not be null.</param>
+            <param name="value">The new value for the field. May be null.</param>
+            <param name="precondition">Optional precondition for updating the document. May be null, which is equivalent to <see cref="P:Google.Cloud.Firestore.Precondition.MustExist"/>.</param>
+            <param name="cancellationToken">A cancellation token to monitor for the asynchronous operation.</param>
+            <returns>The write result of the server operation.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.UpdateAsync(System.Collections.Generic.IDictionary{Google.Cloud.Firestore.FieldPath,System.Object},Google.Cloud.Firestore.Precondition,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously performs a set of updates on the document referred to by this path, with an optional precondition.
+            </summary>
+            <param name="updates">The updates to perform on the document, keyed by the field path to update. Fields not present in this dictionary are not updated. Must not be null or empty.</param>
+            <param name="precondition">Optional precondition for updating the document. May be null, which is equivalent to <see cref="P:Google.Cloud.Firestore.Precondition.MustExist"/>.</param>
+            <param name="cancellationToken">A cancellation token to monitor for the asynchronous operation.</param>
+            <returns>The write result of the server operation.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.SetAsync(System.Object,Google.Cloud.Firestore.SetOptions,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously sets data in the document, either replacing it completely or merging fields.
+            </summary>
+            <param name="documentData">The data to store in the document. Must not be null.</param>
+            <param name="options">The options to use when updating the document. May be null, which is equivalent to <see cref="P:Google.Cloud.Firestore.SetOptions.Overwrite"/>.</param>
+            <param name="cancellationToken">A cancellation token to monitor for the asynchronous operation.</param>
+            <returns>The write result of the server operation.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.GetSnapshotAsync(System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously fetches a snapshot of the document.
+            </summary>
+            <returns>A snapshot of the document. The snapshot may represent a missing document.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.GetSnapshotAsync(Google.Protobuf.ByteString,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously fetches a snapshot of the document.
+            </summary>
+            <returns>A snapshot of the document. The snapshot may represent a missing document.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.ListCollectionsAsync">
+            <summary>
+            Retrieves the collections within this document.
+            </summary>
+            <returns>A lazily-iterated sequence of collection references within this document.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.Listen(System.Func{Google.Cloud.Firestore.DocumentSnapshot,System.Threading.CancellationToken,System.Threading.Tasks.Task},System.Threading.CancellationToken)">
+            <summary>
+            Watch this document for changes.
+            </summary>
+            <param name="callback">The callback to invoke each time the document changes. Must not be null.</param>
+            <param name="cancellationToken">Optional cancellation token which may be used to cancel the listening operation.</param>
+            <returns>A <see cref="T:Google.Cloud.Firestore.FirestoreChangeListener"/> which may be used to monitor the listening operation and stop it gracefully.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentReference.Listen(System.Action{Google.Cloud.Firestore.DocumentSnapshot},System.Threading.CancellationToken)">
+            <summary>
+            Watch this document for changes. This method is a convenience method over <see cref="M:Google.Cloud.Firestore.DocumentReference.Listen(System.Func{Google.Cloud.Firestore.DocumentSnapshot,System.Threading.CancellationToken,System.Threading.Tasks.Task},System.Threading.CancellationToken)"/>,
+            wrapping a synchronous callback to create an asynchronous one.
+            </summary>
+            <param name="callback">The callback to invoke each time the query results change. Must not be null.</param>
+            <param name="cancellationToken">Optional cancellation token which may be used to cancel the listening operation.</param>
+            <returns>A <see cref="T:Google.Cloud.Firestore.FirestoreChangeListener"/> which may be used to monitor the listening operation and stop it gracefully.</returns>
+        </member>
+        <member name="T:Google.Cloud.Firestore.DocumentSet">
+            <summary>
+            Immutable set of DocumentSnapshots, ordered by a custom comparer.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.DocumentSnapshot">
+            <summary>
+            An immutable snapshot of the data for a document.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentSnapshot.Document">
+            <summary>
+            The proto representation of the document. Primarily visible for testing purposes.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentSnapshot.Reference">
+            <summary>
+            The full reference to the document.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentSnapshot.Database">
+            <summary>
+            The database that owns the document.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentSnapshot.Id">
+            <summary>
+            The ID of the document.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentSnapshot.Exists">
+            <summary>
+            Whether or not the document exists.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentSnapshot.CreateTime">
+            <summary>
+            The creation time of the document if it exists, or null otherwise.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentSnapshot.UpdateTime">
+            <summary>
+            The update time of the document if it exists, or null otherwise.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.DocumentSnapshot.ReadTime">
+            <summary>
+            The time at which this snapshot was read.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentSnapshot.ToDictionary">
+            <summary>
+            Returns the document data as a <see cref="T:System.Collections.Generic.Dictionary`2"/>.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">This snapshot represents a missing document, i.e. <see cref="P:Google.Cloud.Firestore.DocumentSnapshot.Exists"/> is false.</exception>
+            <returns>A <see cref="T:System.Collections.Generic.Dictionary`2"/> containing the document data, or null if this object represents a missing document.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentSnapshot.ConvertTo``1">
+            <summary>
+            Deserializes the document data as the specified type.
+            </summary>
+            <typeparam name="T">The type to deserialize the document data as.</typeparam>
+            <returns>The deserialized data, or null if this object represents a missing document.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentSnapshot.GetValue``1(System.String)">
+            <summary>
+            Fetches a field value from the document, throwing an exception if the field does not exist.
+            </summary>
+            <param name="path">The dot-separated field path to fetch. Must not be null or empty</param>
+            <exception cref="T:System.InvalidOperationException">The field does not exist in the document data.</exception>
+            <returns>The deserialized value.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentSnapshot.TryGetValue``1(System.String,``0@)">
+            <summary>
+            Attempts to fetch the given field path from the document, returning whether or not it was found, and deserializing
+            it if it was found.
+            </summary>
+            <remarks>
+            This method does not throw an exception if the field is not found, but does throw an exception if the field was found
+            but cannot be deserialized.
+            </remarks>
+            <typeparam name="T">The type to deserialize the value to, if it is found.</typeparam>
+            <param name="path">The dot-separated field path to fetch. Must not be null or empty</param>
+            <param name="value">When this method returns, contains the deserialized value if the field was found, or the default value
+            of <typeparamref name="T"/> otherwise.</param>
+            <returns>true if the field was found; false otherwise.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentSnapshot.GetValue``1(Google.Cloud.Firestore.FieldPath)">
+            <summary>
+            Fetches a field value from the document, throwing an exception if the field does not exist.
+            </summary>
+            <param name="path">The field path to fetch. Must not be null.</param>
+            <exception cref="T:System.InvalidOperationException">The field does not exist in the document data.</exception>
+            <returns>The deserialized value.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentSnapshot.TryGetValue``1(Google.Cloud.Firestore.FieldPath,``0@)">
+            <summary>
+            Attempts to fetch the given field path from the document, returning whether or not it was found, and deserializing
+            it if it was found.
+            </summary>
+            <remarks>
+            This method does not throw an exception if the field is not found, but does throw an exception if the field was found
+            but cannot be deserialized.
+            </remarks>
+            <typeparam name="T">The type to deserialize the value to, if it is found.</typeparam>
+            <param name="path">The field path to fetch. Must not be null.</param>
+            <param name="value">When this method returns, contains the deserialized value if the field was found, or the default value
+            of <typeparamref name="T"/> otherwise.</param>
+            <returns>true if the field was found; false otherwise.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentSnapshot.ContainsField(System.String)">
+            <summary>
+            Determines whether or not the given field path is present in the document. If this snapshot represents
+            a missing document, this method will always return false.
+            </summary>
+            <param name="path">The dot-separated field path to check. Must not be null or empty.</param>
+            <returns>true if the specified path represents a field in the document; false otherwise</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentSnapshot.ContainsField(Google.Cloud.Firestore.FieldPath)">
+            <summary>
+            Determines whether or not the given field path is present in the document. If this snapshot represents
+            a missing document, this method will always return false.
+            </summary>
+            <param name="path">The field path to check. Must not be null.</param>
+            <returns>true if the specified path represents a field in the document; false otherwise</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentSnapshot.ExtractValue(Google.Cloud.Firestore.FieldPath)">
+            <summary>
+            Extracts the internal value for a field path, still in its serialized form, without any copying.
+            If the document is missing or the field isn't present, this will return null.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentSnapshot.Equals(Google.Cloud.Firestore.DocumentSnapshot)">
+            <summary>
+            Compares this snapshot with another for equality. Only the document data and document reference
+            are considered; the timestamps are ignored.
+            </summary>
+            <param name="other">The snapshot to compare this one with</param>
+            <returns><c>true</c> if this snapshot is equal to <paramref name="other"/>; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentSnapshot.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.DocumentSnapshot.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="T:Google.Cloud.Firestore.FieldMask">
+            <summary>
+            An immutable set of field paths, used to limit the data returned by calls to
+            <see cref="M:Google.Cloud.Firestore.FirestoreDb.GetAllSnapshotsAsync(System.Collections.Generic.IEnumerable{Google.Cloud.Firestore.DocumentReference},System.Threading.CancellationToken)"/>
+            and similar calls.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldMask.#ctor(System.String[])">
+            <summary>
+            Creates a mask from the given paths. Each path is treated as a dot-separated sequence of field names.
+            </summary>
+            <param name="paths">The paths, as dot-separated strings. This must not be null, and it must not contain any null or empty elements.</param>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldMask.#ctor(Google.Cloud.Firestore.FieldPath[])">
+            <summary>
+            Creates a mask from the given paths.
+            </summary>
+            <param name="paths">The segments of the path. This must not be null, and it must not contain any null elements.</param>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldMask.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldMask.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldMask.Equals(Google.Cloud.Firestore.FieldMask)">
+            <inheritdoc />
+        </member>
+        <member name="T:Google.Cloud.Firestore.FieldPath">
+            <summary>
+            An immutable path of field names, used to identify parts of a document.
+            </summary>
+            <remarks>
+            Ordering between field paths is primarily to provide canonical orderings for sets of
+            paths, for example in a <see cref="T:Google.Cloud.Firestore.FieldMask"/>. This ordering is performed segment-wise,
+            using ordinal string comparisons.
+            </remarks>
+        </member>
+        <member name="F:Google.Cloud.Firestore.FieldPath.s_prohibitedCharacters">
+            <summary>
+            Characters prohibited within dot-separated field paths.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FieldPath.DocumentId">
+            <summary>
+            Sentinel field path to refer to the ID of a document. Used in queries to sort or filter
+            by the document ID.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FieldPath.Empty">
+            <summary>
+            An empty field path, appropriate for appending
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FieldPath.Segments">
+            <summary>
+            Segments of the path: do not mutate or expose publicly!
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldPath.#ctor(System.String[],System.Boolean)">
+            <summary>
+            Constructor that trusts the value
+            </summary>
+            <param name="segments">The segments</param>
+            <param name="trusted">True to bypass both copying and validation; false otherwise.</param>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldPath.#ctor(System.String[])">
+            <summary>
+            Creates a path from multiple segments. Each segment is treated verbatim: it may contain dots, which will lead to the segment being escaped in the
+            path's string representation.
+            </summary>
+            <param name="segments">The segments of the path. This must not be null or empty, and it must not contain any null or empty elements.</param>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldPath.Append(System.String)">
+            <summary>
+            Creates a new path from this one, with the specified segment appended.
+            </summary>
+            <param name="segment">The segment to append. Must not be null or empty.</param>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldPath.IsValidIdentifier(System.String)">
+            <summary>
+            Return true if the string could be used as a segment in a field path without escaping. Valid
+            identifiers follow the regex [a-zA-Z_][a-zA-Z0-9_]*.
+            (Using a regular expression is significantly slower though.)
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldPath.ToString">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldPath.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldPath.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldPath.Equals(Google.Cloud.Firestore.FieldPath)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldPath.CompareTo(Google.Cloud.Firestore.FieldPath)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldPath.ToFieldReference">
+            <summary>
+            Conversion from FieldPath to FieldReference.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldPath.IsPrefixOf(Google.Cloud.Firestore.FieldPath)">
+            <summary>
+            Checks whether the specified path starts with the same path segments as this path. A path
+            is considered a prefix of itself, in the way that "a".StartsWith("a") returns true.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.FieldValue">
+            <summary>
+            A static class providing properties and methods to represent sentinel values.
+            Sentinel values are special values where the client-side value is not part of the
+            document modification sent to the server. A property decorated with
+            <see cref="T:Google.Cloud.Firestore.FirestorePropertyAttribute"/> can specify an additional attribute
+            to indicate that it's a sentinel value, such as a<see cref="T:Google.Cloud.Firestore.ServerTimestampAttribute"/>,
+            or the sentinel values returned by the members of this class can be used directly as
+            values to be serialized (for example, in anonymous types), and they will be handled
+            directly by the serialization mechanism.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FieldValue.ServerTimestamp">
+            <summary>
+            Sentinel value indicating that the field should be set to the timestamp of the
+            commit that creates or modifies the document.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FieldValue.Delete">
+            <summary>
+            Sentinel value indicating that the field should be deleted from the document.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldValue.ArrayUnion(System.Object[])">
+            <summary>
+            Creates a sentinel value to indicate the union of the given values with an array.
+            This overload assumes that any custom serializers are configured via attributes. Use the overload
+            accepting a <see cref="T:Google.Cloud.Firestore.FirestoreDb" /> if you need to use database-registered custom serializers.
+            </summary>
+            <param name="values">The values to include in the resulting sentinel value. Must not be null.</param>
+            <returns>A sentinel value representing an array union.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldValue.ArrayRemove(System.Object[])">
+            <summary>
+            Creates a sentinel value to indicate the removal of the given values with an array.
+            This overload assumes that any custom serializers are configured via attributes. Use the overload
+            accepting a <see cref="T:Google.Cloud.Firestore.FirestoreDb" /> if you need to use database-registered custom serializers.
+            </summary>
+            <param name="values">The values to include in the resulting sentinel value. Must not be null.</param>
+            <returns>A sentinel value representing an array removal.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldValue.ArrayUnion(Google.Cloud.Firestore.FirestoreDb,System.Object[])">
+            <summary>
+            Creates a sentinel value to indicate the union of the given values with an array.
+            </summary>
+            <param name="database">Database to check for custom serialization.</param>
+            <param name="values">The values to include in the resulting sentinel value. Must not be null.</param>
+            <returns>A sentinel value representing an array union.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldValue.ArrayRemove(Google.Cloud.Firestore.FirestoreDb,System.Object[])">
+            <summary>
+            Creates a sentinel value to indicate the removal of the given values with an array. This over
+            </summary>
+            <param name="database">Database to check for custom serialization.</param>
+            <param name="values">The values to include in the resulting sentinel value. Must not be null.</param>
+            <returns>A sentinel value representing an array removal.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldValue.Increment(System.Int64)">
+            <summary>
+            Creates a sentinel value to indicate an increment by the given value.
+            </summary>
+            <remarks>
+            <para>
+            If the current field value is an integer, possible integer overflows are resolved to
+            <see cref="F:System.Int64.MaxValue"/> or <see cref="F:System.Int64.MinValue"/>. If the current field value
+            is a double, both values will be interpreted as doubles and the arithmetic will follow IEEE 754 semantics.
+            </para>
+            <para>
+            If the current field is not an integer or double, or if the field does not yet exist, the
+            transformation will set the field to the given value.
+            </para>
+            </remarks>
+            <param name="amount">The amount to increment the field by.</param>
+            <returns>A sentinel value representing a field increment.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FieldValue.Increment(System.Double)">
+            <summary>
+            Creates a sentinel value to indicate an increment by the given value.
+            </summary>
+            <remarks>
+            <para>
+            If the current value is an integer or a double, both the current and the given value will be
+            interpreted as doubles and all arithmetic will follow IEEE 754 semantics.Otherwise, the
+            transformation will set the field to the given value.
+            </para>
+            </remarks>
+            <param name="amount">The amount to increment the field by.</param>
+            <returns>A sentinel value representing a field increment.</returns>
+        </member>
+        <member name="T:Google.Cloud.Firestore.FirestoreChangeListener">
+            <summary>
+            An ongoing "listen" or "watch" operation on either document or query snapshots.
+            This is returned from <c>Listen</c> methods.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreChangeListener.ListenerTask">
+            <summary>
+            A task that will complete when the listen operation finishes.
+            </summary>
+            <remarks>
+            If a cancellation token provided by the caller (either when starting to listen or
+            when calling <see cref="M:Google.Cloud.Firestore.FirestoreChangeListener.StopAsync(System.Threading.CancellationToken)"/>) is canceled, the task will finish in a state of <see cref="F:System.Threading.Tasks.TaskStatus.Canceled"/>.
+            The task will finish in a state of <see cref="F:System.Threading.Tasks.TaskStatus.Faulted"/> if any other kind of exception was thrown, including
+            any non-retriable RPC exceptions. The task will finish in a state of <see cref="F:System.Threading.Tasks.TaskStatus.RanToCompletion"/> if
+            the listener stopped gracefully.
+            </remarks>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreChangeListener.StopAsync(System.Threading.CancellationToken)">
+            <summary>
+            Requests that the client stops listening for changes. If a callback is in progress,
+            that will be allowed to complete, but cancelling <paramref name="cancellationToken"/> will
+            cancel the token passed to the callback, allowing for prompt cancellation if required.
+            </summary>
+            <remarks>This method must only be called once per listener.</remarks>
+            <param name="cancellationToken">A cancellation token to cancel a callback if one is in progress.</param>
+            <returns>The task to indicate listener completion. This returns the same as <see cref="P:Google.Cloud.Firestore.FirestoreChangeListener.ListenerTask"/>.</returns>
+        </member>
+        <member name="T:Google.Cloud.Firestore.FirestoreDataAttribute">
+            <summary>
+            Attribute indicating that a type is intended to be used with Firestore.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDataAttribute.UnknownPropertyHandling">
+            <summary>
+            The strategy to use when handling unknown properties. The default is
+            <see cref="F:Google.Cloud.Firestore.UnknownPropertyHandling.Warn"/>.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDataAttribute.ConverterType">
+            <summary>
+            A custom converter type to use for serializing and deserializing the attributed type.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDataAttribute.#ctor">
+            <summary>
+            Constructs a new instance with default values for options.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDataAttribute.#ctor(Google.Cloud.Firestore.UnknownPropertyHandling)">
+            <summary>
+            Constructs a new instance with the given handling for unknown properties.
+            </summary>
+            <param name="unknownPropertyHandling">The unknown property handling strategy to use.</param>
+        </member>
+        <member name="T:Google.Cloud.Firestore.FirestoreDb">
+            <summary>
+            A Firestore database. Create instances using the static <see cref="M:Google.Cloud.Firestore.FirestoreDb.Create(System.String,Google.Cloud.Firestore.V1.FirestoreClient)"/> and <see cref="M:Google.Cloud.Firestore.FirestoreDb.CreateAsync(System.String,Google.Cloud.Firestore.V1.FirestoreClient)"/>
+            methods, or using a <see cref="T:Google.Cloud.Firestore.FirestoreDbBuilder"/>.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDb.Client">
+            <summary>
+            The underlying client used to make service requests.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDb.ProjectId">
+            <summary>
+            The project ID associated with this database.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDb.DatabaseId">
+            <summary>
+            The database ID associated with this database.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDb.RootPath">
+            <summary>
+            The resource name of the database, in the form "projects/{project_id}/databases/{database_id}".
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDb.DocumentsPath">
+            <summary>
+            The root of the documents, in the form "projects/{project_id}/databases/{database_id}/documents".
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDb.Create(System.String,Google.Cloud.Firestore.V1.FirestoreClient)">
+            <summary>
+            Creates an instance for the specified project, using the specified <see cref="T:Google.Cloud.Firestore.V1.FirestoreClient"/> for RPC operations.
+            </summary>
+            <param name="projectId">The ID of the Google Cloud Platform project that contains the database. May be null, in which case
+            the project will be automatically detected if possible.</param>
+            <param name="client">The client to use for RPC operations. May be null, in which case a client will be created with default credentials.</param>
+            <returns>A new instance.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDb.CreateAsync(System.String,Google.Cloud.Firestore.V1.FirestoreClient)">
+            <summary>
+            Asynchronously creates an instance for the specified project, using the specified <see cref="T:Google.Cloud.Firestore.V1.FirestoreClient"/> for RPC operations.
+            </summary>
+            <param name="projectId">The ID of the Google Cloud Platform project that contains the database. May be null, in which case
+            the project will be automatically detected if possible.</param>
+            <param name="client">The client to use for RPC operations. May be null, in which case a client will be created with default credentials.</param>
+            <returns>A task representing the asynchronous operation. When complete, the result of the task is the new instance.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDb.Create(System.String,System.String,Google.Cloud.Firestore.V1.FirestoreClient,System.Action{System.String},Google.Cloud.Firestore.ConverterRegistry)">
+            <summary>
+            Creates an instance for the specified project and database, using the specified <see cref="T:Google.Cloud.Firestore.V1.FirestoreClient"/>
+            for RPC operations.
+            Note: this method should never be made public, as it is expected to grow as additional state is required in the client.
+            Additional parameters should be made optional, for source (but not binary) compatibility with tests.
+            This method does not perform any blocking operations, so may be used from async methods.
+            </summary>
+            <param name="projectId">The ID of the Google Cloud Platform project that contains the database. Must not be null.</param>
+            <param name="databaseId">The ID of the database within the project. May be null, in which case the default database will be used.</param>
+            <param name="client">The client to use for RPC operations. Must not be null.</param>
+            <param name="warningLogger">The warning logger to use, if any. May be null.</param>
+            <param name="converterRegistry">A registry of custom converters. May be null.</param>
+            <returns>A new instance.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDb.WithWarningLogger(System.Action{System.String})">
+            <summary>
+            Returns a new <see cref="T:Google.Cloud.Firestore.FirestoreDb"/> with the same project, database and client as this one,
+            but the given writer for warning logs.
+            </summary>
+            <param name="warningLogger">The logger for warnings. May be null.</param>
+            <returns>A new <see cref="T:Google.Cloud.Firestore.FirestoreDb"/> based on this one, with the given warning logger.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDb.Collection(System.String)">
+            <summary>
+            Creates a local <see cref="T:Google.Cloud.Firestore.CollectionReference"/> for the given path, which must include
+            an odd number of slash-separated identifiers. This does not perform any remote operations.
+            </summary>
+            <param name="path">The collection path, e.g. <c>col1/doc1/col2</c>.</param>
+            <returns>A collection reference.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDb.Document(System.String)">
+            <summary>
+            Creates a local <see cref="T:Google.Cloud.Firestore.DocumentReference"/> for the given path, which must include
+            an even number of slash-separated identifiers. This does not perform any remote operations.
+            </summary>
+            <param name="path">The document path, e.g. <c>col1/doc1/col2/doc2</c>.</param>
+            <returns>A document reference.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDb.CollectionGroup(System.String)">
+            <summary>
+            Creates and returns a new <see cref="T:Google.Cloud.Firestore.Query"/> that includes all documents in the
+            database that are contained in a collection or subcollection with the
+            given collection ID.
+            </summary>
+            <param name="collectionId">Identifies the collections to query over.
+            Every collection or subcollection with this ID as the last segment
+            of its path will be included. Must not contain a slash.</param>
+            <returns>The created <see cref="T:Google.Cloud.Firestore.Query"/>.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDb.StartBatch">
+            <summary>
+            Creates a write batch, which can be used to commit multiple mutations atomically.
+            </summary>
+            <returns>A write batch for this database.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDb.GetAllSnapshotsAsync(System.Collections.Generic.IEnumerable{Google.Cloud.Firestore.DocumentReference},System.Threading.CancellationToken)">
+            <summary>
+            Fetches document snapshots from the server.
+            </summary>
+            <remarks>
+            Any documents which are missing are represented in the returned list by a <see cref="T:Google.Cloud.Firestore.DocumentSnapshot"/>
+            with <see cref="P:Google.Cloud.Firestore.DocumentSnapshot.Exists"/> value of <c>false</c>.
+            </remarks>
+            <param name="documents">The document references to fetch. Must not be null, or contain null references.</param>
+            <param name="cancellationToken">A cancellation token for the operation.</param>
+            <returns>The document snapshots, in the same order as <paramref name="documents"/>.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDb.GetAllSnapshotsAsync(System.Collections.Generic.IEnumerable{Google.Cloud.Firestore.DocumentReference},Google.Cloud.Firestore.FieldMask,System.Threading.CancellationToken)">
+            <summary>
+            Fetches document snapshots from the server, potentially limiting the fields returned.
+            </summary>
+            <remarks>
+            Any documents which are missing are represented in the returned list by a <see cref="T:Google.Cloud.Firestore.DocumentSnapshot"/>
+            with <see cref="P:Google.Cloud.Firestore.DocumentSnapshot.Exists"/> value of <c>false</c>.
+            </remarks>
+            <param name="documents">The document references to fetch. Must not be null, or contain null references.</param>
+            <param name="fieldMask">The field mask to use to restrict which fields are retrieved. May be null, in which
+            case no field mask is applied, and the complete documents are retrieved.</param>
+            <param name="cancellationToken">A cancellation token for the operation.</param>
+            <returns>The document snapshots, in the same order as <paramref name="documents"/>.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDb.GetDocumentSnapshotsAsync(System.Collections.Generic.IEnumerable{Google.Cloud.Firestore.DocumentReference},Google.Protobuf.ByteString,Google.Cloud.Firestore.FieldMask,System.Threading.CancellationToken)">
+            <summary>
+            Fetches document snapshots from the server, based on an optional transaction ID.
+            </summary>
+            <param name="documents">The document references to fetch. Must not be null, or contain null references.</param>
+            <param name="transactionId">A transaction ID, or null to not include any transaction ID.</param>
+            <param name="fieldMask">The field mask to use to restrict which fields are retrieved. May be null, in which
+            case no field mask is applied, and the complete documents are retrieved.</param>
+            <param name="cancellationToken">A cancellation token for the operation.</param>
+            <returns>The document snapshots, in the order they are provided in the response. (This may not be the order of <paramref name="documents"/>.)</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDb.ListRootCollectionsAsync">
+            <summary>
+            Asynchronously retrieves the root collection IDs from the server.
+            </summary>
+            <returns>All the root collection references, in a lazily-iterated sequence.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDb.RunTransactionAsync(System.Func{Google.Cloud.Firestore.Transaction,System.Threading.Tasks.Task},Google.Cloud.Firestore.TransactionOptions,System.Threading.CancellationToken)">
+            <summary>
+            Runs a transaction asynchronously, with an asynchronous callback that doesn't return a value.
+            The specified callback is executed for a newly-created transaction. If committing the transaction
+            fails, the whole operation is retried based on <see cref="P:Google.Cloud.Firestore.TransactionOptions.MaxAttempts"/>.
+            </summary>
+            <param name="callback">The callback to execute. Must not be null.</param>
+            <param name="options">The options for the transaction. May be null, in which case default options will be used.</param>
+            <param name="cancellationToken">A cancellation token for the operation. This is exposed to the callback through <see cref="P:Google.Cloud.Firestore.Transaction.CancellationToken"/>
+            and applied to all RPCs to begin, rollback or commit the transaction.</param>
+            <returns>A task which completes when the transaction has committed.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDb.RunTransactionAsync``1(System.Func{Google.Cloud.Firestore.Transaction,System.Threading.Tasks.Task{``0}},Google.Cloud.Firestore.TransactionOptions,System.Threading.CancellationToken)">
+            <summary>
+            Runs a transaction asynchronously, with an asynchronous callback that returns a value.
+            The specified callback is executed for a newly-created transaction. If committing the transaction
+            fails, the whole operation is retried based on <see cref="P:Google.Cloud.Firestore.TransactionOptions.MaxAttempts"/>.
+            </summary>
+            <typeparam name="T">The result type of the callback.</typeparam>
+            <param name="callback">The callback to execute. Must not be null.</param>
+            <param name="options">The options for the transaction. May be null, in which case default options will be used.</param>
+            <param name="cancellationToken">A cancellation token for the operation. This is exposed to the callback through <see cref="P:Google.Cloud.Firestore.Transaction.CancellationToken"/>
+            and applied to all RPCs to begin, rollback or commit the transaction.</param>
+            <returns>A task which completes when the transaction has committed. The result of the task then contains the result of the callback.</returns>
+        </member>
+        <member name="T:Google.Cloud.Firestore.FirestoreDbBuilder">
+            <summary>
+            Builder class for <see cref="T:Google.Cloud.Firestore.FirestoreDb"/>, providing simple configuration of credentials,
+            endpoint, project ID etc.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDbBuilder.Settings">
+            <summary>
+            The settings to use for RPCs, or null for the default settings.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDbBuilder.ProjectId">
+            <summary>
+            The ID of the Google Cloud Platform project that contains the database. May be null, in which case
+            the project will be automatically detected if possible.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDbBuilder.DatabaseId">
+            <summary>
+            The ID of the database within the project. May be null, in which case the default database will be used.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDbBuilder.WarningLogger">
+            <summary>
+            Action to receive warning messages. May be null, in which case warnings will be ignored.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDbBuilder.ConverterRegistry">
+            <summary>
+            A registry for custom converters. May be null.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDbBuilder.Client">
+            <summary>
+            The client to use, or null to build a new one.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDbBuilder.EmulatorDetection">
+            <summary>
+            Specifies how the builder responds to the presence of the FIRESTORE_EMULATOR_HOST emulator environment variable.
+            </summary>
+            <remarks>
+            This property defaults to <see cref="F:Google.Api.Gax.EmulatorDetection.None"/>, meaning that the environment variable is
+            ignored.
+            </remarks>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDbBuilder.Build">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDbBuilder.BuildAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDbBuilder.GetDefaultEndpoint">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDbBuilder.GetDefaultScopes">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDbBuilder.GetChannelPool">
+            <inheritdoc />
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestoreDbBuilder.DefaultGrpcAdapter">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDbBuilder.GetEffectiveSettings">
+            <summary>
+            Returns the effective settings for a new client, including the "gccl" version header.
+            We maintain a single settings object which is "the default settings with gccl version added" for the
+            common case where no extra settings have been specified; otherwise, we need to clone those settings and
+            add the header.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDbBuilder.AddGcclVersionHeader(Google.Cloud.Firestore.V1.FirestoreSettings)">
+            <summary>
+            Returns a new FirestoreSettings based on the specified one, which has the "gccl" version
+            header (part of the x-goog-api-client header) added to specify the version of the Google.Cloud.Firestore library.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.FirestoreDocumentCreateTimestampAttribute">
+            <summary>
+            Attribute indicating that a property should be populated with the creation timestamp from a Firestore document snapshot.
+            </summary>
+            <remarks>
+            This attribute must only be applied to properties of <see cref="T:System.DateTime"/>, <see cref="T:System.DateTimeOffset"/>, <see cref="T:Google.Cloud.Firestore.Timestamp" />,
+            or the nullable equivalents, or a <see cref="T:Google.Protobuf.WellKnownTypes.Timestamp">protobuf Timestamp</see>.
+            This attribute is ignored when serializing a document to Firestore.
+            This attribute must not be applied on a property which also has <see cref="T:Google.Cloud.Firestore.FirestorePropertyAttribute"/>.
+            When deserializing a snapshot representing a missing document, nullable properties will be set to a null value; non-nullable
+            properties will be set to the default value of the type (0001-01-01 for DateTime and DateTimeOffset, 1970-01-01 for Timestamp).
+            </remarks>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDocumentCreateTimestampAttribute.#ctor">
+            <summary>
+            Creates an instance of the attribute.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.FirestoreDocumentIdAttribute">
+            <summary>
+            Attribute indicating that a property should be populated with the Firestore document ID.
+            </summary>
+            <remarks>
+            This attribute must only be applied to properties of string or <see cref="T:Google.Cloud.Firestore.DocumentReference" />.
+            This attribute is ignored when serializing a document to Firestore.
+            This attribute must not be applied on a property which also has <see cref="T:Google.Cloud.Firestore.FirestorePropertyAttribute"/>.
+            </remarks>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDocumentIdAttribute.#ctor">
+            <summary>
+            Creates an instance of the attribute.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.FirestoreDocumentReadTimestampAttribute">
+            <summary>
+            Attribute indicating that a property should be populated with the read timestamp from a Firestore document snapshot.
+            </summary>
+            <remarks>
+            This attribute must only be applied to properties of <see cref="T:System.DateTime"/>, <see cref="T:System.DateTimeOffset"/>, <see cref="T:Google.Cloud.Firestore.Timestamp" />,
+            or the nullable equivalents, or a <see cref="T:Google.Protobuf.WellKnownTypes.Timestamp">protobuf Timestamp</see>.
+            This attribute is ignored when serializing a document to Firestore.
+            This attribute must not be applied on a property which also has <see cref="T:Google.Cloud.Firestore.FirestorePropertyAttribute"/>.
+            </remarks>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDocumentReadTimestampAttribute.#ctor">
+            <summary>
+            Creates an instance of the attribute.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.FirestoreDocumentUpdateTimestampAttribute">
+            <summary>
+            Attribute indicating that a property should be populated with the read timestamp from a Firestore document snapshot.
+            </summary>
+            <remarks>
+            This attribute must only be applied to properties of <see cref="T:System.DateTime"/>, <see cref="T:System.DateTimeOffset"/>, <see cref="T:Google.Cloud.Firestore.Timestamp" />,
+            or the nullable equivalents, or a <see cref="T:Google.Protobuf.WellKnownTypes.Timestamp">protobuf Timestamp</see>.
+            This attribute is ignored when serializing a document to Firestore.
+            This attribute must not be applied on a property which also has <see cref="T:Google.Cloud.Firestore.FirestorePropertyAttribute"/>.
+            When deserializing a snapshot representing a missing document, nullable properties will be set to a null value; non-nullable
+            properties will be set to the default value of the type (0001-01-01 for DateTime and DateTimeOffset, 1970-01-01 for Timestamp).
+            </remarks>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreDocumentUpdateTimestampAttribute.#ctor">
+            <summary>
+            Creates an instance of the attribute.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.FirestoreEnumNameConverter`1">
+            <summary>
+            Custom converter which uses enum value names instead of integer values as the Firestore representation.
+            This converter is not used by default; it must be configured in the same way as any other custom converter.
+            </summary>
+            <remarks>
+            <para>
+            Currently this is always case-sensitive, with no customization of the names used. In future releases
+            we may introduce further ways to configure this converter, but the default behavior will remain the same.
+            </para>
+            <para>
+            When the same enum value has multiple names, no guarantee is made about which one is returned, although both
+            are accepted for conversion back to enum values. You are strongly encouraged not to use multiple names for the
+            same value.
+            </para>
+            </remarks>
+            <typeparam name="T">The enum type to convert</typeparam>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreEnumNameConverter`1.FromFirestore(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestoreEnumNameConverter`1.ToFirestore(`0)">
+            <summary>
+            Converts an enum value to its name.
+            </summary>
+            <remarks>
+            If multiple values in the enum map to the same integer, it is undefined which will be returned.
+            If the value is not a named enum element, an exception is thrown, even if the enum is
+            decorated with <see cref="T:System.FlagsAttribute"/>.
+            </remarks>
+            <param name="value">The value to convert.</param>
+            <returns>The name of the value.</returns>
+            <exception cref="T:System.ArgumentException">The given value is not a named value within the enum.</exception>
+        </member>
+        <member name="T:Google.Cloud.Firestore.FirestorePropertyAttribute">
+            <summary>
+            Attribute indicating that a property should be included in Firestore conversions.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestorePropertyAttribute.Name">
+            <summary>
+            The name to use within the Firestore document. If not set, the name
+            of the property is used directly.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.FirestorePropertyAttribute.ConverterType">
+            <summary>
+            A custom converter type to use for the attributed property.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestorePropertyAttribute.#ctor">
+            <summary>
+            Creates an instance with no specified name.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.FirestorePropertyAttribute.#ctor(System.String)">
+            <summary>
+            Creates an instance with the specified name.
+            </summary>
+            <param name="name">The name to use within the Firestore document.</param>
+        </member>
+        <member name="T:Google.Cloud.Firestore.GeoPoint">
+            <summary>
+            Immutable struct representing a geographic location in Firestore.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.GeoPoint.Latitude">
+            <summary>
+            The latitude, in degrees, in the range -90 to 90 inclusive.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.GeoPoint.Longitude">
+            <summary>
+            The longitude, in degrees, in the range -180 to 180 inclusive.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.GeoPoint.#ctor(System.Double,System.Double)">
+            <summary>
+            Creates a new value using the provided latitude and longitude values.
+            </summary>
+            <param name="latitude">The latitude of the point in degrees, between -90 and 90 inclusive.</param>
+            <param name="longitude">The longitude of the point in degrees, between -180 and 180 inclusive.</param>
+        </member>
+        <member name="M:Google.Cloud.Firestore.GeoPoint.ToProto">
+            <summary>
+            Creates a Protobuf <see cref="T:Google.Type.LatLng"/> representation of this
+            point. Modifications to the returned message will not be reflected in this object.
+            </summary>
+            <returns>A Protobuf location representation.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.GeoPoint.FromProto(Google.Type.LatLng)">
+            <summary>
+            Creates an instance from a Protobuf <see cref="T:Google.Type.LatLng"/> representation.
+            Later modifications to the Protobuf representation will not affect the returned object.
+            </summary>
+            <param name="proto">A Protobuf location representation.</param>
+            <returns>A new <see cref="T:Google.Cloud.Firestore.GeoPoint"/> value.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.GeoPoint.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.GeoPoint.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.GeoPoint.Equals(Google.Cloud.Firestore.GeoPoint)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.GeoPoint.op_Equality(Google.Cloud.Firestore.GeoPoint,Google.Cloud.Firestore.GeoPoint)">
+            <summary>
+            Operator overload to compare two GeoPoint values for equality.
+            </summary>
+            <param name="lhs">Left value to compare</param>
+            <param name="rhs">Right value to compare</param>
+            <returns>true if <paramref name="lhs"/> is equal to <paramref name="rhs"/>; otherwise false.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.GeoPoint.op_Inequality(Google.Cloud.Firestore.GeoPoint,Google.Cloud.Firestore.GeoPoint)">
+            <summary>
+            Operator overload to compare two GeoPoint values for inequality.
+            </summary>
+            <param name="lhs">Left value to compare</param>
+            <param name="rhs">Right value to compare</param>
+            <returns>false if <paramref name="lhs"/> is equal to <paramref name="rhs"/>; otherwise true.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.GeoPoint.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Google.Cloud.Firestore.IFirestoreConverter`1">
+            <summary>
+            Custom converter used during serialization and deserialization.
+            </summary>
+            <remarks>
+            <para>
+            This can be specified using <see cref="P:Google.Cloud.Firestore.FirestoreDataAttribute.ConverterType"/> to use
+            the custom converter for all values of the attributed type, or using <see cref="P:Google.Cloud.Firestore.FirestorePropertyAttribute.ConverterType"/>
+            to use the custom converter for a single property. The latter approach can also be used to
+            allow for conversion of types you don't control (e.g. to serialize <see cref="T:System.Guid"/> properties
+            as strings).
+            </para>
+            <para>
+            This interface is never passed a null value and should never return a null value. Null values are transparently
+            handled by the serialization framework; if a document contains a null value, that will always be deserialized
+            to a null reference (or null value of a nullable value type).
+            </para>
+            <para>
+            Converters express their conversions in terms of regular .NET types: strings, integers, lists, dictionaries and so
+            on. The result of serializing an object of type <typeparamref name="T"/> is then processed by the default serialization
+            handling into the Firestore protocol buffer representation. Deserialization works the same way: first the Firestore
+            protocol buffer representation is converted into .NET types in the default manner for this library, and the result is
+            passed to the converter. Note that this means there can be asymmetry between serialization and deserialization: if the
+            <see cref="M:Google.Cloud.Firestore.IFirestoreConverter`1.ToFirestore(`0)"/> method returns an <see cref="T:System.Int32"/>, deserializing the result will involve
+            the <see cref="M:Google.Cloud.Firestore.IFirestoreConverter`1.FromFirestore(System.Object)"/> method receiving an <see cref="T:System.Int64"/> value as that's the default
+            .NET representation of a Firestore integer.
+            </para>
+            <para>
+            Converters that intend to convert objects into top-level documents should return a string-keyed dictionary of values
+            from <see cref="M:Google.Cloud.Firestore.IFirestoreConverter`1.ToFirestore(`0)"/>. On deserialization, <see cref="M:Google.Cloud.Firestore.IFirestoreConverter`1.FromFirestore(System.Object)"/> will be passed a value
+            implementing <see cref="T:System.Collections.Generic.IDictionary`2"/> with a key type of <see cref="T:System.String"/> and a value type
+            of <see cref="T:System.Object"/>.
+            </para>
+            </remarks>
+            <typeparam name="T">The type of object to convert.</typeparam>
+        </member>
+        <member name="M:Google.Cloud.Firestore.IFirestoreConverter`1.ToFirestore(`0)">
+            <summary>
+            Converts a value to its Firestore representation.
+            </summary>
+            <param name="value">The value to convert. When called by Google.Cloud.Firestore,
+            this will never be null.</param>
+            <returns>The converted value. Must not be null.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.IFirestoreConverter`1.FromFirestore(System.Object)">
+            <summary>
+            Converts a value from its Firestore representation.
+            </summary>
+            <param name="value">The value to convert. When called by Google.Cloud.Firestore,
+            this will never be null.</param>
+            <returns>The converted value. Must not be null.</returns>
+        </member>
+        <member name="T:Google.Cloud.Firestore.IWatchState">
+            <summary>
+            Defines the API between gRPC listening code and the watch state that handles business logic.
+            The only implementation is <see cref="T:Google.Cloud.Firestore.WatchState"/>, but this interface makes testing simpler
+            and the boundary responsibility clearer.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.IWatchState.ResumeToken">
+            <summary>
+            The token to provide to return to this state, or null if there's no resume token.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.IWatchState.OnStreamInitialization(Google.Cloud.Firestore.StreamInitializationCause)">
+            <summary>
+            Called before the stream is initialized.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.IWatchState.HandleResponseAsync(Google.Cloud.Firestore.V1.ListenResponse,System.Threading.CancellationToken)">
+            <summary>
+            Handle the given response.
+            </summary>
+            <returns>The next state, or null if the stream needs to be reconnected.</returns>
+        </member>
+        <member name="F:Google.Cloud.Firestore.WatchResponseResult.Continue">
+            <summary>
+            Keep processing the current stream
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.WatchResponseResult.ResetStream">
+            <summary>
+            Reinitialize the stream
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.WatchResponseResult.StreamHealthy">
+            <summary>
+            The stream has become healthy: reset any backoff.
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.StreamInitializationCause.WatchStarting">
+            <summary>
+            A new watch was requested.
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.StreamInitializationCause.ResetRequested">
+            <summary>
+            The previous response requested a stream reset.
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.StreamInitializationCause.RpcError">
+            <summary>
+            A retriable error occurred.
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.StreamInitializationCause.StreamCompleted">
+            <summary>
+            The server indicated that the stream was complete.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.PathComparer">
+            <summary>
+            Provides ordering comparisons for slash-separated resource paths.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.PathUtilities.SplitPath(System.String)">
+            <summary>
+            Splits a path by slashes, and validates that no element is empty.
+            </summary>
+            <param name="path">Path to split. Must not be null.</param>
+            <returns>An array of path elements, all of which are non-empty.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.PathUtilities.GenerateId">
+            <summary>
+            Generates a random ID consisting of exactly 20 characters, each in the range a-z, A-Z, 0-9.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Precondition">
+            <summary>
+            Immutable class representing a precondition for an update operation.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.Precondition.None">
+            <summary>
+            No precondition.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.Precondition.MustExist">
+            <summary>
+            Precondition that the document must exist, but with any last update time.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.Precondition.MustNotExist">
+            <summary>
+            Precondition that the document must not exist. (This is internal for now; we don't believe there's
+            a reason for clients to specify this anywhere.)
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Precondition.LastUpdated(Google.Cloud.Firestore.Timestamp)">
+            <summary>
+            Creates a precondition that the document has the specified last update time.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.Precondition.LastUpdateTime">
+            <summary>
+            Condition that the document was last updated at the specified timestamp, if specified.
+            If this is non-null, <see cref="P:Google.Cloud.Firestore.Precondition.Exists"/> will be null.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.Precondition.Exists">
+            <summary>
+            True if the document must exist; false if the document must not exist.
+            If this is non-null, <see cref="P:Google.Cloud.Firestore.Precondition.LastUpdateTime"/> will be null.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.Precondition.Proto">
+            <summary>
+            The proto representation of the precondition. Must not be mutated or exposed publicly.
+            Will be null for <see cref="P:Google.Cloud.Firestore.Precondition.None"/>.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Query">
+            <summary>
+            A query against a collection.
+            </summary>
+            <remarks>
+            <see cref="T:Google.Cloud.Firestore.CollectionReference"/> derives from this class as a "return-all" query against the
+            collection it refers to.
+            </remarks>
+        </member>
+        <member name="P:Google.Cloud.Firestore.Query.Database">
+            <summary>
+            The database this query will search over.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.Select(System.String[])">
+            <summary>
+            Specifies the field paths to return in the results.
+            </summary>
+            <remarks>
+            This call replaces any previously-specified projections in the query.
+            </remarks>
+            <param name="fieldPaths">The dot-separated field paths to select. Must not be null or empty, or contain null or empty
+            elements.</param>
+            <returns>A new query based on the current one, but with the specified projection applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.Select(Google.Cloud.Firestore.FieldPath[])">
+            <summary>
+            Specifies the field paths to return in the results.
+            </summary>
+            <remarks>
+            This call replaces any previously-specified projections in the query.
+            </remarks>
+            <param name="fieldPaths">The field paths to select. Must not be null or contain null elements.
+            If this is empty, the document ID is implicitly selected.</param>
+            <returns>A new query based on the current one, but with the specified projection applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereEqualTo(System.String,System.Object)">
+            <summary>
+            Returns a query with a filter specifying that the value in <paramref name="fieldPath"/> must be
+            equal to <paramref name="value"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The dot-separated field path to filter on. Must not be null or empty.</param>
+            <param name="value">The value to compare in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereEqualTo(Google.Cloud.Firestore.FieldPath,System.Object)">
+            <summary>
+            Returns a query with a filter specifying that the value in <paramref name="fieldPath"/> must be
+            equal to <paramref name="value"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The field path to filter on. Must not be null.</param>
+            <param name="value">The value to compare in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereNotEqualTo(System.String,System.Object)">
+            <summary>
+            Returns a query with a filter specifying that the value in <paramref name="fieldPath"/> must not be
+            equal to <paramref name="value"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The dot-separated field path to filter on. Must not be null or empty.</param>
+            <param name="value">The value to compare in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereNotEqualTo(Google.Cloud.Firestore.FieldPath,System.Object)">
+            <summary>
+            Returns a query with a filter specifying that the value in <paramref name="fieldPath"/> must not be
+            equal to <paramref name="value"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The field path to filter on. Must not be null.</param>
+            <param name="value">The value to compare in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereLessThan(System.String,System.Object)">
+            <summary>
+            Returns a query with a filter specifying that the value in <paramref name="fieldPath"/> must be less than
+            <paramref name="value"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The dot-separated field path to filter on. Must not be null or empty.</param>
+            <param name="value">The value to compare in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereLessThan(Google.Cloud.Firestore.FieldPath,System.Object)">
+            <summary>
+            Returns a query with a filter specifying that the value in <paramref name="fieldPath"/> must be less than
+            <paramref name="value"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The field path to filter on. Must not be null.</param>
+            <param name="value">The value to compare in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereLessThanOrEqualTo(System.String,System.Object)">
+            <summary>
+            Returns a query with a filter specifying that the value in <paramref name="fieldPath"/> must be less than or
+            equal to <paramref name="value"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The dot-separated field path to filter on. Must not be null or empty.</param>
+            <param name="value">The value to compare in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereLessThanOrEqualTo(Google.Cloud.Firestore.FieldPath,System.Object)">
+            <summary>
+            Returns a query with a filter specifying that the value in <paramref name="fieldPath"/> must be less than or
+            equal to <paramref name="value"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The field path to filter on. Must not be null.</param>
+            <param name="value">The value to compare in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereGreaterThan(System.String,System.Object)">
+            <summary>
+            Returns a query with a filter specifying that the value in <paramref name="fieldPath"/> must be greater than
+            <paramref name="value"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The dot-separated field path to filter on. Must not be null or empty.</param>
+            <param name="value">The value to compare in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereGreaterThan(Google.Cloud.Firestore.FieldPath,System.Object)">
+            <summary>
+            Returns a query with a filter specifying that the value in <paramref name="fieldPath"/> must be greater than
+            <paramref name="value"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The field path to filter on. Must not be null.</param>
+            <param name="value">The value to compare in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereGreaterThanOrEqualTo(System.String,System.Object)">
+            <summary>
+            Returns a query with a filter specifying that the value in <paramref name="fieldPath"/> must be greater than or
+            equal to <paramref name="value"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The dot-separated field path to filter on. Must not be null or empty.</param>
+            <param name="value">The value to compare in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereGreaterThanOrEqualTo(Google.Cloud.Firestore.FieldPath,System.Object)">
+            <summary>
+            Returns a query with a filter specifying that the value in <paramref name="fieldPath"/> must be greater than or
+            equal to <paramref name="value"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The field path to filter on. Must not be null.</param>
+            <param name="value">The value to compare in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereArrayContains(System.String,System.Object)">
+            <summary>
+            Returns a query with a filter specifying that the value in <paramref name="fieldPath"/> must be an array containing
+            <paramref name="value"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The dot-separated field path to filter on. Must not be null or empty.</param>
+            <param name="value">The value to check in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereArrayContains(Google.Cloud.Firestore.FieldPath,System.Object)">
+            <summary>
+            Returns a query with a filter specifying that the value in <paramref name="fieldPath"/> must be an array containing
+            <paramref name="value"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The field path to filter on. Must not be null.</param>
+            <param name="value">The value to check in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereArrayContainsAny(System.String,System.Collections.IEnumerable)">
+            <summary>
+            Returns a query with a filter specifying that <paramref name="fieldPath"/> must be
+            a field present in the document, with a value which is an array containing at least one value in <paramref name="values"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The dot-separated field path to filter on. Must not be null or empty.</param>
+            <param name="values">The values to compare in the filter. Must not be null.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereArrayContainsAny(Google.Cloud.Firestore.FieldPath,System.Collections.IEnumerable)">
+            <summary>
+            Returns a query with a filter specifying that <paramref name="fieldPath"/> must be
+            a field present in the document, with a value which is an array containing at least one value in <paramref name="values"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The field path to filter on. Must not be null.</param>
+            <param name="values">The values to compare in the filter. Must not be null.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereIn(System.String,System.Collections.IEnumerable)">
+            <summary>
+            Returns a query with a filter specifying that <paramref name="fieldPath"/> must be
+            a field present in the document, with a value which is one of the values in <paramref name="values"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The dot-separated field path to filter on. Must not be null or empty.</param>
+            <param name="values">The values to compare in the filter. Must not be null.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereIn(Google.Cloud.Firestore.FieldPath,System.Collections.IEnumerable)">
+            <summary>
+            Returns a query with a filter specifying that <paramref name="fieldPath"/> must be
+            a field present in the document, with a value which is one of the values in <paramref name="values"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The field path to filter on. Must not be null.</param>
+            <param name="values">The values to compare in the filter. Must not be null.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereNotIn(System.String,System.Collections.IEnumerable)">
+            <summary>
+            Returns a query with a filter specifying that <paramref name="fieldPath"/> must be
+            a field present in the document, with a value which is not one of the values in <paramref name="values"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The dot-separated field path to filter on. Must not be null or empty.</param>
+            <param name="values">The values to compare in the filter. Must not be null.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.WhereNotIn(Google.Cloud.Firestore.FieldPath,System.Collections.IEnumerable)">
+            <summary>
+            Returns a query with a filter specifying that <paramref name="fieldPath"/> must be
+            a field present in the document, with a value which is not one of the values in <paramref name="values"/>.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The field path to filter on. Must not be null.</param>
+            <param name="values">The values to compare in the filter. Must not be null.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.ValidateWhereInValues(System.Collections.IEnumerable)">
+            <summary>
+            Validates that a value is suitable for a WhereIn or WhereNotIn query. It can't be null or a string.
+            The reason for highlighting string is that it's an IEnumerable{char}, but users
+            don't tend to think of it that way: anyone passing a single string to WhereIn is doing so
+            expecting it to be treated as an array containing just that string, I'm sure. So let's call that out.
+            </summary>
+            <param name="values">The value to validate.</param>
+            <returns>The original value, if it's valid.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.Where(System.String,Google.Cloud.Firestore.V1.StructuredQuery.Types.FieldFilter.Types.Operator,System.Object)">
+            <summary>
+            Add a filter for the given field path.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The dot-separated field path to filter on. Must not be null or empty.</param>
+            <param name="op">The filter operator. Must not be null.</param>
+            <param name="value">The value to compare in the filter.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.Where(Google.Cloud.Firestore.FieldPath,Google.Cloud.Firestore.V1.StructuredQuery.Types.FieldFilter.Types.Operator,System.Object)">
+            <summary>
+            Add a filter for the given field path.
+            </summary>
+            <remarks>
+            This call adds additional filters to any previously-specified ones.
+            </remarks>
+            <param name="fieldPath">The field path to filter on. Must not be null.</param>
+            <param name="op">The filter operator.</param>
+            <param name="value">The value to compare in the filter. Must not be a sentinel value.</param>
+            <returns>A new query based on the current one, but with the additional specified filter applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.OrderBy(System.String)">
+            <summary>
+            Adds an additional ascending ordering by the specified path.
+            </summary>
+            <remarks>
+            <para>
+            Unlike LINQ's OrderBy method, this call adds additional subordinate orderings to any
+            additionally specified. So <c>query.OrderBy("foo").OrderBy("bar")</c> is similar
+            to a LINQ <c>query.OrderBy(x => x.Foo).ThenBy(x => x.Bar)</c>.
+            </para>
+            <para>
+            This method cannot be called after a start/end cursor has been specified with
+            <see cref="M:Google.Cloud.Firestore.Query.StartAt(System.Object[])"/>, <see cref="M:Google.Cloud.Firestore.Query.StartAfter(System.Object[])"/>, <see cref="M:Google.Cloud.Firestore.Query.EndAt(System.Object[])"/> or <see cref="M:Google.Cloud.Firestore.Query.EndBefore(System.Object[])"/>.
+            </para>
+            </remarks>
+            <param name="fieldPath">The dot-separated field path to order by. Must not be null or empty.</param>
+            <returns>A new query based on the current one, but with the additional specified ordering applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.OrderByDescending(System.String)">
+            <summary>
+            Adds an additional descending ordering by the specified path.
+            </summary>
+            <remarks>
+            <para>
+            Unlike LINQ's OrderBy method, this call adds additional subordinate orderings to any
+            additionally specified. So <c>query.OrderBy("foo").OrderByDescending("bar")</c> is similar
+            to a LINQ <c>query.OrderBy(x => x.Foo).ThenByDescending(x => x.Bar)</c>.
+            </para>
+            <para>
+            This method cannot be called after a start/end cursor has been specified with
+            <see cref="M:Google.Cloud.Firestore.Query.StartAt(System.Object[])"/>, <see cref="M:Google.Cloud.Firestore.Query.StartAfter(System.Object[])"/>, <see cref="M:Google.Cloud.Firestore.Query.EndAt(System.Object[])"/> or <see cref="M:Google.Cloud.Firestore.Query.EndBefore(System.Object[])"/>.
+            </para>
+            </remarks>
+            <param name="fieldPath">The dot-separated field path to order by. Must not be null or empty.</param>
+            <returns>A new query based on the current one, but with the additional specified ordering applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.OrderBy(Google.Cloud.Firestore.FieldPath)">
+            <summary>
+            Adds an additional ascending ordering by the specified path.
+            </summary>
+            <remarks>
+            <para>
+            Unlike LINQ's OrderBy method, this call adds additional subordinate orderings to any
+            additionally specified. So <c>query.OrderBy("foo").OrderBy("bar")</c> is similar
+            to a LINQ <c>query.OrderBy(x => x.Foo).ThenBy(x => x.Bar)</c>.
+            </para>
+            <para>
+            This method cannot be called after a start/end cursor has been specified with
+            <see cref="M:Google.Cloud.Firestore.Query.StartAt(System.Object[])"/>, <see cref="M:Google.Cloud.Firestore.Query.StartAfter(System.Object[])"/>, <see cref="M:Google.Cloud.Firestore.Query.EndAt(System.Object[])"/> or <see cref="M:Google.Cloud.Firestore.Query.EndBefore(System.Object[])"/>.
+            </para>
+            </remarks>
+            <param name="fieldPath">The field path to order by. Must not be null.</param>
+            <returns>A new query based on the current one, but with the additional specified ordering applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.OrderByDescending(Google.Cloud.Firestore.FieldPath)">
+            <summary>
+            Adds an additional descending ordering by the specified path.
+            </summary>
+            <remarks>
+            <para>
+            Unlike LINQ's OrderBy method, this call adds additional subordinate orderings to any
+            additionally specified. So <c>query.OrderBy("foo").OrderByDescending("bar")</c> is similar
+            to a LINQ <c>query.OrderBy(x => x.Foo).ThenByDescending(x => x.Bar)</c>.
+            </para>
+            <para>
+            This method cannot be called after a start/end cursor has been specified with
+            <see cref="M:Google.Cloud.Firestore.Query.StartAt(System.Object[])"/>, <see cref="M:Google.Cloud.Firestore.Query.StartAfter(System.Object[])"/>, <see cref="M:Google.Cloud.Firestore.Query.EndAt(System.Object[])"/> or <see cref="M:Google.Cloud.Firestore.Query.EndBefore(System.Object[])"/>.
+            </para>
+            </remarks>
+            <param name="fieldPath">The field path to order by. Must not be null.</param>
+            <returns>A new query based on the current one, but with the additional specified ordering applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.Limit(System.Int32)">
+            <summary>
+            Specifies the maximum number of results to return.
+            </summary>
+            <remarks>
+            This call replaces any previously-specified limit in the query.
+            </remarks>
+            <param name="limit">The maximum number of results to return. Must be greater than or equal to 0.</param>
+            <returns>A new query based on the current one, but with the specified limit applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.LimitToLast(System.Int32)">
+            <summary>
+            Creates and returns a new query that only returns the last <paramref name="limit"/> matching documents.
+            </summary>
+            <remarks>
+            <para>
+            You must specify at least one <see cref="M:Google.Cloud.Firestore.Query.OrderBy(System.String)"/> clause for limit-to-last queries. Otherwise,
+            an <see cref="T:System.InvalidOperationException"/> is thrown during execution.
+            </para>
+            <para>
+            Results for limit-to-last queries are only available once all documents are received, which means
+            that these queries cannot be streamed using the <see cref="M:Google.Cloud.Firestore.Query.StreamAsync(System.Threading.CancellationToken)"/> method.
+            </para>
+            </remarks>
+            <param name="limit">The maximum number of results to return. Must be greater than or equal to 0.</param>
+            <returns>A new query based on the current one, but with the specified limit applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.Offset(System.Int32)">
+            <summary>
+            Specifies a number of results to skip.
+            </summary>
+            <remarks>
+            This call replaces any previously-specified offset in the query.
+            </remarks>
+            <param name="offset">The number of results to skip. Must be greater than or equal to 0.</param>
+            <returns>A new query based on the current one, but with the specified offset applied.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.StartAt(System.Object[])">
+            <summary>
+            Creates and returns a new query that starts at the provided fields relative to the order of the
+            query. The order of the field values must match the order of the order-by clauses of the query.
+            </summary>
+            <remarks>
+            This call replaces any previously specified start position in the query.
+            </remarks>
+            <param name="fieldValues">The field values. Must not be null or empty, or have more values than query has orderings.</param>
+            <returns>A new query based on the current one, but with the specified start position.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.StartAfter(System.Object[])">
+            <summary>
+            Creates and returns a new query that starts after the provided fields relative to the order of the
+            query. The order of the field values must match the order of the order-by clauses of the query.
+            </summary>
+            <remarks>
+            This call replaces any previously specified start position in the query.
+            </remarks>
+            <param name="fieldValues">The field values. Must not be null or empty, or have more values than query has orderings.</param>
+            <returns>A new query based on the current one, but with the specified start position.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.EndBefore(System.Object[])">
+            <summary>
+            Creates and returns a new query that ends before the provided fields relative to the order of the
+            query. The order of the field values must match the order of the order-by clauses of the query.
+            </summary>
+            <remarks>
+            This call replaces any previously specified end position in the query.
+            </remarks>
+            <param name="fieldValues">The field values. Must not be null or empty, or have more values than query has orderings.</param>
+            <returns>A new query based on the current one, but with the specified end position.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.EndAt(System.Object[])">
+            <summary>
+            Creates and returns a new query that ends at the provided fields relative to the order of the
+            query. The order of the field values must match the order of the order-by clauses of the query.
+            </summary>
+            <remarks>
+            This call replaces any previously specified end position in the query.
+            </remarks>
+            <param name="fieldValues">The field values. Must not be null or empty, or have more values than query has orderings.</param>
+            <returns>A new query based on the current one, but with the specified end position.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.StartAt(Google.Cloud.Firestore.DocumentSnapshot)">
+            <summary>
+            Creates and returns a new query that starts at the document snapshot provided fields relative to the order of the
+            query.
+            </summary>
+            <remarks>
+            This call replaces any previously specified start position in the query.
+            </remarks>
+            <param name="snapshot">The snapshot of the document to start at. Must not be null.</param>
+            <returns>A new query based on the current one, but with the specified start position.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.StartAfter(Google.Cloud.Firestore.DocumentSnapshot)">
+            <summary>
+            Creates and returns a new query that starts after the document snapshot provided fields relative to the order of the
+            query.
+            </summary>
+            <remarks>
+            This call replaces any previously specified start position in the query.
+            </remarks>
+            <param name="snapshot">The snapshot of the document to start after. Must not be null.</param>
+            <returns>A new query based on the current one, but with the specified start position.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.EndBefore(Google.Cloud.Firestore.DocumentSnapshot)">
+            <summary>
+            Creates and returns a new query that ends before the document snapshot provided fields relative to the order of the
+            query.
+            </summary>
+            <remarks>
+            This call replaces any previously specified end position in the query.
+            </remarks>
+            <param name="snapshot">The snapshot of the document to end before. Must not be null.</param>
+            <returns>A new query based on the current one, but with the specified end position.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.EndAt(Google.Cloud.Firestore.DocumentSnapshot)">
+            <summary>
+            Creates and returns a new query that ends at the document snapshot provided fields relative to the order of the
+            query.
+            </summary>
+            <remarks>
+            This call replaces any previously specified end position in the query.
+            </remarks>
+            <param name="snapshot">The snapshot of the document to end at.</param>
+            <returns>A new query based on the current one, but with the specified end position.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.GetSnapshotAsync(System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously takes a snapshot of all documents matching the query.
+            </summary>
+            <param name="cancellationToken">A cancellation token for the operation.</param>
+            <returns>A snapshot of documents matching the query.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.CreateDocumentSnapshotComparer">
+            <summary>
+            Creates an <see cref="T:System.Collections.Generic.IComparer`1"/> which will order documents in the same way as the server
+            does for this query. The returned comparer does *not* handle missing snapshots.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.StreamAsync(System.Threading.CancellationToken)">
+            <summary>
+            Returns an asynchronous sequence of snapshots matching the query.
+            </summary>
+            <remarks>
+            Each time you iterate over the sequence, a new query will be performed.
+            </remarks>
+            <param name="cancellationToken">The cancellation token to apply to the streaming operation. Note that even if this is
+            <see cref="P:System.Threading.CancellationToken.None"/>, a cancellation token can still be applied when iterating over
+            the stream, by passing it into <see cref="M:System.Collections.Generic.IAsyncEnumerable`1.GetAsyncEnumerator(System.Threading.CancellationToken)"/>.
+            If a cancellation token is passed both to this method and GetAsyncEnumerator,
+            then cancelling either of the tokens will result in the operation being cancelled.
+            </param>
+            <returns>An asynchronous sequence of document snapshots matching the query.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.Equals(Google.Cloud.Firestore.Query)">
+            <summary>
+            Compares this query with another for equality. Every aspect of the query must be equal,
+            including the collection. A plain Query instance is not equal to a CollectionReference instance,
+            even if they are logically similar: <c>collection.Offset(0).Equals(collection)</c> will return
+            <c>false</c>, even though 0 is the default offset.
+            </summary>
+            <param name="other">The query to compare this one with</param>
+            <returns><c>true</c> if this query is equal to <paramref name="other"/>; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.Listen(System.Func{Google.Cloud.Firestore.QuerySnapshot,System.Threading.CancellationToken,System.Threading.Tasks.Task},System.Threading.CancellationToken)">
+            <summary>
+            Listen to this query for changes.
+            </summary>
+            <param name="callback">The callback to invoke each time the query results change. Must not be null.</param>
+            <param name="cancellationToken">Optional cancellation token which may be used to cancel the listening operation.</param>
+            <returns>A <see cref="T:Google.Cloud.Firestore.FirestoreChangeListener"/> which may be used to monitor the listening operation and stop it gracefully.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.Listen(System.Action{Google.Cloud.Firestore.QuerySnapshot},System.Threading.CancellationToken)">
+            <summary>
+            Listen to this query for changes. This method is a convenience method over <see cref="M:Google.Cloud.Firestore.Query.Listen(System.Func{Google.Cloud.Firestore.QuerySnapshot,System.Threading.CancellationToken,System.Threading.Tasks.Task},System.Threading.CancellationToken)"/>,
+            wrapping a synchronous callback to create an asynchronous one.
+            </summary>
+            <param name="callback">The callback to invoke each time the query results change. Must not be null.</param>
+            <param name="cancellationToken">Optional cancellation token which may be used to cancel the listening operation.</param>
+            <returns>A <see cref="T:Google.Cloud.Firestore.FirestoreChangeListener"/> which may be used to monitor the listening operation and stop it gracefully.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.ValidateNoSentinelsRecursively(Google.Cloud.Firestore.V1.Value,System.String)">
+            <summary>
+            Convenience method to validate that a serialized value doesn't contain any sentinels.
+            Throws an ArgumentException with the given message if it does contain a sentinel.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Query.InternalFilter.IsOrderingFilter">
+            <summary>
+            Checks whether this is a comparison operator.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.QuerySnapshot">
+            <summary>
+            An immutable snapshot of complete query results.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.QuerySnapshot.Query">
+            <summary>
+            The query producing this snapshot.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.QuerySnapshot.ReadTime">
+            <summary>
+            The time at which the snapshot was read.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.QuerySnapshot.Documents">
+            <summary>
+            The documents in the snapshot.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.QuerySnapshot.Changes">
+            <summary>
+            The changes in the documents.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.QuerySnapshot.Item(System.Int32)">
+            <summary>
+            Returns the document snapshot with the specified index within this query snapshot.
+            </summary>
+            <param name="index">The index of the document to return.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is less than 0, or greater than or equal to <see cref="P:Google.Cloud.Firestore.QuerySnapshot.Count"/>.</exception>
+            <returns>The document snapshot with the specified index within this query snapshot.</returns>
+        </member>
+        <member name="P:Google.Cloud.Firestore.QuerySnapshot.Count">
+            <summary>
+            Returns the number of documents in this query snapshot.
+            </summary>
+            <value>The number of documents in this query snapshot.</value>
+        </member>
+        <member name="M:Google.Cloud.Firestore.QuerySnapshot.GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.QuerySnapshot.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.QuerySnapshot.Equals(Google.Cloud.Firestore.QuerySnapshot)">
+            <summary>
+            Compares this snapshot with another for equality. The documents and query are compared;
+            the read time is not.
+            </summary>
+            <param name="other">The snapshot to compare this one with</param>
+            <returns><c>true</c> if this snapshot is equal to <paramref name="other"/>; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.QuerySnapshot.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.QuerySnapshot.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="T:Google.Cloud.Firestore.QuerySnapshot.LazyChangeList">
+            <summary>
+            A lazy read-only list that's a projection over a list of snapshots.
+            This is used to avoid materializing a whole collection.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.RetryHelper">
+            <summary>
+            Provides retry functionality similar to that provided by GAX.
+            (This code is almost entirely copied from GAX. The GAX code doesn't quite work
+            for our use case.)
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.SentinelReflection">
+            <summary>Holder for reflection information generated from sentinel.proto</summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.SentinelReflection.Descriptor">
+            <summary>File descriptor for sentinel.proto</summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.AugmentedValue">
+            <summary>
+            This is like google.firestore.v1.Value, but with
+            extra "hidden" fields. We can convert between Value and AugmentedValue
+            via serialization without losing information, which lets us "hide"
+            information related to sentinel values (delete, server
+            timestamps, array operations) within a regular Value object.
+            However, such values should never be transmitted over the wire.
+            They are purely implementation details to allow information to
+            flow through a Value-oriented interface.
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.AugmentedValue.KindFieldNumber">
+            <summary>Field number for the "kind" field.</summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.AugmentedValue.Kind">
+            <summary>
+            This must be field 11 to match null_value in google.firestore.v1.Value
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.AugmentedValue.ArrayFieldNumber">
+            <summary>Field number for the "array" field.</summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.AugmentedValue.Array">
+            <summary>
+            These fields are populated or not according to the kind.
+            They must not collide with the fields in google.firestore.v1.Value
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.AugmentedValue.IncrementFieldNumber">
+            <summary>Field number for the "increment" field.</summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.SentinelValue">
+            <summary>
+            Internal representation of sentinel values such as "server timestamp", "delete this field"
+            and array operations. They are opaque to user code. A sentinel value can be converted to a protobuf Value,
+            using somewhat ugly means: the resulting Value should never be sent on the wire as-is.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.SentinelValue.GetKind(Google.Cloud.Firestore.V1.Value)">
+            <summary>
+            Returns the detected kind of a serialized sentinel value, or None if it's not a sentinel value.
+            </summary>
+            <param name="value">The serialized value to inspect.</param>
+            <returns>The kind of sentinel serialized in <paramref name="value"/> or None if it's not a sentinel value.</returns>
+        </member>
+        <member name="T:Google.Cloud.Firestore.SerializationContext">
+            <summary>
+            Provides context for serialization operations. This allows different converters to be used for different
+            databases, etc. Currently only used for custom converters (so FirestoreDb-wide) but could potentially
+            have more information later.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.ServerTimestampAttribute">
+            <summary>
+            Attribute indicating that the value of the property within the .NET object should be ignored
+            when creating or modifying a document. Instead, the server time of the commit that creates
+            or modifies the document is automatically used to populate the value in the Firestore document.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.SetOptions">
+            <summary>
+            Immutable class representing options for Set operations.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.SetOptions.Overwrite">
+            <summary>
+            Returns an instance that overwrites the target object. This is the default when no
+            options are provided.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.SetOptions.MergeAll">
+            <summary>
+            Returns an instance that merges all fields.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.SetOptions.MergeFields(System.String[])">
+            <summary>
+            Returns an instance that merges the given fields.
+            </summary>
+            <param name="fieldMask">The fields to merge. An empty array is equivalent to using <see cref="P:Google.Cloud.Firestore.SetOptions.MergeAll"/>.
+            Must not be null or contain any empty or null elements. Each field is treated as a dot-separated list of segments.
+            </param>
+            <returns>An instance that merges the given fields.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.SetOptions.MergeFields(Google.Cloud.Firestore.FieldPath[])">
+            <summary>
+            Returns an instance that merges the given fields.
+            </summary>
+            <param name="fieldMask">The fields to merge. An empty array is equivalent to using <see cref="P:Google.Cloud.Firestore.SetOptions.MergeAll"/>.
+            Must not be null or contain any null elements.</param>
+            <returns>An instance that merges the given fields.</returns>
+        </member>
+        <member name="P:Google.Cloud.Firestore.SetOptions.Merge">
+            <summary>
+            Whether or not to merge values. If <see cref="P:Google.Cloud.Firestore.SetOptions.FieldMask"/> is non-empty,
+            this is always <c>true</c>.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.SetOptions.FieldMask">
+            <summary>
+            The fields to merge. This property is never null; if the mask is empty,
+            all fields will be merged or overwritten.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.Timestamp">
+            <summary>
+            A nanosecond-precision immutable timestamp. When this is stored as part of a document in Firestore,
+            it is truncated to the microsecond, towards the start of time.
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.Timestamp._seconds">
+            <summary>
+            Seconds since the Unix epoch. Negative values indicate timestamps before the Unix epoch.
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.Timestamp._nanoseconds">
+            <summary>
+            Nanoseconds within the second; always non-negative. (For example, the nanosecond before the Unix epoch
+            has a seconds value of -1, and a nanoseconds value of 999,999,999.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.ToDateTime">
+            <summary>
+            Converts this timestamp to a <see cref="T:System.DateTime"/> with a kind of
+            <see cref="F:System.DateTimeKind.Utc"/>. This can lose information as DateTime has a precision of
+            a tick (100 nanoseconds). If the timestamp is not a precise number of ticks, it will be
+            truncated towards the start of time.
+            </summary>
+            <returns>A <see cref="T:System.DateTime"/> representation of this timestamp.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.ToDateTimeOffset">
+            <summary>
+            Converts this timestamp into a <see cref="T:System.DateTimeOffset"/>.
+            </summary>
+            <remarks>
+            The resulting <c>DateTimeOffset</c> will always have an <c>Offset</c> of zero.
+            If the timestamp is not a precise number of ticks, it will be truncated towards the start
+            of time.
+            <see cref="T:System.DateTimeOffset"/> value precisely on a second.
+            </remarks>
+            <returns>This timestamp as a <c>DateTimeOffset</c>.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.FromDateTime(System.DateTime)">
+            <summary>
+            Converts a <see cref="T:System.DateTime"/> to a <see cref="T:Google.Cloud.Firestore.Timestamp"/>.
+            </summary>
+            <param name="dateTime">The value to convert; its kind must be <see cref="F:System.DateTimeKind.Utc"/>.</param>
+            <returns>A <see cref="T:Google.Cloud.Firestore.Timestamp"/> representation of <paramref name="dateTime"/>.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.FromDateTimeOffset(System.DateTimeOffset)">
+            <summary>
+            Converts the given <see cref="T:System.DateTimeOffset"/> to a <see cref="T:Google.Cloud.Firestore.Timestamp"/>
+            </summary>
+            <remarks>The offset is taken into consideration when converting the value (so the same instant in time
+            is represented) but is not a separate part of the resulting value. In other words, there is no
+            roundtrip operation to retrieve the original <c>DateTimeOffset</c>.</remarks>
+            <param name="dateTimeOffset">The date and time (with UTC offset) to convert to a timestamp.</param>
+            <returns>The converted timestamp.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.GetCurrentTimestamp">
+            <summary>
+            Returns the current timestamp according to the system clock. The system time zone
+            is irrelevant, as a timestamp represents an instant in time.
+            </summary>
+            <returns>The current timestamp according to the system clock.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.ToProto">
+            <summary>
+            Creates a Protobuf <see cref="T:Google.Protobuf.WellKnownTypes.Timestamp"/> representation of this
+            timestamp. Modifications to the returned message will not be reflected in this object.
+            </summary>
+            <returns>A Protobuf timestamp representation.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.FromProto(Google.Protobuf.WellKnownTypes.Timestamp)">
+            <summary>
+            Creates an instance from a Protobuf <see cref="T:Google.Protobuf.WellKnownTypes.Timestamp"/> representation.
+            Later modifications to the Protobuf representation will not affect the returned oject.
+            </summary>
+            <param name="proto">A Protobuf timestamp representation. Must not be null.</param>
+            <returns>An immutable timestamp.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.FromProtoOrNull(Google.Protobuf.WellKnownTypes.Timestamp)">
+            <summary>
+            Creates an instance from a Protobuf <see cref="T:Google.Protobuf.WellKnownTypes.Timestamp"/> representation
+            if present, or returns a null value on null input.
+            </summary>
+            <param name="proto">A Protobuf timestamp representation, or null.</param>
+            <returns>A null value if <paramref name="proto"/> is null; otherwise, the converted Timestamp.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.Equals(Google.Cloud.Firestore.Timestamp)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.CompareTo(Google.Cloud.Firestore.Timestamp)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.CompareTo(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.op_Equality(Google.Cloud.Firestore.Timestamp,Google.Cloud.Firestore.Timestamp)">
+            <summary>
+            Operator overload to compare two Blob values for equality.
+            </summary>
+            <param name="lhs">Left value to compare</param>
+            <param name="rhs">Right value to compare</param>
+            <returns>true if <paramref name="lhs"/> is equal to <paramref name="rhs"/>; otherwise false.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.op_Inequality(Google.Cloud.Firestore.Timestamp,Google.Cloud.Firestore.Timestamp)">
+            <summary>
+            Operator overload to compare two Blob values for inequality.
+            </summary>
+            <param name="lhs">Left value to compare</param>
+            <param name="rhs">Right value to compare</param>
+            <returns>false if <paramref name="lhs"/> is equal to <paramref name="rhs"/>; otherwise true.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.op_LessThan(Google.Cloud.Firestore.Timestamp,Google.Cloud.Firestore.Timestamp)">
+            <summary>
+            Compares two timestamps.
+            </summary>
+            <param name="lhs">The left timestamp to compare.</param>
+            <param name="rhs">The right timestamp to compare.</param>
+            <returns>true is <paramref name="lhs"/> is strictly earlier than <paramref name="rhs"/>; otherwise false.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.op_LessThanOrEqual(Google.Cloud.Firestore.Timestamp,Google.Cloud.Firestore.Timestamp)">
+            <summary>
+            Compares two timestamps.
+            </summary>
+            <param name="lhs">The left timestamp to compare.</param>
+            <param name="rhs">The right timestamp to compare.</param>
+            <returns>true is <paramref name="lhs"/> is earlier than or equal to <paramref name="rhs"/>; otherwise false.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.op_GreaterThan(Google.Cloud.Firestore.Timestamp,Google.Cloud.Firestore.Timestamp)">
+            <summary>
+            Compares two timestamps.
+            </summary>
+            <param name="lhs">The left timestamp to compare.</param>
+            <param name="rhs">The right timestamp to compare.</param>
+            <returns>true is <paramref name="lhs"/> is strictly later than <paramref name="rhs"/>; otherwise false.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.op_GreaterThanOrEqual(Google.Cloud.Firestore.Timestamp,Google.Cloud.Firestore.Timestamp)">
+            <summary>
+            Compares two timestamps.
+            </summary>
+            <param name="lhs">The left timestamp to compare.</param>
+            <param name="rhs">The right timestamp to compare.</param>
+            <returns>true is <paramref name="lhs"/> is later than or equal to <paramref name="rhs"/>; otherwise false.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Timestamp.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Google.Cloud.Firestore.Transaction">
+            <summary>
+            A transaction, as created by
+            <see cref="M:Google.Cloud.Firestore.FirestoreDb.RunTransactionAsync``1(System.Func{Google.Cloud.Firestore.Transaction,System.Threading.Tasks.Task{``0}},Google.Cloud.Firestore.TransactionOptions,System.Threading.CancellationToken)"/>
+            (and overloads) and passed to user code.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.Transaction.CancellationToken">
+            <summary>
+            The cancellation token for this transaction
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.Transaction.Database">
+            <summary>
+            The database for this transaction.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Transaction.GetSnapshotAsync(Google.Cloud.Firestore.DocumentReference,System.Threading.CancellationToken)">
+            <summary>
+            Fetch a snapshot of the document specified by <paramref name="documentReference"/>, with respect to this transaction.
+            This method cannot be called after any write operations have been created.
+            </summary>
+            <param name="documentReference">The document reference to fetch. Must not be null.</param>
+            <param name="cancellationToken">A cancellation token to monitor for the asynchronous operation.</param>
+            <returns>A snapshot of the given document with respect to this transaction.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Transaction.GetAllSnapshotsAsync(System.Collections.Generic.IEnumerable{Google.Cloud.Firestore.DocumentReference},System.Threading.CancellationToken)">
+            <summary>
+            Fetch snapshots of all the documents specified by <paramref name="documentReferences"/>, with respect to this transaction.
+            This method cannot be called after any write operations have been created.
+            </summary>
+            <remarks>
+            Any documents which are missing are represented in the returned list by a <see cref="T:Google.Cloud.Firestore.DocumentSnapshot"/>
+            with <see cref="P:Google.Cloud.Firestore.DocumentSnapshot.Exists"/> value of <c>false</c>.
+            </remarks>
+            <param name="documentReferences">The document references to fetch. Must not be null, or contain null references.</param>
+            <param name="cancellationToken">A cancellation token to monitor for the asynchronous operation.</param>
+            <returns>The document snapshots, in the same order as <paramref name="documentReferences"/>.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Transaction.GetAllSnapshotsAsync(System.Collections.Generic.IEnumerable{Google.Cloud.Firestore.DocumentReference},Google.Cloud.Firestore.FieldMask,System.Threading.CancellationToken)">
+            <summary>
+            Fetch snapshots of all the documents specified by <paramref name="documentReferences"/>, with respect to this transaction,
+            potentially limiting the fields returned.
+            This method cannot be called after any write operations have been created.
+            </summary>
+            <remarks>
+            Any documents which are missing are represented in the returned list by a <see cref="T:Google.Cloud.Firestore.DocumentSnapshot"/>
+            with <see cref="P:Google.Cloud.Firestore.DocumentSnapshot.Exists"/> value of <c>false</c>.
+            </remarks>
+            <param name="documentReferences">The document references to fetch. Must not be null, or contain null references.</param>
+            <param name="fieldMask">The field mask to use to restrict which fields are retrieved. May be null, in which
+            case no field mask is applied, and the complete documents are retrieved.</param>
+            <param name="cancellationToken">A cancellation token to monitor for the asynchronous operation.</param>
+            <returns>The document snapshots, in the same order as <paramref name="documentReferences"/>.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Transaction.GetSnapshotAsync(Google.Cloud.Firestore.Query,System.Threading.CancellationToken)">
+            <summary>
+            Performs a query and returned a snapshot of the the results, with respect to this transaction.
+            This method cannot be called after any write operations have been created.
+            </summary>
+            <param name="query">The query to execute. Must not be null.</param>
+            <param name="cancellationToken">A cancellation token to monitor for the asynchronous operation.</param>
+            <returns>A snapshot of results of the given query with respect to this transaction.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Transaction.Create(Google.Cloud.Firestore.DocumentReference,System.Object)">
+            <summary>
+            Adds an operation to create a document in this transaction.
+            </summary>
+            <param name="documentReference">The document reference to create. Must not be null.</param>
+            <param name="documentData">The data for the document. Must not be null.</param>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Transaction.Set(Google.Cloud.Firestore.DocumentReference,System.Object,Google.Cloud.Firestore.SetOptions)">
+            <summary>
+            Adds an operation to set a document's data in this transaction.
+            </summary>
+            <param name="documentReference">The document in which to set the data. Must not be null.</param>
+            <param name="documentData">The data for the document. Must not be null.</param>
+            <param name="options">The options to use when updating the document. May be null, which is equivalent to <see cref="P:Google.Cloud.Firestore.SetOptions.Overwrite"/>.</param>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Transaction.Update(Google.Cloud.Firestore.DocumentReference,System.Collections.Generic.IDictionary{System.String,System.Object},Google.Cloud.Firestore.Precondition)">
+            <summary>
+            Adds an operation to update a document's data in this transaction.
+            </summary>
+            <param name="documentReference">A document reference indicating the path of the document to update. Must not be null.</param>
+            <param name="updates">The updates to perform on the document, keyed by the dot-separated field path to update. Fields not present in this dictionary are not updated. Must not be null or empty.</param>
+            <param name="precondition">Optional precondition for updating the document. May be null, which is equivalent to <see cref="P:Google.Cloud.Firestore.Precondition.MustExist"/>.</param>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Transaction.Update(Google.Cloud.Firestore.DocumentReference,System.String,System.Object,Google.Cloud.Firestore.Precondition)">
+            <summary>
+            Adds an operation to update a document's data in this transaction.
+            </summary>
+            <param name="documentReference">A document reference indicating the path of the document to update. Must not be null.</param>
+            <param name="field">The dot-separated name of the field to update. Must not be null.</param>
+            <param name="value">The new value for the field. May be null.</param>
+            <param name="precondition">Optional precondition for updating the document. May be null, which is equivalent to <see cref="P:Google.Cloud.Firestore.Precondition.MustExist"/>.</param>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Transaction.Update(Google.Cloud.Firestore.DocumentReference,System.Collections.Generic.IDictionary{Google.Cloud.Firestore.FieldPath,System.Object},Google.Cloud.Firestore.Precondition)">
+            <summary>
+            Adds an operation to update a document's data in this transaction.
+            </summary>
+            <param name="documentReference">The document to update. Must not be null.</param>
+            <param name="updates">The updates to perform on the document, keyed by the field path to update. Fields not present in this dictionary are not updated. Must not be null or empty.</param>
+            <param name="precondition">Optional precondition for updating the document. May be null, which is equivalent to <see cref="P:Google.Cloud.Firestore.Precondition.MustExist"/>.</param>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Transaction.Delete(Google.Cloud.Firestore.DocumentReference,Google.Cloud.Firestore.Precondition)">
+            <summary>
+            Adds an operation to delete a document's data in this transaction.
+            </summary>
+            <param name="documentReference">The document to delete. Must not be null.</param>
+            <param name="precondition">Optional precondition for deletion. May be null, in which case the deletion is unconditional.</param>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Transaction.CommitAsync">
+            <summary>
+            Asynchronously commits the transaction, using the same cancellation token as was used to begin the transaction.
+            </summary>
+            <returns>A task representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.Transaction.RollbackAsync">
+            <summary>
+            Asynchronously rolls back the transaction, using the same cancellation token as was used to begin the transaction.
+            </summary>
+            <returns>A task representing the asynchronous operation.</returns>
+        </member>
+        <member name="T:Google.Cloud.Firestore.TransactionOptions">
+            <summary>
+            Immutable class representing options for executing transactions.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.TransactionOptions.Default">
+            <summary>
+            The transaction options that are used if nothing is specified by the caller.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.TransactionOptions.MaxAttempts">
+            <summary>
+            The number of times the transaction will be attempted before failing.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.TransactionOptions.ForMaxAttempts(System.Int32)">
+            <summary>
+            Creates an instance with the given maximum number of attempts.
+            </summary>
+            <param name="maxAttempts">The number of times a transaction will be attempted before failing. Must be positive.</param>
+            <returns>A new options object.</returns>
+        </member>
+        <member name="T:Google.Cloud.Firestore.UnknownPropertyHandling">
+            <summary>
+            Determines how unknown properties are handling when deserializing a
+            Firestore document.
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.UnknownPropertyHandling.Ignore">
+            <summary>
+            Unknown properties are silently ignored.
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.UnknownPropertyHandling.Warn">
+            <summary>
+            Unknown properties cause a warning, but no error.
+            </summary>
+        </member>
+        <member name="F:Google.Cloud.Firestore.UnknownPropertyHandling.Throw">
+            <summary>
+            Unknown properties cause an exception to be thrown.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.ValueComparer">
+            <summary>
+            Comparison for Value protos.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.ValueDeserializer">
+            <summary>
+            Provides conversions from Firestore Value protos to .NET types.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.ValueDeserializer.Deserialize(Google.Cloud.Firestore.DeserializationContext,Google.Cloud.Firestore.V1.Value,System.Type)">
+            <summary>
+            Deserializes from a Firestore Value proto to a .NET type.
+            </summary>
+            <param name="context">The context for the deserialization operation. Never null.</param>
+            <param name="value">The value to deserialize. Must not be null.</param>
+            <param name="targetType">The target type. The method tries to convert to this type. If the type is
+            object, it uses the default representation of the value.</param>
+            <returns>The deserialized value</returns>
+        </member>
+        <member name="T:Google.Cloud.Firestore.ValueSerializer">
+            <summary>
+            Provides conversions from .NET types to Firestore Value protos.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.ValueSerializer.Serialize(Google.Cloud.Firestore.SerializationContext,System.Object)">
+            <summary>
+            Serializes a single input to a Value.
+            </summary>
+            <remarks>
+            It's important that this always clones any mutable values - which is really only
+            relevant when the input is already a proto. That allows the caller to then mutate the result
+            where appropriate.
+            </remarks>
+            <param name="context"></param>
+            <param name="value">The value to serialize.</param>
+            <returns>A Firestore Value proto.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.ValueSerializer.SerializeMap(Google.Cloud.Firestore.SerializationContext,System.Object)">
+            <summary>
+            Serializes a map-based input to a dictionary of fields to values.
+            This is effectively the map-only part of <see cref="M:Google.Cloud.Firestore.ValueSerializer.Serialize(Google.Cloud.Firestore.SerializationContext,System.Object)"/>, but without wrapping the
+            result in a Value.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.WatchState">
+            <summary>
+            The state of a Watch operation, dealing with the business logic of keeping track of documents.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WatchState.DeleteDocument(Google.Cloud.Firestore.DocumentSnapshot)">
+            <summary>
+            Applies a document delete to the document tree. Returns the corresponding DocumentChange event.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WatchState.AddDocument(Google.Cloud.Firestore.DocumentSnapshot)">
+            <summary>
+            Applies a document addition to the document tree. Returns the corresponding DocumentChange event.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WatchState.ModifyDocument(Google.Cloud.Firestore.DocumentSnapshot)">
+            <summary>
+            Applies a document modification to the document tree. Returns the DocumentChange event for
+            successful modifications, or null if the old and new documents have the same update timestamp.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.WriteBatch">
+            <summary>
+            A batch of write operations, to be applied in a single commit.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WriteBatch.Create(Google.Cloud.Firestore.DocumentReference,System.Object)">
+            <summary>
+            Adds a write operation which will create the specified document with a precondition
+            that it doesn't exist already.
+            </summary>
+            <param name="documentReference">A document reference indicating the path of the document to create. Must not be null.</param>
+            <param name="documentData">The data for the document. Must not be null.</param>
+            <returns>This batch, for the purpose of method chaining</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WriteBatch.Delete(Google.Cloud.Firestore.DocumentReference,Google.Cloud.Firestore.Precondition)">
+            <summary>
+            Adds a write operation that deletes the specified document, with an optional precondition.
+            </summary>
+            <param name="documentReference">A document reference indicating the path of the document to delete. Must not be null.</param>
+            <param name="precondition">Optional precondition for deletion. May be null, in which case the deletion is unconditional.</param>
+            <returns>This batch, for the purposes of method chaining.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WriteBatch.Update(Google.Cloud.Firestore.DocumentReference,System.Collections.Generic.IDictionary{System.String,System.Object},Google.Cloud.Firestore.Precondition)">
+            <summary>
+            Adds an update operation that updates just the specified fields paths in the document, with the corresponding values.
+            </summary>
+            <param name="documentReference">A document reference indicating the path of the document to update. Must not be null.</param>
+            <param name="updates">The updates to perform on the document, keyed by the dot-separated field path to update. Fields not present in this dictionary are not updated. Must not be null or empty.</param>
+            <param name="precondition">Optional precondition for updating the document. May be null, which is equivalent to <see cref="P:Google.Cloud.Firestore.Precondition.MustExist"/>.</param>
+            <returns>This batch, for the purposes of method chaining.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WriteBatch.Update(Google.Cloud.Firestore.DocumentReference,System.String,System.Object,Google.Cloud.Firestore.Precondition)">
+            <summary>
+            Adds an update operation that updates just the specified field in the document, with the corresponding values.
+            </summary>
+            <param name="documentReference">A document reference indicating the path of the document to update. Must not be null.</param>
+            <param name="field">The dot-separated name of the field to update. Must not be null.</param>
+            <param name="value">The new value for the field. May be null.</param>
+            <param name="precondition">Optional precondition for updating the document. May be null, which is equivalent to <see cref="P:Google.Cloud.Firestore.Precondition.MustExist"/>.</param>
+            <returns>This batch, for the purposes of method chaining.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WriteBatch.Update(Google.Cloud.Firestore.DocumentReference,System.Collections.Generic.IDictionary{Google.Cloud.Firestore.FieldPath,System.Object},Google.Cloud.Firestore.Precondition)">
+            <summary>
+            Adds an update operation that updates just the specified fields paths in the document, with the corresponding values.
+            </summary>
+            <param name="documentReference">A document reference indicating the path of the document to update. Must not be null.</param>
+            <param name="updates">The updates to perform on the document, keyed by the field path to update. Fields not present in this dictionary are not updated. Must not be null or empty.</param>
+            <param name="precondition">Optional precondition for updating the document. May be null, which is equivalent to <see cref="P:Google.Cloud.Firestore.Precondition.MustExist"/>.</param>
+            <returns>This batch, for the purposes of method chaining.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WriteBatch.Set(Google.Cloud.Firestore.DocumentReference,System.Object,Google.Cloud.Firestore.SetOptions)">
+            <summary>
+            Adds an operation that sets data in a document, either replacing it completely or merging fields.
+            </summary>
+            <param name="documentReference">A document reference indicating the path of the document to update. Must not be null.</param>
+            <param name="documentData">The data to store in the document. Must not be null.</param>
+            <param name="options">The options to use when setting data in the document. May be null, which is equivalent to <see cref="P:Google.Cloud.Firestore.SetOptions.Overwrite"/>.</param>
+            <returns>This batch, for the purposes of method chaining.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WriteBatch.CommitAsync(System.Threading.CancellationToken)">
+            <summary>
+            Commits the batch on the server.
+            </summary>
+            <returns>The write results from the commit.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WriteBatch.FindSentinels(System.Collections.Generic.IDictionary{System.String,Google.Cloud.Firestore.V1.Value})">
+            <summary>
+            Finds all the sentinel values in a field map.
+            Additionally, this validates that no sentinels exist in arrays (even nested).
+            </summary>
+            <param name="fields">The field map to find sentinels within.</param>
+            <returns>The sentinel fields in the field map: both the value and the corresponding field path.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WriteBatch.RemoveSentinels(System.Collections.Generic.IDictionary{System.String,Google.Cloud.Firestore.V1.Value},System.Collections.Generic.IEnumerable{Google.Cloud.Firestore.WriteBatch.SentinelField})">
+            <summary>
+            Removes the specified sentinel paths from the given field map. Any maps which were non-empty but become empty due to this are
+            removed along the way.
+            </summary>
+            <returns>true iff the map was non-empty before, but is now empty (i.e. removing the sentinels has removed all data)</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WriteBatch.ExpandObject(System.Collections.Generic.IDictionary{Google.Cloud.Firestore.FieldPath,Google.Cloud.Firestore.V1.Value})">
+            <summary>
+            Turns a field map that contains field paths into a nested map, such that each key in the response only has a single segment.
+            For example, { "a.b": "c" } is converted into { "a": { "b": "c" } }
+            ... assuming that a.b is a field path with two segments "a" and "b", rather than a single segment of "a.b".
+            </summary>
+            <remarks>
+            Precondition (checked in method): dictionary keys do not contain any mutual prefixes.
+            </remarks>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WriteBatch.ApplyFieldMask(System.Collections.Generic.IDictionary{System.String,Google.Cloud.Firestore.V1.Value},System.Collections.Generic.IEnumerable{Google.Cloud.Firestore.FieldPath})">
+            <summary>
+            Applies a field mask to the specified dictionary of values, returning a set of fields limited to the given field mask.
+            </summary>
+            <param name="fields">The field/value map.</param>
+            <param name="fieldMask">The field mask to apply.</param>
+            <returns>A filtered view of fields.</returns>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WriteBatch.ExtractDocumentMask(System.Collections.Generic.IDictionary{System.String,Google.Cloud.Firestore.V1.Value})">
+            <summary>
+            Returns all a list of all the field paths to non-map values within a set of values.
+            An empty map value does not create any entries.
+            </summary>
+        </member>
+        <member name="M:Google.Cloud.Firestore.WriteBatch.ValidateNoPrefixes(System.Collections.Generic.IEnumerable{Google.Cloud.Firestore.FieldPath})">
+            <summary>
+            Validates that the given set of paths contains no paths p1, p2 such that p1.IsPrefixOf(p2) is true.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.WriteBatch.SentinelField">
+            <summary>
+            A sentinel field value detected within a document.
+            </summary>
+        </member>
+        <member name="T:Google.Cloud.Firestore.WriteResult">
+            <summary>
+            The result of a write operation, in terms of the server's update time.
+            </summary>
+        </member>
+        <member name="P:Google.Cloud.Firestore.WriteResult.UpdateTime">
+            <summary>
+            The update time as exposed by the server. This can be used to create
+            a precondition using <see cref="M:Google.Cloud.Firestore.Precondition.LastUpdated(Google.Cloud.Firestore.Timestamp)"/>.
+            </summary>
+        </member>
+    </members>
+</doc>
