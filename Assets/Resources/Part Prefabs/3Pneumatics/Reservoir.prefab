@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 1068742034584817466}
   - component: {fileID: 4830357235349963832}
   m_Layer: 0
-  m_Name: Pneumatic tank
+  m_Name: Reservoir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
   id: Tank
   connectingPart: 0
   group: 0
-  icon: {fileID: 21300000, guid: a0f6d9bfdf4ac3a458b08fd541cef75a, type: 3}
+  icon: {fileID: 21300000, guid: e49cf932028b54545b5f42a23471a735, type: 3}
 --- !u!114 &4830357235349963832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Type
-    value: 
+    value: Legacy
     custom: 0
     customUnit: 
     customDefault: 

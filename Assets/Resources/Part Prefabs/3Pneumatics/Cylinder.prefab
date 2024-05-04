@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 980129981268902320}
   - component: {fileID: 882933855480887058}
   m_Layer: 0
-  m_Name: Piston
+  m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -200,7 +200,7 @@ MonoBehaviour:
   id: PNMT
   connectingPart: 0
   group: 1
-  icon: {fileID: 21300000, guid: 2c14c90abb668f84287b6cd91981864b, type: 3}
+  icon: {fileID: 21300000, guid: 42a07bd1d4d040548afd75ab98c8f56f, type: 3}
 --- !u!114 &882933855480887058
 MonoBehaviour:
   m_ObjectHideFlags: 0
