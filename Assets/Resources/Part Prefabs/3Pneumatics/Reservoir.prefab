@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20517603e29e5ac47a06559006a99763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: Tank
+  id: TANK
   connectingPart: 0
   group: 0
   icon: {fileID: 21300000, guid: e49cf932028b54545b5f42a23471a735, type: 3}

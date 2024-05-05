@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef3e438c7b589434682238df7a3f8a85, type: 3}
   m_Name: Website Link
   m_EditorClassIdentifier: 
-  link: https://protobot.web.app
+  link: https://github.com/BreadSoup/Protobot-Rebuilt/releases/latest

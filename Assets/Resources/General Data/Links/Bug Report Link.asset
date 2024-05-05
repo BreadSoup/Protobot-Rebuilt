@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef3e438c7b589434682238df7a3f8a85, type: 3}
   m_Name: Bug Report Link
   m_EditorClassIdentifier: 
-  link: https://forms.gle/tWEpqKee9wGDo2sp9
+  link: https://github.com/BreadSoup/Protobot-Rebuilt/issues
