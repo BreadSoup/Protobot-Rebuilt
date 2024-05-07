@@ -475,7 +475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Type
-    value: Normal
+    value: High Strength
     custom: 0
     customUnit: 
     customDefault: 
