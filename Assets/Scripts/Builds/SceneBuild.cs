@@ -35,10 +35,10 @@ namespace Protobot.Builds {
             //Camera Data
             CameraData camData = buildData.camera;
 
-            Vector3 savedCamPos = new Vector3((float) camData.xPos, (float) camData.yPos, (float) camData.zPos);
-            Vector3 savedCamAngle = new Vector3((float) camData.xRot, (float) camData.yRot, (float) camData.zRot);
+            Vector3 savedCamPos = new Vector3((float)camData.xPos, (float)camData.yPos, (float)camData.zPos);
+            Vector3 savedCamAngle = new Vector3((float)camData.xRot, (float)camData.yRot, (float)camData.zRot);
 
-            PivotCamera.main.SetTransform(savedCamPos, savedCamAngle, (float) camData.zoom);
+            PivotCamera.main.SetTransform(savedCamPos, savedCamAngle, (float)camData.zoom);
 
             var projectionSwitcher = PivotCamera.main.GetComponent<ProjectionSwitcher>();
 
@@ -63,12 +63,18 @@ namespace Protobot.Builds {
                     GenerateObject(part);
 
             }
-            
+
             OnGenerateBuild?.Invoke(buildData);
         }
 
-        private static GameObject GenerateObject(ObjectData objectData) => 
-            PartsManager.GeneratePart(objectData.partId, objectData.GetPos(), objectData.GetRot());
+        private static GameObject GenerateObject(ObjectData objectData)
+        {
+            GameObject generatedObject = PartsManager.GeneratePart(objectData.partId, objectData.GetPos(), objectData.GetRot());
+            generatedObject.GetComponent<Renderer>().material.color = objectData.GetColor();
+            return generatedObject;
+
+        }
+            
 
 
         /// <summary>
@@ -117,6 +123,7 @@ namespace Protobot.Builds {
             for (int i = 0; i < newParts.Length; i++) {
                 Transform tForm = sceneObjs[i].transform;
                 SavedObject savedData = tForm.GetComponent<SavedObject>();
+                Renderer savedColor = tForm.GetComponent<Renderer>();
 
                 var position = tForm.position;
                 var eulerAngles = tForm.eulerAngles;
@@ -131,6 +138,10 @@ namespace Protobot.Builds {
                     xRot = eulerAngles.x,
                     yRot = eulerAngles.y,
                     zRot = eulerAngles.z,
+
+                    rColor = savedColor.material.color.r,
+                    bColor = savedColor.material.color.b,
+                    gColor = savedColor.material.color.g,
                 };
             }
 
