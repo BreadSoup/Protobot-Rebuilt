@@ -56,21 +56,28 @@ namespace Protobot.Builds {
                         connectingObjects.Add(part);
                     }
                     else
-                        GenerateObject(part);
+                        GenerateObject(part, buildData);
                 }
 
                 foreach (ObjectData part in connectingObjects)
-                    GenerateObject(part);
+                    GenerateObject(part, buildData);
 
             }
 
             OnGenerateBuild?.Invoke(buildData);
         }
 
-        private static GameObject GenerateObject(ObjectData objectData)
+        private static GameObject GenerateObject(ObjectData objectData, BuildData buildData)
         {
             GameObject generatedObject = PartsManager.GeneratePart(objectData.partId, objectData.GetPos(), objectData.GetRot());
-            generatedObject.GetComponent<Renderer>().material.color = objectData.GetColor();
+            if(buildData.version.Equals("1.3.1") || buildData.version.Equals("1.3.2") || buildData.version.Equals("1.3.3"))
+            {
+                Debug.Log("old version");
+            }
+            else
+            {
+                generatedObject.GetComponent<Renderer>().material.color = objectData.GetColor();
+            }
             return generatedObject;
 
         }
