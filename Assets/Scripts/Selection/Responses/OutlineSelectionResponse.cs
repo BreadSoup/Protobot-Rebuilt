@@ -11,12 +11,6 @@ namespace Protobot.SelectionSystem {
         public override void OnSet(ISelection sel) {
             if (!sel.gameObject.tag.Contains(ignoredTags)) {
                 sel.gameObject.EnableOutline(colorIndex, 1, 0.15f);
-
-                if(sel.gameObject.TryGetComponent<Renderer>(out Renderer renderer))
-                {
-                    ColorTool.material = renderer.material;
-                    ColorTool.RunUpdateSliders();
-                }
             }
         }
 
@@ -25,7 +19,6 @@ namespace Protobot.SelectionSystem {
 
             if (!clearedObj.tag.Contains(ignoredTags)) {
                 clearedObj.DisableOutline();
-                ColorTool.material = ColorTool.placeholder;
             }
         }
     }

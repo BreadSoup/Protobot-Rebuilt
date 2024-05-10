@@ -9,13 +9,14 @@ using Protobot.SelectionSystem;
 public class ColorTool : MonoBehaviour
 {
     [SerializeField] public static Material material, placeholder;
-    [SerializeField] public static List<Material> materials;
+    [SerializeField] public static List<Material> materials = new();
     [SerializeField] Material placeHolderRef;
     [SerializeField] List<Color> color;
     [SerializeField] GameObject custom;
     [SerializeField] Slider red,green,blue;
     [SerializeField] Image preview;
     [SerializeField] public static ColorTool a;
+    [SerializeField] public static int indexRef;
 
     private void Awake()
     {
@@ -30,14 +31,18 @@ public class ColorTool : MonoBehaviour
     }
     public void HandleInput(int index)
     {
-        if(materials != null)
+        indexRef = index;
+        if(materials.Count != 0)
         {
             if (index < color.Count)
             {
                 custom.SetActive(false);
                 for (int i = 0; i < materials.Count; i++)
                 {
-                    materials[i].color = color[index];
+                    if (materials[i].GetFloat("_Metallic") == .754f)
+                    {
+                        materials[i].color = color[index];
+                    }
                 }
             }
             else
@@ -50,7 +55,10 @@ public class ColorTool : MonoBehaviour
         {
             if (index < color.Count)
             {
-                material.color = color[index];
+                if (material.GetFloat("_Metallic") == .754f)
+                {
+                    material.color = color[index];
+                }
                 custom.SetActive(false);
             }
             else
@@ -80,6 +88,7 @@ public class ColorTool : MonoBehaviour
 
     public static void RunUpdateSliders()
     {
+        if (indexRef == 13)
         a.UpdateColorSliders();
     }
 }
