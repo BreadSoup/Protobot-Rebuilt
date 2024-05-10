@@ -11,13 +11,17 @@ namespace Protobot.SelectionSystem
         {
             if (sel.gameObject.TryGetComponent<Renderer>(out Renderer renderer))
             {
-                ColorTool.material = renderer.material;
+                if (renderer.material.GetFloat("_Metallic") == .754f && ColorToolActiveCheck.colorToolActive)
+                {
+                    ColorTool.material = renderer.material;
+                    renderer.material.color = ColorTool.colorToSet;
+                }
             }
         }
 
         public override void OnClear(ClearInfo info)
         {
-            ColorTool.material = ColorTool.placeholder;
+            info.selection.Deselect();
         }
     }
 }

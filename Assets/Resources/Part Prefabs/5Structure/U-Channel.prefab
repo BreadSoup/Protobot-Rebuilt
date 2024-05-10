@@ -3045,7 +3045,7 @@ MonoBehaviour:
   mid5Start: {fileID: 2834139868658171537}
   mid5End: {fileID: 8111770127176326524}
   end: {fileID: 4348313998507422485}
-  material: {fileID: 2100000, guid: df807890bcb729e4fb9ddedbdf60bb3f, type: 2}
+  material: {fileID: 2100000, guid: 4cbbf88a6aa3e4b4f9ce73c795161034, type: 2}
   maxHoleCount: 20
 --- !u!1 &8111770126761755291
 GameObject:

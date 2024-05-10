@@ -10071,6 +10071,7 @@ GameObject:
   - component: {fileID: 410139577}
   - component: {fileID: 410139579}
   - component: {fileID: 410139578}
+  - component: {fileID: 410139580}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -10139,6 +10140,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410139576}
   m_CullTransparentMesh: 1
+--- !u!114 &410139580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410139576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c949e310a9418f49ac0dc14e62b9f39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &420614778 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5131950046360261741, guid: e272231221d4c5647b528cd620cd61b6,
@@ -11925,7 +11938,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54fef075c32893e49ae8512c5cbded83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placeHolderRef: {fileID: 2100000, guid: aa29d526044f86b41aa32fd2296b8db3, type: 2}
   color:
   - {r: 0.9490196, g: 0.9490196, b: 0.9490196, a: 1}
   - {r: 0.3962264, g: 0.37940547, b: 0.37940547, a: 0}
@@ -26121,7 +26133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionObjectLink: {fileID: 1718958752}
-  outlinedObjs: []
 --- !u!114 &1178496101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26186,7 +26197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01b798616d41194c90c735ff065f4a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionObjectLink: {fileID: 1718958752}
 --- !u!114 &1186669527 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2342093200153429456, guid: 4de7c2b0ceec08d4d87143e25cc8d43c,

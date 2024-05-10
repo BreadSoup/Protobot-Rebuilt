@@ -8,31 +8,20 @@ using Protobot.SelectionSystem;
 
 public class ColorTool : MonoBehaviour
 {
-    [SerializeField] public static Material material, placeholder;
+    [SerializeField] public static Material material;
     [SerializeField] public static List<Material> materials = new();
-    [SerializeField] Material placeHolderRef;
     [SerializeField] List<Color> color;
     [SerializeField] GameObject custom;
     [SerializeField] Slider red,green,blue;
     [SerializeField] Image preview;
-    [SerializeField] public static ColorTool a;
-    [SerializeField] public static int indexRef;
-
-    private void Awake()
-    {
-        placeholder = placeHolderRef;
-        material = placeHolderRef;
-
-        a = gameObject.GetComponent<ColorTool>();
-    }
+    [SerializeField] public static Color colorToSet;
     public void EnableUI(GameObject UI)
     {
         UI.SetActive(!UI.active);
     }
     public void HandleInput(int index)
     {
-        indexRef = index;
-        if(materials.Count != 0)
+        /*if(materials.Count != 0)
         {
             if (index < color.Count)
             {
@@ -41,7 +30,7 @@ public class ColorTool : MonoBehaviour
                 {
                     if (materials[i].GetFloat("_Metallic") == .754f)
                     {
-                        materials[i].color = color[index];
+                        colorToSet = color[index];
                     }
                 }
             }
@@ -52,26 +41,21 @@ public class ColorTool : MonoBehaviour
             
         }
         else
+        {}*/ //commented because it is a prototype theory for coloring multiple metal at once
+        if (index < color.Count)
         {
-            if (index < color.Count)
-            {
-                if (material.GetFloat("_Metallic") == .754f)
-                {
-                    material.color = color[index];
-                }
-                custom.SetActive(false);
-            }
-            else
-            {
-                custom.SetActive(true);
-            }
+            colorToSet = color[index];
+            custom.SetActive(false);
         }
-        
+        else
+        {
+            custom.SetActive(true);
+        }
     }
 
     public void UpdateCustomColor()
     {
-        material.color = new Color(red.value / 255, green.value / 255, blue.value / 255, 1);
+        colorToSet = new Color(red.value / 255, green.value / 255, blue.value / 255, 1);
     }
 
     public void UpdatePreview()
@@ -84,11 +68,5 @@ public class ColorTool : MonoBehaviour
         red.value = material.color.r * 255;
         green.value = material.color.g * 255;
         blue.value = material.color.b * 255;
-    }
-
-    public static void RunUpdateSliders()
-    {
-        if (indexRef == 13)
-        a.UpdateColorSliders();
     }
 }
