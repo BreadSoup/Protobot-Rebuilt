@@ -1,8 +1,9 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+ using System.Runtime.InteropServices;
+ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.UI;
 using SFB;
@@ -13,6 +14,7 @@ using UnityEngine.SceneManagement;
 
 namespace Protobot.Builds {
     public class BuildsManager : MonoBehaviour {
+        public static BuildsManager Instance { get; private set; }
         [SerializeField] private InputEvent saveInput;
 
         [SerializeField] private UnsavedChangesUI unsavedChangesMenu;
@@ -27,8 +29,8 @@ namespace Protobot.Builds {
         /// </summary>
         private BuildData savedBuildData;
 
-        private string attemptPath = "";
-        private BuildData attemptData;
+        public string attemptPath = "";
+        public BuildData attemptData;
         
         public BuildDataUnityEvent OnLoadBuild;
         public BuildDataUnityEvent OnSaveBuild;
@@ -40,6 +42,11 @@ namespace Protobot.Builds {
 
         private void Awake() {
             saveInput.performed += Save;
+            if (Instance == null) {
+                Instance = this;
+            } else {
+                Destroy(gameObject);
+            }
         }
 
         public void Start() {
@@ -84,23 +91,45 @@ namespace Protobot.Builds {
         public string GetFileName() => PathToFileName(buildPath);
         
         public static string PathToFileName(string path) => (path.Length > 0) ? path.Split('\\')[^1] : "";
-        
-        public void Save() {
-            if (buildPath == "") {
-                SaveAs();
-                return;
-            }
-
-            var sceneBuildData = SceneBuild.ToBuildData();
-            
+        [DllImport("__Internal")]
+        private static extern void SaveFile(string data, string fileName);
+        public void Save()
+        {
+            BuildData sceneBuildData = new BuildData();
             BinaryFormatter bf = new BinaryFormatter();
+            if (Application.platform == RuntimePlatform.WebGLPlayer)
+            {
+                sceneBuildData = SceneBuild.ToBuildData();
+                bf = new BinaryFormatter();
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    bf.Serialize(ms, sceneBuildData);
+                    string data = Convert.ToBase64String(ms.ToArray());
+                    Debug.Log(data);
+                    string dataUri = Uri.EscapeDataString(data);
+                    SaveFile(dataUri, "example.pbb");
+                }
+            }
+            else
+            {
 
-            FileStream file = File.Create(buildPath);
-            bf.Serialize(file, sceneBuildData);
-            file.Close();
+                if (buildPath == "")
+                {
+                    SaveAs();
+                    return;
+                }
 
-            savedBuildData = sceneBuildData;
-            OnSaveBuild?.Invoke(sceneBuildData);
+                sceneBuildData = SceneBuild.ToBuildData();
+
+                bf = new BinaryFormatter();
+
+                FileStream file = File.Create(buildPath);
+                bf.Serialize(file, sceneBuildData);
+                file.Close();
+
+                savedBuildData = sceneBuildData;
+                OnSaveBuild?.Invoke(sceneBuildData);
+            }
         }
 
         public void SaveAs() {
@@ -136,8 +165,22 @@ namespace Protobot.Builds {
             return !sceneBuild.CompareData(savedBuildData);
         }
 
-        public void OpenBuild() {
-            var paths = StandaloneFileBrowser.OpenFilePanel("Open Build File", "", "pbb", false);
+        [DllImport("__Internal")]
+        private static extern void OpenFile();
+        public void OpenBuild()
+        {
+            string[] paths;
+            //string paths;
+            if (Application.platform != RuntimePlatform.WebGLPlayer)
+            {
+                paths = StandaloneFileBrowser.OpenFilePanel("Open Build File", "", "pbb", false);
+            }
+            else
+            {
+                // paths = Application.ExternalEval("openFile();");
+                OpenFile();
+                return;
+            }
 
             if (paths.Length == 0 || paths[0] == "") return;
 
