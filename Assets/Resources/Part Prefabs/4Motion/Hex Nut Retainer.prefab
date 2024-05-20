@@ -278,7 +278,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3624365698414136671, guid: 1989e3ae965e11247ad689edefe8658a, type: 3}
+  - {fileID: 2100000, guid: 212d9dd57862f5749ac4d331ea23eba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -423,7 +423,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5088663542140716031, guid: 1989e3ae965e11247ad689edefe8658a, type: 3}
+  - {fileID: 2100000, guid: 212d9dd57862f5749ac4d331ea23eba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -567,7 +567,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 867844080075394071, guid: 1989e3ae965e11247ad689edefe8658a, type: 3}
+  - {fileID: 2100000, guid: 212d9dd57862f5749ac4d331ea23eba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -729,7 +729,7 @@ GameObject:
   - component: {fileID: 4929414569566694013}
   - component: {fileID: 8606223664594773731}
   m_Layer: 0
-  m_Name: HexNutRetainer
+  m_Name: Hex Nut Retainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
