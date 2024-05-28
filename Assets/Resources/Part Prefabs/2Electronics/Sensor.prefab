@@ -133,6 +133,7 @@ MonoBehaviour:
   param1Value: Distance
   param2Value: Cortex
   holeData: 
+  centerHoleDepth: 0
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
 --- !u!1 &881224588738804892
@@ -267,6 +268,7 @@ MonoBehaviour:
   param1Value: Line Tracker
   param2Value: Cortex
   holeData: 
+  centerHoleDepth: 0
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
 --- !u!1 &1218502684336912831
@@ -338,8 +340,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &1921111126020397104
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,8 +410,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &1951938809780555338
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,6 +546,7 @@ MonoBehaviour:
   param1Value: Vision
   param2Value: V5
   holeData: 
+  centerHoleDepth: 0
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
 --- !u!1 &1954523021746448338
@@ -617,8 +618,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &2282866948630475623
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,6 +751,7 @@ MonoBehaviour:
   param1Value: Optical
   param2Value: Cortex
   holeData: 
+  centerHoleDepth: 0
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
 --- !u!1 &2369658485472386115
@@ -822,8 +823,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &3326919785572419155
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,8 +893,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &3616204586926670191
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,8 +963,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &3721279789414448650
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,8 +1033,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &3972613762143702693
 GameObject:
   m_ObjectHideFlags: 0
@@ -1106,8 +1103,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!114 &3169649964680128417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1193,8 +1189,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &4457496100630164871
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,8 +1259,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &4537491503900565643
 GameObject:
   m_ObjectHideFlags: 0
@@ -1335,8 +1329,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &4981041226254883245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1405,8 +1398,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &5190446102398353305
 GameObject:
   m_ObjectHideFlags: 0
@@ -1560,7 +1552,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 212d9dd57862f5749ac4d331ea23eba2, type: 2}
-  - {fileID: 2100000, guid: 6935ae663be49ce49aa1612801d9d899, type: 2}
+  - {fileID: 2100000, guid: e7353dbda81d0d644b5f6f067d9a6a0a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1625,6 +1617,7 @@ MonoBehaviour:
   param1Value: Potentiometer
   param2Value: V5
   holeData: 
+  centerHoleDepth: 0.25
   primaryHole: {fileID: 2922666527457203967}
   allowCenterInserts: 0
 --- !u!1 &5190446102819052526
@@ -1696,8 +1689,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &5234754851731046367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1828,6 +1820,7 @@ MonoBehaviour:
   param1Value: Inertial
   param2Value: V5
   holeData: 
+  centerHoleDepth: 0
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
 --- !u!1 &5614135770531657591
@@ -1899,8 +1892,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &5718711704724534152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,8 +1962,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &6063795798756170617
 GameObject:
   m_ObjectHideFlags: 0
@@ -2041,8 +2032,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &6266072290974715585
 GameObject:
   m_ObjectHideFlags: 0
@@ -2112,8 +2102,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &6393962280976188914
 GameObject:
   m_ObjectHideFlags: 0
@@ -2183,8 +2172,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &6543691147661728248
 GameObject:
   m_ObjectHideFlags: 0
@@ -2321,6 +2309,7 @@ MonoBehaviour:
   param1Value: Optical
   param2Value: V5
   holeData: 
+  centerHoleDepth: 0
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
 --- !u!1 &7085060498827036351
@@ -2391,8 +2380,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &7213414468595544125
 GameObject:
   m_ObjectHideFlags: 0
@@ -2462,8 +2450,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &7394297646430432282
 GameObject:
   m_ObjectHideFlags: 0
@@ -2595,6 +2582,7 @@ MonoBehaviour:
   param1Value: Rotation
   param2Value: V5
   holeData: 
+  centerHoleDepth: 0.6575
   primaryHole: {fileID: 1850353065105549890}
   allowCenterInserts: 1
 --- !u!1 &7792885995556039598
@@ -2733,6 +2721,7 @@ MonoBehaviour:
   param1Value: Distance
   param2Value: V5
   holeData: 
+  centerHoleDepth: 0
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
 --- !u!1 &7836092879870976340
@@ -2804,8 +2793,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &7993947812608496819
 GameObject:
   m_ObjectHideFlags: 0
@@ -2875,8 +2863,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &8116784307290305593
 GameObject:
   m_ObjectHideFlags: 0
@@ -2946,8 +2933,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &8203982571376833255
 GameObject:
   m_ObjectHideFlags: 0
@@ -3017,8 +3003,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &8355650455118554075
 GameObject:
   m_ObjectHideFlags: 0
@@ -3088,8 +3073,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &8616648540747575238
 GameObject:
   m_ObjectHideFlags: 0
@@ -3159,8 +3143,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &8771234827383329245
 GameObject:
   m_ObjectHideFlags: 0
@@ -3230,8 +3213,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}
 --- !u!1 &8905245376768879507
 GameObject:
   m_ObjectHideFlags: 0
@@ -3367,6 +3349,7 @@ MonoBehaviour:
   param1Value: Rotation
   param2Value: Cortex
   holeData: 
+  centerHoleDepth: 0.6725
   primaryHole: {fileID: 1905340031826493212}
   allowCenterInserts: 0
 --- !u!1 &9113456632205310335
@@ -3438,5 +3421,4 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detectors: []
-  twoSided: 0
+  detector: {fileID: 0}

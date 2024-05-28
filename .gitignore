@@ -72,6 +72,3 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 Packages/Grpc.Core.2.31.0/Grpc.Core.2.31.0.nupkg
 Packages/Grpc.Core.2.31.0/native/ios/universal/libgrpc.a
-
-# WebGL Builds
-WebGL/*
