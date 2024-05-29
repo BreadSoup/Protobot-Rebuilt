@@ -94,7 +94,7 @@ namespace Protobot {
             if (invertZoom) inverted = -1;
 
             zoomDistance += -input * inverted;
-            zoomDistance = Mathf.Clamp(zoomDistance, 0.5f, 100f);
+            zoomDistance = Mathf.Clamp(zoomDistance, 0.5f, 1000f);
 
             Vector3 newPos = cameraPosition;
             newPos.z = -zoomDistance;
