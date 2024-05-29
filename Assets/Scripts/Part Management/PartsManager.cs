@@ -50,8 +50,11 @@ namespace Protobot {
                     //TODO This is awful and should be compared against an array in another file/method to make sure legacy files work but this is a quick fix
                     if (gen.name == "Omni Wheel" || gen.name == "Traction Wheel")
                     {
-                        p2.value = p1Val;
-                        p1.value = "V1";
+                        if (p2Val == "")
+                        {
+                            p2.value = p1Val;
+                            p1.value = "V1";
+                        }
                     }
                     if (gen.name == "Motor" && p1Val == "")
                     {
@@ -63,7 +66,7 @@ namespace Protobot {
                     }
                     if (gen.name == "Cylinder" && p2Val == "")
                     {
-                        p2Val = "Normal";
+                        p2.value = "Normal";
                     }
 
                     partObj = gen.Generate(pos, rot);
