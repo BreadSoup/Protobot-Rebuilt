@@ -187,7 +187,7 @@ MonoBehaviour:
   id: TANK
   connectingPart: 0
   group: 0
-  icon: {fileID: 21300000, guid: e49cf932028b54545b5f42a23471a735, type: 3}
+  icon: {fileID: 21300000, guid: 5a1d5f2cc2cd12346a8f85af9b3675dc, type: 3}
 --- !u!114 &4830357235349963832
 MonoBehaviour:
   m_ObjectHideFlags: 0
