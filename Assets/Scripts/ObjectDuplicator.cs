@@ -46,6 +46,10 @@ namespace Protobot {
                 foreach (GameObject obj in movingObjs) {
                     GameObject clone = Instantiate(obj, obj.transform.position, obj.transform.rotation);
                     clone.DisableOutline();
+                    if(clone.name != "MultiPivot(Clone)")
+                    {
+                        clone.GetComponent<Renderer>().material = new Material(obj.GetComponent<Renderer>().material);
+                    }
                     prevDuplicatedObjs.Add(clone);
                 }
             }
