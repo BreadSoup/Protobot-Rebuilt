@@ -19,12 +19,13 @@ namespace Protobot.SelectionSystem
             //this *shouldn't* have any issues but there may be an edge case where it could recolor a part that isn't supposed to be recolored
             //TODO: Add a check to be 100% that the part is supposed to be recolored
             if (sel.gameObject.TryGetComponent<Renderer>(out var component) ||
-                sel.gameObject.transform.parent.gameObject.TryGetComponent<Renderer>(out component)) 
+                sel.gameObject.transform.parent.gameObject.TryGetComponent<Renderer>(out component))
             {
-                if (component.material.GetFloat("_Metallic") == .754f && ColorToolActiveCheck.colorToolActive)
+                if (component.material.GetFloat("_Metallic") == .754f)
                 {
                     ColorTool.material = component.material;
-                    component.material.color = ColorTool.colorToSet;
+                    if (ColorToolActiveCheck.colorToolActive)
+                        component.material.color = ColorTool.colorToSet;
                 }
             }
         }

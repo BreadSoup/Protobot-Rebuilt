@@ -18,7 +18,8 @@ public class ColorTool : MonoBehaviour
     public void EnableUI(GameObject UI)
     {
         UI.SetActive(!UI.active);
-        colorToSet = color[0]; //If this is not set when started it will be 0,0,0 which we dont want
+        colorToSet = color[0]; //If this is not set when started it will be 0,0,0 which we dont want unless custom is selected
+        UpdatePreview();
     }
     public void HandleInput(int index)
     {
