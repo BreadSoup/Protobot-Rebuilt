@@ -10,7 +10,8 @@ namespace Protobot.SelectionSystem {
             if (incomingSelection.gameObject.CompareTag("HoleCollider")) {
                 selectHoleFace.gameObject.SetActive(true);
                 selectHoleFace.Set(hoverHoleFace);
-
+                ColorSelectionResponse colorSelectionResponse = new();
+                colorSelectionResponse.HoleColliderException(incomingSelection);
                 return new HoleSelection {
                     gameObject = selectHoleFace.gameObject,
                     selector = incomingSelection.selector,
