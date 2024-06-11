@@ -21,27 +21,6 @@ public class ColorTool : MonoBehaviour
     }
     public void HandleInput(int index)
     {
-        /*if(materials.Count != 0)
-        {
-            if (index < color.Count)
-            {
-                custom.SetActive(false);
-                for (int i = 0; i < materials.Count; i++)
-                {
-                    if (materials[i].GetFloat("_Metallic") == .754f)
-                    {
-                        colorToSet = color[index];
-                    }
-                }
-            }
-            else
-            {
-                custom.SetActive(true);
-            }
-            
-        }
-        else
-        {}*/ //commented because it is a prototype theory for coloring multiple metal at once
         if (index < color.Count)
         {
             colorToSet = color[index];
