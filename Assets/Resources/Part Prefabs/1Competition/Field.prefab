@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6618621914762097417}
   - component: {fileID: 6080763058574434980}
   - component: {fileID: 930892971555121534}
+  - component: {fileID: 342203158}
   m_Layer: 0
   m_Name: Fieldnowalls
   m_TagString: Untagged
@@ -148,6 +149,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &342203158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3090016989389296052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 'High Stakes Field '
 --- !u!1 &3829103032990208914
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +187,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3829103032990208914}
-  m_LocalRotation: {x: 0.00000003774895, y: -0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 19.93872, y: 160.59222, z: 49.00575}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -239,6 +253,7 @@ GameObject:
   - component: {fileID: 1676721783562380878}
   - component: {fileID: 8815548249702422984}
   - component: {fileID: 6869139274557552820}
+  - component: {fileID: 342203159}
   m_Layer: 0
   m_Name: Fieldwithwalls
   m_TagString: Untagged
@@ -382,3 +397,16 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &342203159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4611931009571561300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: High Stakes Field

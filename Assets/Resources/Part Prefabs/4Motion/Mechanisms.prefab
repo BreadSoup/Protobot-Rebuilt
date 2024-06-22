@@ -450,7 +450,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657556348533334503}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.6125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -496,7 +496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Part
-    value: 
+    value: Drop Off Cam
     custom: 0
     customUnit: 
     customDefault: 
@@ -593,6 +593,7 @@ GameObject:
   - component: {fileID: 3040497918405153577}
   - component: {fileID: 4467750522908269783}
   - component: {fileID: 743771426867120862}
+  - component: {fileID: 6017259853897036275}
   m_Layer: 0
   m_Name: 32t Bevel Gear
   m_TagString: Untagged
@@ -711,6 +712,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &6017259853897036275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043584986549105568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 32t Bevel Gear
 --- !u!1 &2361413980858439665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,6 +1165,7 @@ GameObject:
   - component: {fileID: 6248007380479868669}
   - component: {fileID: 6268699306553587562}
   - component: {fileID: 8392771328480530794}
+  - component: {fileID: 6154971866006128639}
   m_Layer: 0
   m_Name: Lead Screw
   m_TagString: Untagged
@@ -1269,6 +1284,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &6154971866006128639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3449719437032434322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Lead Screw
 --- !u!1 &3869780406986262068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,6 +1595,7 @@ GameObject:
   - component: {fileID: 5439407654446606190}
   - component: {fileID: 8772347230433679126}
   - component: {fileID: 4202813179378354116}
+  - component: {fileID: 1780543025177099025}
   m_Layer: 0
   m_Name: camfollower
   m_TagString: Untagged
@@ -1695,6 +1724,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &1780543025177099025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4431892529150396503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Can Follower
 --- !u!1 &4488949371863004038
 GameObject:
   m_ObjectHideFlags: 0
@@ -2417,6 +2459,7 @@ GameObject:
   - component: {fileID: 1107191892683259952}
   - component: {fileID: 1763788730653093565}
   - component: {fileID: 1475439421139713789}
+  - component: {fileID: 3743025006158899869}
   m_Layer: 0
   m_Name: Drop Off Cam
   m_TagString: Untagged
@@ -2551,6 +2594,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &3743025006158899869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5509864959235320432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Drop Off Cam
 --- !u!1 &5983849611679763987
 GameObject:
   m_ObjectHideFlags: 0
@@ -2919,6 +2975,7 @@ GameObject:
   - component: {fileID: 7004235942324119933}
   - component: {fileID: 3123297827473118107}
   - component: {fileID: 4490286177219078222}
+  - component: {fileID: 104724582949316482}
   m_Layer: 0
   m_Name: Lead Screw Bracket
   m_TagString: Untagged
@@ -3048,6 +3105,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &104724582949316482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6207314982663753893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Lead Screw Bracket
 --- !u!1 &6473134528712028314
 GameObject:
   m_ObjectHideFlags: 0
@@ -3062,6 +3132,7 @@ GameObject:
   - component: {fileID: 2485477678998498547}
   - component: {fileID: 7043502225099753826}
   - component: {fileID: 3380542886930519084}
+  - component: {fileID: 7075203797007177653}
   m_Layer: 0
   m_Name: 16t Bevel Gear
   m_TagString: Untagged
@@ -3180,6 +3251,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &7075203797007177653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6473134528712028314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 16t Bevel Gear
 --- !u!1 &6544027697243018381
 GameObject:
   m_ObjectHideFlags: 0
@@ -4116,6 +4200,7 @@ GameObject:
   - component: {fileID: 225795979364971211}
   - component: {fileID: 7765683716485631390}
   - component: {fileID: 4426505345289458675}
+  - component: {fileID: 4183863709368361144}
   m_Layer: 0
   m_Name: Hand Crank
   m_TagString: Untagged
@@ -4234,6 +4319,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &4183863709368361144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630223239448373833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Hand Crank
 --- !u!1 &8942095055915627506
 GameObject:
   m_ObjectHideFlags: 0
@@ -4319,6 +4417,7 @@ GameObject:
   - component: {fileID: 4324776670678373020}
   - component: {fileID: 6859422073053547235}
   - component: {fileID: 7552693471485633475}
+  - component: {fileID: 1029895790175419530}
   m_Layer: 0
   m_Name: Lead Screw Nut
   m_TagString: Untagged
@@ -4441,6 +4540,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &1029895790175419530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8977831959208735362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Lead Screw Nut
 --- !u!1 &9018555969250471532
 GameObject:
   m_ObjectHideFlags: 0

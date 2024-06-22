@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2418463739224950877}
   - component: {fileID: 3320688921432821915}
   - component: {fileID: 5979358291007398093}
+  - component: {fileID: 659391614}
   m_Layer: 0
   m_Name: 3.00in
   m_TagString: Motion
@@ -134,6 +135,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 3758552330146641541}
   allowCenterInserts: 1
+--- !u!114 &659391614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314410163448214156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 3in Flex Wheel with Adadpter
 --- !u!1 &972609957238980198
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +260,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367666537081069903}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 25.58, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -318,6 +332,7 @@ GameObject:
   - component: {fileID: 1367666537441297457}
   - component: {fileID: 1367666537441297456}
   - component: {fileID: 1367666537441297459}
+  - component: {fileID: 659391616}
   m_Layer: 0
   m_Name: 1.625in
   m_TagString: Motion
@@ -437,6 +452,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 1367666537581935449}
   allowCenterInserts: 1
+--- !u!114 &659391616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367666537441297469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1.625in Flex Wheel with Adadpter
 --- !u!1 &1367666537581935451
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,6 +566,7 @@ GameObject:
   - component: {fileID: 7392594452606796370}
   - component: {fileID: 5547922365041594193}
   - component: {fileID: 7591749832469199636}
+  - component: {fileID: 2098641633}
   m_Layer: 0
   m_Name: 4.00in (Empty)
   m_TagString: Motion
@@ -655,6 +684,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 1
+--- !u!114 &2098641633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2664371925755151199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 4in Flex Wheel
 --- !u!1 &3016892791711297410
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,6 +711,7 @@ GameObject:
   - component: {fileID: 2948030368600198438}
   - component: {fileID: 2284525947663298755}
   - component: {fileID: 3620702327394265417}
+  - component: {fileID: 659391613}
   m_Layer: 0
   m_Name: 4.00in
   m_TagString: Motion
@@ -789,6 +832,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 102302772694291303}
   allowCenterInserts: 1
+--- !u!114 &659391613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3016892791711297410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 4in Flex Wheel with Adadpter
 --- !u!1 &3281606271635622689
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,6 +859,7 @@ GameObject:
   - component: {fileID: 7269964665473004999}
   - component: {fileID: 3364556042686346057}
   - component: {fileID: 4883132546669481055}
+  - component: {fileID: 667463973}
   m_Layer: 0
   m_Name: 2.00in (Empty)
   m_TagString: Motion
@@ -920,6 +977,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 1
+--- !u!114 &667463973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3281606271635622689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 2in Flex Wheel
 --- !u!1 &4744779762384514599
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,6 +1004,7 @@ GameObject:
   - component: {fileID: 2094578719206111552}
   - component: {fileID: 5157510576965549399}
   - component: {fileID: 6872471914159348505}
+  - component: {fileID: 2134857595}
   m_Layer: 0
   m_Name: 3.00in (Empty)
   m_TagString: Motion
@@ -1051,6 +1122,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 1
+--- !u!114 &2134857595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4744779762384514599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 3in Flex Wheel
 --- !u!1 &5950691255908903169
 GameObject:
   m_ObjectHideFlags: 0
@@ -1065,6 +1149,7 @@ GameObject:
   - component: {fileID: 3966167969178960757}
   - component: {fileID: 717787871659633248}
   - component: {fileID: 5221294069301103450}
+  - component: {fileID: 659391615}
   m_Layer: 0
   m_Name: 2.00in
   m_TagString: Motion
@@ -1184,6 +1269,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 632590244384667405}
   allowCenterInserts: 1
+--- !u!114 &659391615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5950691255908903169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 2in Flex Wheel with Adadpter
 --- !u!1 &6947861786008273821
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,6 +1470,7 @@ GameObject:
   - component: {fileID: 3099969767613764701}
   - component: {fileID: 4165842209495251003}
   - component: {fileID: 9132873608812346590}
+  - component: {fileID: 659391612}
   m_Layer: 0
   m_Name: 1.625in (Empty)
   m_TagString: Motion
@@ -1489,3 +1588,16 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 1
+--- !u!114 &659391612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8108319038500407460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1.625in Flex Wheel
