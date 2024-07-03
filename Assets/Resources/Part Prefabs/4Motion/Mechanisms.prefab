@@ -496,14 +496,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Part
-    value: Drop Off Cam
+    value: Bevel Gear
     custom: 0
     customUnit: 
     customDefault: 
     customLimits: {x: 0, y: 0}
   param2:
     name: Size
-    value: 
+    value: 16T
     custom: 0
     customUnit: 
     customDefault: 
@@ -1736,7 +1736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Can Follower
+  name: Cam Follower
 --- !u!1 &4488949371863004038
 GameObject:
   m_ObjectHideFlags: 0
