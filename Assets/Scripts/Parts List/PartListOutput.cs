@@ -43,7 +43,7 @@ public class PartListOutput : MonoBehaviour
         //edits the output string in order to add a disclaimer about certain things 
         //for example clarifying that HS is an abbrievation of High Strength
 
-        partsList = "======DISCLAIMER======\nHS is an abbreviation of High Strength\nNumbers inside of () are used the represent the hole count, for example C-Channel 1x2x1 (25) means the C-Channel is 25 holes long\n======================\n\n";
+        partsList = "======DISCLAIMER======\nHS is an abbreviation of High Strength\nNumbers inside of () are used the represent the hole count, for example C-Channel 1x2x1 (25) means the C-Channel is 25 holes long\n======================\n\n======PARTS LIST======\n";
         //makes the dictionary into a string that is used as the input for txt file output 
         foreach (string key in sortedDict.Keys)
         {
@@ -51,7 +51,7 @@ public class PartListOutput : MonoBehaviour
         }
 
        
-
+        //writes the partlist string into a txt file instead of having an in-program ui
 
         string fileLocation = GetFileLocation();
 
@@ -60,6 +60,7 @@ public class PartListOutput : MonoBehaviour
 
     public string GetFileLocation()
     {
+        //allows the user to specify the file path to save the txt file to
         return StandaloneFileBrowser.SaveFilePanel("Save Parts List", "", "Parts", "txt");
     }
 }
