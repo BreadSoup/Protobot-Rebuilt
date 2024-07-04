@@ -832,4 +832,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: High Strength Block Bearing
+  name: HS Block Bearing

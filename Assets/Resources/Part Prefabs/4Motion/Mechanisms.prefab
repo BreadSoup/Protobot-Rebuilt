@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 759115829510613557}
   - component: {fileID: 3323824155153674869}
   - component: {fileID: 8303978762023846781}
+  - component: {fileID: 2292925461742533757}
   m_Layer: 0
   m_Name: Worm Gearl
   m_TagString: Untagged
@@ -132,6 +133,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 1854848895526130531}
   allowCenterInserts: 0
+--- !u!114 &2292925461742533757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271974302394610386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Worm Gear
 --- !u!1 &499900821900596186
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,7 +873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 32t Bevel Gear
+  name: 32T Bevel Gear
 --- !u!1 &2361413980858439665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1363,7 +1377,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3449719437032434322}
+  m_GameObject: {fileID: 3719867447111157587}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
@@ -1597,6 +1611,7 @@ GameObject:
   - component: {fileID: 8800268530912572371}
   - component: {fileID: 3218101734180000661}
   - component: {fileID: 5056557305107491460}
+  - component: {fileID: 1324752939716450844}
   m_Layer: 0
   m_Name: Worm Wheel
   m_TagString: Untagged
@@ -1614,7 +1629,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2753285122418186621}
   m_Father: {fileID: 3825741393806233955}
@@ -1715,6 +1730,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 4283901112379100735}
   allowCenterInserts: 0
+--- !u!114 &1324752939716450844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4119871240852572745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Worm Wheel
 --- !u!1 &4271535666042592732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1729,6 +1757,7 @@ GameObject:
   - component: {fileID: 5060965608424521529}
   - component: {fileID: 3133457608776651349}
   - component: {fileID: 133800430109282678}
+  - component: {fileID: 4616555415767736038}
   m_Layer: 0
   m_Name: RackGearV2
   m_TagString: Motion
@@ -1848,6 +1877,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &4616555415767736038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4271535666042592732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Rack Gear v2
 --- !u!1 &4366761781803188899
 GameObject:
   m_ObjectHideFlags: 0
@@ -3601,7 +3643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 16t Bevel Gear
+  name: 16T Bevel Gear
 --- !u!1 &6544027697243018381
 GameObject:
   m_ObjectHideFlags: 0
@@ -4537,6 +4579,7 @@ GameObject:
   - component: {fileID: 5965519513147273910}
   - component: {fileID: 5882395284839002813}
   - component: {fileID: 6046574172310543293}
+  - component: {fileID: 7569442074625091918}
   m_Layer: 0
   m_Name: Lead Screw
   m_TagString: Untagged
@@ -4655,6 +4698,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 6189884470567541958}
   allowCenterInserts: 0
+--- !u!114 &7569442074625091918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8458041174114668693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Lead Screw
 --- !u!1 &8504642755107692874
 GameObject:
   m_ObjectHideFlags: 0
@@ -5007,7 +5063,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8630223239448373833}
+  m_GameObject: {fileID: 8824786877543131098}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}

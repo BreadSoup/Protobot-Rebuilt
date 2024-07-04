@@ -32,7 +32,7 @@ namespace Protobot {
             //most plausable way that I (Rose) could figure out
             if(gameObject.name == "C-Channel")
             {
-                partName.name = param1.value + " C-Channel " + "(" + HoleCount + ")";
+                partName.name = param1.value + "x1 C-Channel " + "(" + HoleCount + ")";
             }else if(gameObject.name == "Angle")
             {
                 partName.name = param1.value + " Angle " + "(" + HoleCount + ")";
@@ -42,7 +42,7 @@ namespace Protobot {
             }
             else if(gameObject.name == "U-Channel")
             {
-                partName.name = param1.value + " U-Channel " + "(" + HoleCount + ")";
+                partName.name = param1.value + "x2 U-Channel " + "(" + HoleCount + ")";
             }
 
             RemoveDataScripts(partObj);

@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 2.25in Screw
+  name: 2.25" Screw
 --- !u!1 &5519233413200490527
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 2.50in Screw
+  name: 2.50" Screw
 --- !u!1 &7074932535482431805
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 7/8in Screw
+  name: 7/8" Screw
 --- !u!1 &7074932535504565886
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 2.00in Screw
+  name: 2.00" Screw
 --- !u!1 &7074932535607183255
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,7 +794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 1.50in Screw
+  name: 1.50" Screw
 --- !u!1 &7074932535628050118
 GameObject:
   m_ObjectHideFlags: 0
@@ -953,7 +953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 1/4in Screw
+  name: 1/4" Screw
 --- !u!1 &7074932535663284011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,7 +1112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 3/8in Screw
+  name: 3/8" Screw
 --- !u!1 &7074932535733219535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1271,7 +1271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 1.75in Screw
+  name: 1.75" Screw
 --- !u!1 &7074932535929617507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,7 +1430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 1.00in Screw
+  name: 1.00" Screw
 --- !u!1 &7074932536225802394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1677,7 +1677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 5/8in Screw
+  name: 5/8" Screw
 --- !u!1 &7074932536853012793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1836,7 +1836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 3/4in Screw
+  name: 3/4" Screw
 --- !u!1 &7074932536895543758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1995,7 +1995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 1.25in Screw
+  name: 1.25" Screw
 --- !u!1 &7074932536932325182
 GameObject:
   m_ObjectHideFlags: 0
@@ -2154,4 +2154,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 1/2in Screw
+  name: 1/2" Screw

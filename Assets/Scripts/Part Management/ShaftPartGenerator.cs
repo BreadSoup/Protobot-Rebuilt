@@ -62,7 +62,7 @@ public class ShaftPartGenerator : PartGenerator {
 
         GameObject newObj = Instantiate(temp, position, rotation);
         string shaftType;
-        if(param1.value == "High Strength") { shaftType = "in HS Shaft"; } else { shaftType = "in Shaft"; }
+        if(param1.value == "High Strength") { shaftType = "\" HS Shaft"; } else { shaftType = "\" Shaft"; }
         newObj.AddComponent<PartName>().name = float.Parse(param2.value) + shaftType;
         
         SetId(newObj);

@@ -508,7 +508,7 @@ MonoBehaviour:
     customLimits: {x: 0, y: 0}
   param2:
     name: Size
-    value: 1/8in
+    value: 1/4in
     custom: 0
     customUnit: 
     customDefault: 
@@ -667,7 +667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 1/4in HS Spacer
+  name: 1/4" HS Spacer
 --- !u!1 &5112426444074949841
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,7 +822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 1/4in Nylon Spacer
+  name: 1/4" Nylon Spacer
 --- !u!1 &5112426444488920909
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,7 +977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 1/16in HS Spacer
+  name: 1/16" HS Spacer
 --- !u!1 &5112426444534556309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,7 +1274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 1/2in Nylon Spacer
+  name: 1/2" Nylon Spacer
 --- !u!1 &5112426444807183001
 GameObject:
   m_ObjectHideFlags: 0
@@ -1429,7 +1429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 1/8in Nylon Spacer
+  name: 1/8" Nylon Spacer
 --- !u!1 &5112426444881236526
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,7 +1584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 1/8in HS Spacer
+  name: 1/8" HS Spacer
 --- !u!1 &5112426444900737450
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,7 +1739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 3/8in Nylon Spacer
+  name: 3/8" Nylon Spacer
 --- !u!1 &5112426444933573014
 GameObject:
   m_ObjectHideFlags: 0
@@ -2175,7 +2175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 1/2in HS Spacer
+  name: 1/2" HS Spacer
 --- !u!1 &6471132970564596477
 GameObject:
   m_ObjectHideFlags: 0

@@ -819,7 +819,7 @@ MonoBehaviour:
     customLimits: {x: 0, y: 0}
   param2:
     name: Size
-    value: 2.75in
+    value: 3.25in
     custom: 0
     customUnit: 
     customDefault: 
@@ -980,7 +980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 2.75in Omni Wheel
+  name: 2.75" Omni Wheel
 --- !u!1 &1367666537469076981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1137,7 +1137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 4in Omni Wheel
+  name: 4" Omni Wheel
 --- !u!1 &1367666537581935451
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,7 +1409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 3.25in Omni Wheel
+  name: 3.25" Omni Wheel
 --- !u!1 &1367666538023408263
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,7 +2276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 2in Omni Wheel
+  name: 2" Omni Wheel
 --- !u!1 &3287821461027131796
 GameObject:
   m_ObjectHideFlags: 0
@@ -2741,7 +2741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 2.75in Omni Wheel
+  name: 2.75" Omni Wheel
 --- !u!1 &3852376023712893227
 GameObject:
   m_ObjectHideFlags: 0
@@ -3770,7 +3770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 4in Omni Wheel
+  name: 4" Omni Wheel
 --- !u!1 &5410222753865298998
 GameObject:
   m_ObjectHideFlags: 0
@@ -5265,4 +5265,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 3.25in Omni Wheel
+  name: 3.25" Omni Wheel
