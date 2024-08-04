@@ -15,7 +15,7 @@ namespace Protobot.InputEvents {
         [SerializeField] private Text rebindText;
         [SerializeField] private Button resetButton;
 
-        [SerializeField] private bool rebinding = false;
+        [SerializeField] private bool rebinding;
 
         void Start() {
             if (EventRebindAction != null) {
