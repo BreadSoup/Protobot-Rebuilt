@@ -5,11 +5,11 @@ using UnityEngine.Splines;
 
 public class ChainGenerator : MonoBehaviour {
     //declaring variables
-    static public float Point1x = -5;//a
-    static public float Point1y = 5f;//b
+    static public float Point1x = -9.6f;//a
+    static public float Point1y = 4.58f;//b
     static public float Size1 = 5f;//R1
-    static public float Point2x = 5;//c
-    static public float Point2y = 2;//d
+    static public float Point2x = 3.78f;//c
+    static public float Point2y = -0.3f;//d
     static public float Size2 = 3f;//R2
     static public float Distance = 0f; //D
     static public float Size3 = Size1 - Size2; //calculated C3
