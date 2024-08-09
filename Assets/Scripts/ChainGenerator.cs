@@ -5,8 +5,8 @@ using UnityEngine.Splines;
 
 public class ChainGenerator : MonoBehaviour {
     //declaring variables
-    static public float Point1x = -9.6f;//a
-    static public float Point1y = 4.58f;//b
+    static public float Point1x = -10.5f;//a
+    static public float Point1y = 5.76f;//b
     static public float Size1 = 5f;//R1
     static public float Point2x = 3.78f;//c
     static public float Point2y = -0.3f;//d
@@ -97,9 +97,10 @@ public class ChainGenerator : MonoBehaviour {
 
 
     public void OnButtonPress(){ //everything inside this is activated once button is pressed
-        Debug.Log(Size3); //makes sure button works, testing
+        Debug.Log("test"); //makes sure button works, testing
         GameObject ChainContainer = new GameObject(); //Creates game object named ChainContainer
         ChainContainer.name = "Chain Container"; //names object whatever is in Quotations
+        ChainContainer.gameObject.transform.Translate(Point1x, Point1y, 0);
         ChainContainer.AddComponent<GeneratingChains>(); //adds spline container to ChainContainer object
 
         GameObject ChainPoint1 = new GameObject();
@@ -112,8 +113,7 @@ public class ChainGenerator : MonoBehaviour {
 
         float Distance = Vector3.Distance(ChainPoint1.transform.position, ChainPoint2.transform.position); //finds distance between two points
         
-        //some more maths
-
+        //calculating all the variables
         float hline = Hline(Distance, Size1, Size2);//H
         float yline = Yline(Hline(Distance, Size1, Size2), Size2);//Y
         float theta1 = Theta1(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2));//theta1
@@ -133,6 +133,20 @@ public class ChainGenerator : MonoBehaviour {
         float ipoint3 = Ipoint3(Point1y, Size1, Theta3(Theta1(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2)), Ypoint1(Point2y, Point1y), Xpoint1(Point2x, Point1x))); //Y position of third tangent, i3
         float upoint4 = Upoint4(Point2x, Point1x, Size1, Point1y, Size3, Theta3(Theta1(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2)), Ypoint1(Point2y, Point1y), Xpoint1(Point2x, Point1x)));//X position of fourth tangent, u4
         float ipoint4 = Ipoint4(Point2y, Point1x, Size1, Point1y, Size3, Theta3(Theta1(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2)), Ypoint1(Point2y, Point1y), Xpoint1(Point2x, Point1x)));//Y position of fourth tangent, i4
+        float tangent1In = 1;
+        float tangent1Out = 1;
+        float tangent2In = 1;
+        float tangent2Out = 1;
+        float tangent3In = 1;
+        float tangent3Out = 1;
+        float tangent4In = 1;
+        float tangent4Out = 1;
+
+
+        
+        
+        
+        //reading out variables for testing
         Debug.Log("R1 " + Size1);
         Debug.Log("a " + Point1x);
         Debug.Log("b " + Point1y);
@@ -160,5 +174,34 @@ public class ChainGenerator : MonoBehaviour {
         Debug.Log("i3 " + ipoint3);
         Debug.Log("i4 " + ipoint4);
         Debug.Log("u4 " + upoint4);
+
+        //adding spline part
+        // Add a SplineContainer component to the ChainContainer GameObject.
+        var container = ChainContainer.AddComponent<SplineContainer>();
+
+        // Create a new Spline on the SplineContainer.
+        var spline = container.AddSpline();
+
+        // Set some knot values.
+        var knots = new BezierKnot[4];
+        knots[0] = new BezierKnot(new float3(upoint1,  ipoint1, 0f));//tangent 1
+        knots[1] = new BezierKnot(new float3(upoint2,  ipoint2, 0f));//tangent 2
+        knots[2] = new BezierKnot(new float3(upoint4, ipoint4, 0f));//tangent 4 (not a typo, order calculated is Tangent: 1>2>4>3)
+        knots[3] = new BezierKnot(new float3(upoint3, ipoint3, 0f));//tanent 3
+
+        knots[0].TangentIn = new float3(tangent1In, tangent1Out, 0f);
+        knots[0].TangentOut = new float3(-tangent1In, -tangent1Out, 0f);
+
+        knots[1].TangentIn = new float3(tangent2In, tangent2Out, 0f);
+        knots[1].TangentOut = new float3(-tangent2In, -tangent2Out, 0f);
+
+        knots[2].TangentIn = new float3(tangent4In, tangent4Out, 0f);
+        knots[2].TangentOut = new float3(-tangent4In, -tangent4Out, 0f);
+
+        knots[3].TangentIn = new float3(tangent3In, tangent3Out, 0f);
+        knots[3].TangentOut = new float3(-tangent3In, -tangent3Out, 0f);
+        
+        spline.Knots = knots;
+        spline.Closed = true;
    }
 }
