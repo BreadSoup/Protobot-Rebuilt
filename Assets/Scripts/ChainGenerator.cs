@@ -107,7 +107,6 @@ public class ChainGenerator : MonoBehaviour {
         GameObject ChainContainer = new GameObject(); //Creates game object named ChainContainer
         ChainContainer.name = "Chain Container"; //names object whatever is in Quotations
         ChainContainer.gameObject.transform.Translate(Point1x, Point1y, 0);
-        ChainContainer.AddComponent<GeneratingChains>(); //adds spline container to ChainContainer object
 
         GameObject ChainPoint1 = new GameObject();
         ChainPoint1.name = "ChainPoint1";
