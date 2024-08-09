@@ -104,14 +104,27 @@ public class ChainGenerator : MonoBehaviour {
         //this for loop disables all objects that are not sprockets temporaliy so that users can easily access them
         //look at the function `CancelToolUi` for a demonstration on how to re-enable all objects
         var savedObjects = GameObject.FindObjectsOfType<SavedObject>();
-        for (int i = 0; i < savedObjects.Length; i++)
+        var isOn = gameObject.GetComponentInParent<Toggle>().isOn;
+        if (isOn)
         {
-            if (!savedObjects[i].id.Contains("SPKT"))
+            for (int i = 0; i < savedObjects.Length; i++)
             {
-                savedObjects[i].gameObject.SetActive(false);
-                disabledObjects.Add(savedObjects[i].gameObject);
+                if (!savedObjects[i].id.Contains("SPKT"))
+                {
+                    savedObjects[i].gameObject.SetActive(false);
+                    disabledObjects.Add(savedObjects[i].gameObject);
+                }
             }
         }
+        else
+        {
+            for (int i = 0; i < disabledObjects.Count; i++)
+            {
+                disabledObjects[i].SetActive(true);
+            }
+            disabledObjects.Clear();
+        }
+        
 
         Debug.Log("Select 1 of 2 Sprocket. Press Esc to Cancel"); //asks user to click the first sprocket
         float Point1x = 0f; //save the gameobjects x coordinate (IMPORTANT: should update as the game object moves)
