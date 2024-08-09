@@ -2,6 +2,8 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Splines;
+using Protobot;
+using System.Collections.Generic;
 
 public class ChainGenerator : MonoBehaviour {
     //declaring variables
@@ -13,6 +15,7 @@ public class ChainGenerator : MonoBehaviour {
     static public float Size2 = 3f;//R2
     static public float Distance = 0f; //D
     static public float Size3 = Size1 - Size2; //calculated C3
+    [SerializeField] private List<GameObject> disabledObjects = new List<GameObject>();
     static public float Hline(float Distance, float Size1, float Size2)//H
     {
         return Mathf.Sqrt(Distance * Distance - Mathf.Pow(Size1 - Size2, 2));//sqrt(D^2 - (R1 - R2)^2)
@@ -97,6 +100,19 @@ public class ChainGenerator : MonoBehaviour {
 
 
     public void OnButtonPress(){ //everything inside this is activated once button is pressed
+
+        //this for loop disables all objects that are not sprockets temporaliy so that users can easily access them
+        //look at the function `CancelToolUi` for a demonstration on how to re-enable all objects
+        var savedObjects = GameObject.FindObjectsOfType<SavedObject>();
+        for (int i = 0; i < savedObjects.Length; i++)
+        {
+            if (!savedObjects[i].id.Contains("SPKT"))
+            {
+                savedObjects[i].gameObject.SetActive(false);
+                disabledObjects.Add(savedObjects[i].gameObject);
+            }
+        }
+
         Debug.Log("Select 1 of 2 Sprocket. Press Esc to Cancel"); //asks user to click the first sprocket
         float Point1x = 0f; //save the gameobjects x coordinate (IMPORTANT: should update as the game object moves)
         float Point1Y = 0f; //save the gameobjects y coordiante (IMPORTANT: should update as the game object moves)
@@ -186,6 +202,7 @@ public class ChainGenerator : MonoBehaviour {
 
         // Create a new Spline on the SplineContainer.
         var spline = container.AddSpline();
+        container.RemoveSplineAt(0);
 
         // Set some knot values.
         var knots = new BezierKnot[4];
@@ -205,8 +222,18 @@ public class ChainGenerator : MonoBehaviour {
 
         knots[3].TangentIn = new float3(tangent3In, tangent3Out, 0f);
         knots[3].TangentOut = new float3(-tangent3In, -tangent3Out, 0f);
-        
+
         spline.Knots = knots;
         spline.Closed = true;
    }
+
+    //this function is assigned the the gameobject chain tool toggle and activates whenever escape is pressed
+    public void CancelToolUi()
+    {
+        for (int i = 0; i < disabledObjects.Count; i++)
+        {
+            disabledObjects[i].SetActive(true);
+        }
+        disabledObjects.Clear();
+    }
 }
