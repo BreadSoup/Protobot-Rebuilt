@@ -99,7 +99,7 @@ public class ChainGenerator : MonoBehaviour {
     }
 
 
-    public void OnButtonPress(){ //everything inside this is activated once button is pressed
+    public void OnToggle(){ //everything inside this is activated once button is pressed
 
         //this for loop disables all objects that are not sprockets temporaliy so that users can easily access them
         //look at the function `CancelToolUi` for a demonstration on how to re-enable all objects
@@ -119,7 +119,13 @@ public class ChainGenerator : MonoBehaviour {
         Debug.Log("Select 2 of 2 Sprocket. Press Esc to Cancel"); //asks user to click the second sprocket
         float Point2x = 0f; //save the gameobjects x coordinate (IMPORTANT: should update as the game object moves)
         float Point2y = 0f; //save the gameobjects y coordinate (IMPORTANT: should update as the game object moves)
+        
+   }
 
+    //this function generates all the chains and calculations
+   public void GenerateChain()
+   {
+        //generates empty game objects to be used as calculations
         GameObject ChainContainer = new GameObject(); //Creates game object named ChainContainer
         ChainContainer.name = "Chain Container"; //names object whatever is in Quotations
         ChainContainer.gameObject.transform.Translate(Point1x, Point1y, 0);
@@ -132,9 +138,8 @@ public class ChainGenerator : MonoBehaviour {
         ChainPoint2.name = "ChainPoint2";
         ChainPoint2.gameObject.transform.Translate(Point2x, Point2y, 0);
 
-        float Distance = Vector3.Distance(ChainPoint1.transform.position, ChainPoint2.transform.position); //finds distance between two points
-        
         //calculating all the variables
+        float Distance = Vector3.Distance(ChainPoint1.transform.position, ChainPoint2.transform.position); //finds distance between two points
         float hline = Hline(Distance, Size1, Size2);//H
         float yline = Yline(Hline(Distance, Size1, Size2), Size2);//Y
         float theta1 = Theta1(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2));//theta1
@@ -163,10 +168,6 @@ public class ChainGenerator : MonoBehaviour {
         float tangent4In = 1;
         float tangent4Out = 1;
 
-
-        
-        
-        
         //reading out variables for testing
         Debug.Log("R1 " + Size1);
         Debug.Log("a " + Point1x);
