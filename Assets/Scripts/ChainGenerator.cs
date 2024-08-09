@@ -97,7 +97,13 @@ public class ChainGenerator : MonoBehaviour {
 
 
     public void OnButtonPress(){ //everything inside this is activated once button is pressed
-        Debug.Log("test"); //makes sure button works, testing
+        Debug.Log("Select 1 of 2 Sprocket. Press Esc to Cancel"); //asks user to click the first sprocket
+        float Point1x = 0f; //save the gameobjects x coordinate (IMPORTANT: should update as the game object moves)
+        float Point1Y = 0f; //save the gameobjects y coordiante (IMPORTANT: should update as the game object moves)
+        Debug.Log("Select 2 of 2 Sprocket. Press Esc to Cancel"); //asks user to click the second sprocket
+        float Point2x = 0f; //save the gameobjects x coordinate (IMPORTANT: should update as the game object moves)
+        float Point2y = 0f; //save the gameobjects y coordinate (IMPORTANT: should update as the game object moves)
+
         GameObject ChainContainer = new GameObject(); //Creates game object named ChainContainer
         ChainContainer.name = "Chain Container"; //names object whatever is in Quotations
         ChainContainer.gameObject.transform.Translate(Point1x, Point1y, 0);
