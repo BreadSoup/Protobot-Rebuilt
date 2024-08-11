@@ -7678,7 +7678,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 926006024}
   m_HandleRect: {fileID: 926006023}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -10564,7 +10564,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 2
   outlineTargets:
-  - IsVisible: 1
+  - IsVisible: 0
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
@@ -17167,6 +17167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bf10ef3f4f055540ba7c35d9a3914b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Panel: {fileID: 1987918982}
   disabledObjects: []
 --- !u!1 &894894860
 GameObject:
@@ -21855,7 +21856,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1859459259}
   m_Direction: 3
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.9999996
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -28531,7 +28532,7 @@ MonoBehaviour:
   OnStartPlacing:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: d9cde7524a01edd499212c0e77d7cfa5, type: 2}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: SetCursor
         m_Mode: 3
@@ -28645,7 +28646,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 0
   outlineTargets:
-  - IsVisible: 1
+  - IsVisible: 0
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
@@ -41047,7 +41048,7 @@ GameObject:
   - component: {fileID: 1987918987}
   - component: {fileID: 1987918986}
   m_Layer: 5
-  m_Name: optional ui
+  m_Name: Chain Generator Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41072,7 +41073,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 440.18442, y: 625}
+  m_AnchoredPosition: {x: 410, y: 632}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1987918986
@@ -41543,7 +41544,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 2
   outlineTargets:
-  - IsVisible: 1
+  - IsVisible: 0
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5

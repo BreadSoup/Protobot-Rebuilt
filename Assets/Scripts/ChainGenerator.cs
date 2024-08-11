@@ -3,16 +3,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Splines;
 using Protobot;
+using System.Collections;
 using System.Collections.Generic;
 
 public class ChainGenerator : MonoBehaviour {
+    public GameObject Panel; //sets Chain Generator Display ui
+    
     //declaring variables
-    static public float Point1x = -10.5f;//a
-    static public float Point1y = 5.76f;//b
-    static public float Size1 = 5f;//R1
-    static public float Point2x = 3.78f;//c
-    static public float Point2y = -0.3f;//d
-    static public float Size2 = 3f;//R2
+    static public float Point1x = -10.5f;//a (This should be the first sprockets X)
+    static public float Point1y = 5.76f;//b (This should be the first sprockets Y)
+    static public float Size1 = 5f;//R1 (This should be the first sprockets radius)
+    static public float Point2x = 3.78f;//c (This should be the second sprockets X)
+    static public float Point2y = -0.3f;//d (This should be the second sprockets Y)
+    static public float Size2 = 3f;//R2 (This should be the second sprockets radius)
     static public float Distance = 0f; //D
     static public float Size3 = Size1 - Size2; //calculated C3
     [SerializeField] private List<GameObject> disabledObjects = new List<GameObject>();
@@ -99,7 +102,13 @@ public class ChainGenerator : MonoBehaviour {
     }
 
 
+    void Start()
+    {
+        Panel.gameObject.SetActive (false);
+    }
+
     public void OnToggle(){ //everything inside this is activated once button is pressed
+        //some where in this script should be the sprocket selection, should happen after the button is pressed.
 
         //this for loop disables all objects that are not sprockets temporaliy so that users can easily access them
         //look at the function `CancelToolUi` for a demonstration on how to re-enable all objects
@@ -113,6 +122,7 @@ public class ChainGenerator : MonoBehaviour {
                 {
                     savedObjects[i].gameObject.SetActive(false);
                     disabledObjects.Add(savedObjects[i].gameObject);
+                    Panel.gameObject.SetActive (true);
                 }
             }
         }
@@ -121,21 +131,16 @@ public class ChainGenerator : MonoBehaviour {
             for (int i = 0; i < disabledObjects.Count; i++)
             {
                 disabledObjects[i].SetActive(true);
+                Panel.gameObject.SetActive (false);
             }
             disabledObjects.Clear();
         }
         
+    }
 
-        Debug.Log("Select 1 of 2 Sprocket. Press Esc to Cancel"); //asks user to click the first sprocket
-        float Point1x = 0f; //save the gameobjects x coordinate (IMPORTANT: should update as the game object moves)
-        float Point1Y = 0f; //save the gameobjects y coordiante (IMPORTANT: should update as the game object moves)
-        Debug.Log("Select 2 of 2 Sprocket. Press Esc to Cancel"); //asks user to click the second sprocket
-        float Point2x = 0f; //save the gameobjects x coordinate (IMPORTANT: should update as the game object moves)
-        float Point2y = 0f; //save the gameobjects y coordinate (IMPORTANT: should update as the game object moves)
-        
-   }
 
-    //this function generates all the chains and calculations
+
+    //this function generates all the chains and calculations. (will be called once both sprockets are selected)
    public void GenerateChain()
    {
         //generates empty game objects to be used as calculations
@@ -181,7 +186,7 @@ public class ChainGenerator : MonoBehaviour {
         float tangent4In = 1;
         float tangent4Out = 1;
 
-        //reading out variables for testing
+        //reading out variables for testing purposes
         Debug.Log("R1 " + Size1);
         Debug.Log("a " + Point1x);
         Debug.Log("b " + Point1y);
@@ -207,8 +212,8 @@ public class ChainGenerator : MonoBehaviour {
         Debug.Log("i6 " + ipoint6);
         Debug.Log("u3 " + upoint3);
         Debug.Log("i3 " + ipoint3);
-        Debug.Log("i4 " + ipoint4);
-        Debug.Log("u4 " + upoint4);
+        Debug.Log("i4 " + ipoint4); //FOR SOME REASON THESE TWO VARIABLES GET MISCALCULATED, ive checked dozens of times, all the math is correct, idk whats happening maybe its something with unity math im not understanding
+        Debug.Log("u4 " + upoint4); //^
 
         //adding spline part
         // Add a SplineContainer component to the ChainContainer GameObject.
@@ -247,6 +252,7 @@ public class ChainGenerator : MonoBehaviour {
         for (int i = 0; i < disabledObjects.Count; i++)
         {
             disabledObjects[i].SetActive(true);
+            Panel.gameObject.SetActive (false);
         }
         disabledObjects.Clear();
     }
