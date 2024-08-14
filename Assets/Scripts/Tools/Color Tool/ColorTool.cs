@@ -21,9 +21,9 @@ public class ColorTool : MonoBehaviour
         ui.SetActive(!ui.gameObject.activeSelf);
         ColorToSet = color[0]; //If this is not set when started it will be 0,0,0 which we dont want unless custom is selected
         UpdatePreview();
-        red.value = 0;
-        green.value = 0;
-        blue.value = 0;
+        red.value = 242;
+        green.value = 242;
+        blue.value = 242;
     }
     public void HandleInput(int index)
     {

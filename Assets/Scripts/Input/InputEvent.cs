@@ -55,5 +55,10 @@ namespace Protobot.InputEvents {
         public void OnDisable() {
             defaultAction.Disable();
         }
+        
+        public string GetCurrentKeybind()
+        {
+            return defaultAction.GetBindingDisplayString();
+        }
     }
 }
