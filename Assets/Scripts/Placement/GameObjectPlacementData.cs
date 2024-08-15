@@ -14,10 +14,10 @@ namespace Protobot {
 
         public override string objectId {
             get {
-                if (gameObject.TryGetComponent(out SavedObject savedObject))
-                    return savedObject.id;
+                if (gameObject.TryGetComponent(out SavedObject savedObject))// Try to get the SavedObject component from the gameObject
+                    return savedObject.id;// If the component is found, return its id property
                 else
-                    return gameObject.tag;
+                    return gameObject.tag;// If the component is not found, return the gameObject's tag property
             }
         }
 

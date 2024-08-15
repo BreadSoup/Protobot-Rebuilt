@@ -5,17 +5,24 @@ using UnityEngine.Splines;
 using Protobot;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class ChainGenerator : MonoBehaviour {
     public GameObject Panel; //sets Chain Generator Display ui
+    public Image buttonImage1; // Reference to the button's Image component
+    public Image buttonImage2; // Reference to the button's Image component
+    public Color selectedColor = Color.green; // Color to use for the selected state
+    public Color defaultColor = Color.white; // Default color for the button
     
     //declaring variables
     static public float Point1x = -10.5f;//a (This should be the first sprockets X)
     static public float Point1y = 5.76f;//b (This should be the first sprockets Y)
-    static public float Size1 = 5f;//R1 (This should be the first sprockets radius)
+    static public float Point1z = 0;//not used in original math, just incase
+    static public float Size1 = 2f;//R1 (This should be the first sprockets radius)
     static public float Point2x = 3.78f;//c (This should be the second sprockets X)
     static public float Point2y = -0.3f;//d (This should be the second sprockets Y)
-    static public float Size2 = 3f;//R2 (This should be the second sprockets radius)
+    static public float Point2z = 0;//not used in original math, just incase
+    static public float Size2 = 1f;//R2 (This should be the second sprockets radius)
     static public float Distance = 0f; //D
     static public float Size3 = Size1 - Size2; //calculated C3
     [SerializeField] private List<GameObject> disabledObjects = new List<GameObject>();
@@ -107,15 +114,26 @@ public class ChainGenerator : MonoBehaviour {
         Panel.gameObject.SetActive (false);
     }
 
+    private bool isSelectingSprocket = false;
+    private bool isFirstSprocketSelected = false;
+    private GameObject firstSprocket;
+
     public void OnToggle(){ //everything inside this is activated once button is pressed
         //some where in this script should be the sprocket selection, should happen after the button is pressed.
 
         //this for loop disables all objects that are not sprockets temporaliy so that users can easily access them
         //look at the function `CancelToolUi` for a demonstration on how to re-enable all objects
+        // Reset the button's color
+        buttonImage1.color = defaultColor;
+        buttonImage2.color = defaultColor; 
+
         var savedObjects = GameObject.FindObjectsOfType<SavedObject>();
         var isOn = gameObject.GetComponentInParent<Toggle>().isOn;
         if (isOn)
         {
+            isSelectingSprocket = true;
+            StartCoroutine(SelectSprocket());
+
             for (int i = 0; i < savedObjects.Length; i++)
             {
                 if (!savedObjects[i].id.Contains("SPKT"))
@@ -128,6 +146,9 @@ public class ChainGenerator : MonoBehaviour {
         }
         else
         {
+            isSelectingSprocket = false;
+            isFirstSprocketSelected = false;
+
             for (int i = 0; i < disabledObjects.Count; i++)
             {
                 disabledObjects[i].SetActive(true);
@@ -138,6 +159,72 @@ public class ChainGenerator : MonoBehaviour {
         
     }
 
+    private IEnumerator SelectSprocket() { // This coroutine is responsible for selecting a game object in the scene
+        while (isSelectingSprocket) {
+            if (Mouse.current.leftButton.isPressed) { // Check if the left mouse button is pressed
+                Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());// Create a ray from the camera through the mouse position
+                RaycastHit hit;
+
+                // Create a layer mask that only includes the "Default" layer
+                // This ensures that we only hit game objects on this layer and ignore UI elements and other layers
+                int layerMask = 1 << LayerMask.NameToLayer("Default");
+
+                // Perform a raycast from the camera through the mouse position, only hitting objects on the "Default" layer
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
+                    GameObject selectedObject = hit.transform.gameObject;// Get the game object that was hit by the raycast
+                    Transform selectedTransform = selectedObject.transform;
+                    
+                    // Check if the object has a SavedObject component with an id of "SPKT"
+                    SavedObject savedObject = selectedObject.GetComponent<SavedObject>();
+                    if (savedObject != null && savedObject.id.Contains("SPKT")) {
+                        if (!isFirstSprocketSelected) { // First sprocket selection
+                            isFirstSprocketSelected = true;
+                            firstSprocket = selectedObject;
+
+                            // Log some information about the selected object
+                            Debug.Log("Selected First Sprocket: " + selectedObject.name);
+                            Debug.Log("X: " + selectedTransform.position.x);
+                            Debug.Log("Y: " + selectedTransform.position.y);
+                            Debug.Log("Z: " + selectedTransform.position.z);
+
+                            // Store the selected object's position in the Point1 variables
+                            Point1x = selectedTransform.position.x;
+                            Point1y = selectedTransform.position.y;
+                            Point1z = selectedTransform.position.z;
+
+                            // Change the button's color to green
+                            buttonImage1.color = selectedColor;
+                        }
+                        else if (selectedObject != firstSprocket) {
+                            // Second sprocket selection
+                            Debug.Log("Selected Second Sprocket: " + selectedObject.name);
+                            Debug.Log("X: " + selectedTransform.position.x);
+                            Debug.Log("Y: " + selectedTransform.position.y);
+                            Debug.Log("Z: " + selectedTransform.position.z);
+
+                            // Store the selected object's position in the Point2 variables
+                            Point2x = selectedTransform.position.x;
+                            Point2y = selectedTransform.position.y;
+                            Point2z = selectedTransform.position.z;
+
+                            // Change the button's color to green
+                            buttonImage2.color = selectedColor;
+
+                            // Stop the coroutine since we've selected an object
+                            isFirstSprocketSelected = false;
+                            isSelectingSprocket = false;
+
+                            // Generate the chain
+                            GenerateChain();
+                        }
+                    }
+                }
+            }
+
+            yield return null;
+        }
+    }
+
 
 
     //this function generates all the chains and calculations. (will be called once both sprockets are selected)
@@ -146,7 +233,7 @@ public class ChainGenerator : MonoBehaviour {
         //generates empty game objects to be used as calculations
         GameObject ChainContainer = new GameObject(); //Creates game object named ChainContainer
         ChainContainer.name = "Chain Container"; //names object whatever is in Quotations
-        ChainContainer.gameObject.transform.Translate(Point1x, Point1y, 0);
+        ChainContainer.gameObject.transform.Translate(0, 0, 0);
 
         GameObject ChainPoint1 = new GameObject();
         ChainPoint1.name = "ChainPoint1";
@@ -177,14 +264,14 @@ public class ChainGenerator : MonoBehaviour {
         float ipoint3 = Ipoint3(Point1y, Size1, Theta3(Theta1(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2)), Ypoint1(Point2y, Point1y), Xpoint1(Point2x, Point1x))); //Y position of third tangent, i3
         float upoint4 = Upoint4(Point2x, Point1x, Size1, Point1y, Size3, Theta3(Theta1(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2)), Ypoint1(Point2y, Point1y), Xpoint1(Point2x, Point1x)));//X position of fourth tangent, u4
         float ipoint4 = Ipoint4(Point2y, Point1x, Size1, Point1y, Size3, Theta3(Theta1(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2)), Ypoint1(Point2y, Point1y), Xpoint1(Point2x, Point1x)));//Y position of fourth tangent, i4
-        float tangent1In = 1;
+        /*float tangent1In = 1;
         float tangent1Out = 1;
         float tangent2In = 1;
         float tangent2Out = 1;
         float tangent3In = 1;
         float tangent3Out = 1;
         float tangent4In = 1;
-        float tangent4Out = 1;
+        float tangent4Out = 1;*/
 
         //reading out variables for testing purposes
         Debug.Log("R1 " + Size1);
@@ -223,6 +310,7 @@ public class ChainGenerator : MonoBehaviour {
         var spline = container.AddSpline();
         container.RemoveSplineAt(0);
 
+        
         // Set some knot values.
         var knots = new BezierKnot[4];
         knots[0] = new BezierKnot(new float3(upoint1,  ipoint1, 0f));//tangent 1
@@ -230,18 +318,11 @@ public class ChainGenerator : MonoBehaviour {
         knots[2] = new BezierKnot(new float3(upoint4, ipoint4, 0f));//tangent 4 (not a typo, order calculated is Tangent: 1>2>4>3)
         knots[3] = new BezierKnot(new float3(upoint3, ipoint3, 0f));//tanent 3
 
-        knots[0].TangentIn = new float3(tangent1In, tangent1Out, 0f);
-        knots[0].TangentOut = new float3(-tangent1In, -tangent1Out, 0f);
+        //Work in progress, all API found here: https://docs.unity3d.com/Packages/com.unity.splines@2.0/api/index.html
+        //this specific thing im trying to do can be found here: https://docs.unity3d.com/Packages/com.unity.splines@2.0/api/UnityEngine.Splines.TangentMode.html
+        //i just dont know how to code so idk why its not working.
 
-        knots[1].TangentIn = new float3(tangent2In, tangent2Out, 0f);
-        knots[1].TangentOut = new float3(-tangent2In, -tangent2Out, 0f);
-
-        knots[2].TangentIn = new float3(tangent4In, tangent4Out, 0f);
-        knots[2].TangentOut = new float3(-tangent4In, -tangent4Out, 0f);
-
-        knots[3].TangentIn = new float3(tangent3In, tangent3Out, 0f);
-        knots[3].TangentOut = new float3(-tangent3In, -tangent3Out, 0f);
-
+        //spline.SetTangentMode(TangentMode.AutoSmooth);//trying to set the splines knots to "Auto" as shown in the unity editor inside of a spline container
         spline.Knots = knots;
         spline.Closed = true;
    }
