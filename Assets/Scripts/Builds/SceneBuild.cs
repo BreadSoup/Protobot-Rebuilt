@@ -70,16 +70,12 @@ namespace Protobot.Builds {
         private static GameObject GenerateObject(ObjectData objectData, BuildData buildData)
         {
             GameObject generatedObject = PartsManager.GeneratePart(objectData.partId, objectData.GetPos(), objectData.GetRot());
-            if(buildData.version.Equals("1.3.1") || buildData.version.Equals("1.3.2") || buildData.version.Equals("1.3.3"))
-            {
-                Debug.Log("old version");
-            }
-            else
+            string[] versionsNoColor = new string[] { "1.0", "1.1", "1.1.1", "1.2", "1.3", "1.3.1", "1.3.2", "1.3.3", "1.3.4" };
+            if(!versionsNoColor.Contains(buildData.version))
             {
                 generatedObject.GetComponent<Renderer>().material.color = objectData.GetColor();
             }
             return generatedObject;
-
         }
             
 
