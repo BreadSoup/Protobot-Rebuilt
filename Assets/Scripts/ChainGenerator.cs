@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 using JetBrains.Annotations;
 using Protobot.UI;
 using UnityEngine.Events;
+using System;
+
 public class ChainGenerator : MonoBehaviour {
     public GameObject Panel; //sets Chain Generator Display ui
     public Image buttonImage1; // Reference to the button's Image component
@@ -18,12 +20,9 @@ public class ChainGenerator : MonoBehaviour {
     public UnityEvent onSelectionError;
     public UnityEvent onChainGenerated;
 
-    // Settigns for Spline
-    public SplineComponent.AlignAxis UpAxis;
-    public SplineComponent.AlignAxis ForwardAxis;
-    public SplineInstantiate.Method InstantiateMethod;
-    public GameObject HighStrength;
-    public GameObject SixP;
+    //splines
+     // Reference to the Prefab. Drag a Prefab into this field in the Inspector.
+    public GameObject myPrefab;
     
     //declaring variables
     static public string ChainType = "High Strength"; //default: High Strength, others: 6P
@@ -492,10 +491,9 @@ public class ChainGenerator : MonoBehaviour {
    public void GenerateChain()
    {
     Debug.Log("This is the Size2 at start of Generate Chain " + Size2);
-        //generates empty game objects to be used as calculations
-        GameObject ChainContainer = new GameObject(); //Creates game object named ChainContainer
-        ChainContainer.name = "Chain Container"; //names object whatever is in Quotations
-        ChainContainer.gameObject.transform.Translate(0, 0, 0);
+        // Instantiate at position (0, 0, 0) and zero rotation.
+        GameObject myObject = Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        myObject.name = "Chain Container2.0";
 
         GameObject ChainPoint1 = new GameObject();
         ChainPoint1.name = "ChainPoint1";
@@ -601,10 +599,9 @@ public class ChainGenerator : MonoBehaviour {
 
         //adding spline part
         // Add a SplineContainer component to the ChainContainer GameObject.
-        var container = ChainContainer.AddComponent<SplineContainer>();
-        var instantiate = ChainContainer.AddComponent<SplineInstantiate>();
+        var container = myObject.AddComponent<SplineContainer>();
         // Create a new Spline on the SplineContainer.
-        var spline = container.AddSpline();
+        var spline1 = container.AddSpline();
         container.RemoveSplineAt(0);
 
         
@@ -621,14 +618,16 @@ public class ChainGenerator : MonoBehaviour {
         knots[8] = new BezierKnot(new float3(upoint4, ipoint4, Point1z));//tangent 4 (not a typo, order calculated is Tangent: 1>2>4>3)
         knots[9] = new BezierKnot(new float3(upoint3, ipoint3, Point1z));//tanent 3
         
-
+        spline1.Knots = knots;
+        spline1.Closed = true;
         //Work in progress, all API found here: https://docs.unity3d.com/Packages/com.unity.splines@2.0/api/index.html
         //this specific thing im trying to do can be found here: https://docs.unity3d.com/Packages/com.unity.splines@2.0/api/UnityEngine.Splines.TangentMode.html
         //i just dont know how to code so idk why its not working.
+        for (int i = 0; i < spline1.Count; i++)
+        {
+            spline1.SetTangentMode(i, TangentMode.AutoSmooth);
+        }
 
-        //spline.SetTangentMode(TangentMode.AutoSmooth); //trying to set the splines knots to "Auto" as shown in the unity editor inside of a spline container
-        spline.Knots = knots;
-        spline.Closed = true;
 
         onChainGenerated.Invoke();
    }
@@ -644,3 +643,4 @@ public class ChainGenerator : MonoBehaviour {
         disabledObjects.Clear();
     }
 }
+
