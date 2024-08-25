@@ -40,7 +40,7 @@ public class EdgeDetectPostProcessingRenderer<T> : PostProcessEffectRenderer<T> 
         if (settings == null)
             return;
 
-        var sheet = context.propertySheets.Get(Shader.Find("Hidden/EdgeDetect"));
+        var sheet = context.propertySheets.Get(Shader.Find($"Hidden/EdgeDetect")); // IDE was complaining about this line
 
         Vector2 sensitivity = new Vector2(settings.sensitivityDepth, settings.sensitivityNormals);
         sheet.properties.SetVector("_Sensitivity", new Vector4(sensitivity.x, sensitivity.y, 1.0f, sensitivity.y));
