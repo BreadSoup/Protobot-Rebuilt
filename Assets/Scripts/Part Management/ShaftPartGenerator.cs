@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Protobot;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ShaftPartGenerator : PartGenerator {
     [SerializeField] private GameObject normalShaftInch;
@@ -60,6 +61,9 @@ public class ShaftPartGenerator : PartGenerator {
         temp.transform.localScale = scale;
 
         GameObject newObj = Instantiate(temp, position, rotation);
+        string shaftType;
+        if(param1.value == "High Strength") { shaftType = "\" HS Shaft"; } else { shaftType = "\" Shaft"; }
+        newObj.AddComponent<PartName>().name = float.Parse(param2.value) + shaftType;
         
         SetId(newObj);
         RemoveDataScripts(newObj);

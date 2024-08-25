@@ -4144,6 +4144,7 @@ GameObject:
   - component: {fileID: 14275206975707818}
   - component: {fileID: 14275206975707817}
   - component: {fileID: 14275206975707816}
+  - component: {fileID: 14275208445044879}
   m_Layer: 0
   m_Name: 2x35
   m_TagString: Object
@@ -4434,6 +4435,19 @@ MonoBehaviour:
     -0.25 > 0.25, -0.2575)'
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &14275208445044879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14275206975707822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 2x35 Rail
 --- !u!1 &14275206979834999
 GameObject:
   m_ObjectHideFlags: 0
@@ -10475,6 +10489,7 @@ GameObject:
   - component: {fileID: 14275207750798124}
   - component: {fileID: 14275207750798099}
   - component: {fileID: 14275207750798098}
+  - component: {fileID: 14275208445044880}
   m_Layer: 0
   m_Name: 2x25
   m_TagString: Object
@@ -10725,6 +10740,19 @@ MonoBehaviour:
     -0.25 > 0.25, -0.2575)'
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &14275208445044880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14275207750798096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 2x25 Rail
 --- !u!1 &14275207772306678
 GameObject:
   m_ObjectHideFlags: 0

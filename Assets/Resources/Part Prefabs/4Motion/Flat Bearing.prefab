@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 916879701492282399}
   - component: {fileID: 916879701492282384}
   - component: {fileID: 916879701492282398}
+  - component: {fileID: 4404238454222995152}
   m_Layer: 0
   m_Name: Normal
   m_TagString: Motion
@@ -289,6 +290,19 @@ MonoBehaviour:
     > 0.5,0,0)'
   primaryHole: {fileID: 916879703091036064}
   allowCenterInserts: 0
+--- !u!114 &4404238454222995152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916879701492282396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Bearing Flat
 --- !u!1 &916879701886060014
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Type
-    value: 
+    value: Normal
     custom: 0
     customUnit: 
     customDefault: 
@@ -453,6 +467,7 @@ GameObject:
   - component: {fileID: 916879702113012500}
   - component: {fileID: 916879702113012499}
   - component: {fileID: 916879702113012498}
+  - component: {fileID: 6240830487174975675}
   m_Layer: 0
   m_Name: High Strength
   m_TagString: Motion
@@ -594,6 +609,19 @@ MonoBehaviour:
     hole=(0,0,-0.0125)'
   primaryHole: {fileID: 916879701362239524}
   allowCenterInserts: 0
+--- !u!114 &6240830487174975675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916879702113012496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS Bearing Flat
 --- !u!1 &916879702539534672
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,6 +991,7 @@ GameObject:
   - component: {fileID: 4162681960812525536}
   - component: {fileID: 6249404579368246171}
   - component: {fileID: 1253744141691840017}
+  - component: {fileID: 672819688152276789}
   m_Layer: 0
   m_Name: Low Profile Bearing Flat (276-8023)
   m_TagString: Untagged
@@ -1096,6 +1125,19 @@ MonoBehaviour:
     > 0.5,0,0)'
   primaryHole: {fileID: 7369022418273531137}
   allowCenterInserts: 0
+--- !u!114 &672819688152276789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143333799315351661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Low Profile Bearing Flat
 --- !u!1 &2389634833167383194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,6 +1436,7 @@ GameObject:
   - component: {fileID: 1772422704470539221}
   - component: {fileID: 4066724860548826651}
   - component: {fileID: 2544485068917369679}
+  - component: {fileID: 555329559193247439}
   m_Layer: 0
   m_Name: Shaft Collar Retainer with Bearing Flat (276-8024)
   m_TagString: Untagged
@@ -1527,3 +1570,16 @@ MonoBehaviour:
     > 0.5,0,0)'
   primaryHole: {fileID: 5673098956103547927}
   allowCenterInserts: 0
+--- !u!114 &555329559193247439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9193880744965871990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Shaft Collar Retainer with Bearing Flat

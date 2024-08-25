@@ -66,6 +66,7 @@ namespace Protobot {
 
             newPart.transform.position = position;
             newPart.transform.rotation = rotation;
+            newPart.AddComponent<PartName>().name = newPart.name;
             
             RemoveDataScripts(newPart);
             SetId(newPart);

@@ -294,6 +294,7 @@ GameObject:
   - component: {fileID: 5325696420222822871}
   - component: {fileID: 4509435047044586971}
   - component: {fileID: 7212613342597525012}
+  - component: {fileID: 8439892658328748034}
   m_Layer: 0
   m_Name: LinearSlideBracket
   m_TagString: Untagged
@@ -443,6 +444,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &8439892658328748034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1340190638413752264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Linear Slide Bracket
 --- !u!1 &1431256243825446179
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,6 +1101,7 @@ GameObject:
   - component: {fileID: 5772448177593312750}
   - component: {fileID: 5363802370025786077}
   - component: {fileID: 3911095557475636377}
+  - component: {fileID: 8412414098125186355}
   m_Layer: 0
   m_Name: OuterSlideTrunk
   m_TagString: Untagged
@@ -1208,6 +1223,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &8412414098125186355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3755560300842071129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Outer Slide Trunk
 --- !u!1 &3882497969396436373
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,6 +1320,7 @@ GameObject:
   - component: {fileID: 235857153642179031}
   - component: {fileID: 133328629064873652}
   - component: {fileID: 838435312173931237}
+  - component: {fileID: 4547961032673288350}
   m_Layer: 0
   m_Name: InnerSlideTrunk
   m_TagString: Untagged
@@ -1413,6 +1442,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &4547961032673288350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3908407123060323333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Inner Slide Trunk
 --- !u!1 &4020267957727431983
 GameObject:
   m_ObjectHideFlags: 0
@@ -2844,7 +2886,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7712745615738991248}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.53125, z: -0.00000047683716}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2885,7 +2927,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Part
-    value: 
+    value: Inner Slide Trunk
     custom: 0
     customUnit: 
     customDefault: 

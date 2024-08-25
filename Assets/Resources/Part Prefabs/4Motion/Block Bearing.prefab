@@ -207,7 +207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Type
-    value: 
+    value: Normal
     custom: 0
     customUnit: 
     customDefault: 
@@ -304,6 +304,7 @@ GameObject:
   - component: {fileID: 5339055131049761910}
   - component: {fileID: 5339055131049761905}
   - component: {fileID: 5339055131049761904}
+  - component: {fileID: 122065371}
   m_Layer: 0
   m_Name: Block Bearing
   m_TagString: Motion
@@ -446,6 +447,19 @@ MonoBehaviour:
 '
   primaryHole: {fileID: 5339055130867997279}
   allowCenterInserts: 0
+--- !u!114 &122065371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5339055131049761906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Block Bearing
 --- !u!1 &5339055131414414683
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,6 +687,7 @@ GameObject:
   - component: {fileID: 6008422564784063252}
   - component: {fileID: 2432514646995718305}
   - component: {fileID: 6483605444819491382}
+  - component: {fileID: 5339055130559934492}
   m_Layer: 0
   m_Name: High Strength Block Bearing
   m_TagString: Untagged
@@ -805,3 +820,16 @@ MonoBehaviour:
 '
   primaryHole: {fileID: 5339055130867997279}
   allowCenterInserts: 0
+--- !u!114 &5339055130559934492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7247471652615742257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS Block Bearing

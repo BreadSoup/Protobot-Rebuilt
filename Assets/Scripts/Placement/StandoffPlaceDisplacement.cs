@@ -15,6 +15,7 @@ namespace Protobot {
             "SPCR",
             "PSPC",
             "BRNG",
+            "WSHR",
         };
 
         public bool IsIdAllowed(PlacementData placementData) { 

@@ -26,6 +26,24 @@ namespace Protobot {
             var partObj = subParts[param1Options.IndexOf(param1.value)].GeneratePart(HoleCount);
             partObj.transform.position = position;
             partObj.transform.rotation = rotation;
+            var partName = partObj.AddComponent<PartName>();
+            //messy code that could probably been simplified but the general purpose is to assign the part name
+            //since we're not able to do it in inspector for these parts and this is the
+            //most plausable way that I (Rose) could figure out
+            if(gameObject.name == "C-Channel")
+            {
+                partName.name = param1.value + "x1 C-Channel " + "(" + HoleCount + ")";
+            }else if(gameObject.name == "Angle")
+            {
+                partName.name = param1.value + " Angle " + "(" + HoleCount + ")";
+            }else if(gameObject.name == "Rails")
+            {
+                partName.name = param1.value + " (" + HoleCount + ")";
+            }
+            else if(gameObject.name == "U-Channel")
+            {
+                partName.name = param1.value + "x2 U-Channel " + "(" + HoleCount + ")";
+            }
 
             RemoveDataScripts(partObj);
             SetId(partObj);

@@ -33901,6 +33901,7 @@ GameObject:
   - component: {fileID: 5485291761484873225}
   - component: {fileID: 5485291761484873224}
   - component: {fileID: 5485291761484873227}
+  - component: {fileID: 6472301884355936550}
   m_Layer: 0
   m_Name: Base Plate
   m_TagString: Object
@@ -34579,6 +34580,19 @@ MonoBehaviour:
     -3 > 3, 0.25)'
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &6472301884355936550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5485291761484873229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Base Plate
 --- !u!1 &5485291761487388166
 GameObject:
   m_ObjectHideFlags: 0

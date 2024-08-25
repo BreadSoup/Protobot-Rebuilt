@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3735495282579685948}
   - component: {fileID: 2354835396336289041}
   - component: {fileID: 2177043570166587159}
+  - component: {fileID: 2508302250886022173}
   m_Layer: 0
   m_Name: default
   m_TagString: Untagged
@@ -131,6 +132,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &2508302250886022173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804246520019105240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Ring
 --- !u!1 &7242970480101707009
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +170,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7242970480101707009}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 31.302, y: 25.39988, z: -27.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
