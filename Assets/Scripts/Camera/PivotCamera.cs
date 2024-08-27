@@ -5,15 +5,15 @@ namespace Protobot {
     public class PivotCamera : MonoBehaviour {
         public static PivotCamera main;
         [SerializeField] public new Camera camera;
-
-        //Moving values
-        public bool moving => DOTween.IsTweening(transform);
+        
+        // Moving values
+        public bool moving => useSmoothing && DOTween.IsTweening(transform);
 
         private Tweener orbitTween;
-        public bool orbiting => orbitTween != null ? orbitTween.active : false;
+        public bool orbiting => useSmoothing && orbitTween != null ? orbitTween.active : false;
 
         private Tweener zoomTween;
-        public bool zooming => zoomTween != null ? zoomTween.active : false;
+        public bool zooming => useSmoothing && zoomTween != null ? zoomTween.active : false;
 
         public Vector3 cameraPosition => camera.transform.localPosition;
         public Vector3 focusPosition => transform.position;
@@ -23,11 +23,11 @@ namespace Protobot {
 
         private Vector3 panPos = Vector3.zero;
 
-
         [CacheComponent] private ProjectionSwitcher projectionSwitcher;
         private IPivotCameraInput[] inputs;
         private float zoomDistance;
         public bool invertZoom = false;
+        [SerializeField] public bool useSmoothing = true;
         public float snapSensitivity;
 
         void Start() {
@@ -67,29 +67,38 @@ namespace Protobot {
         }
 
         public void SetTransform(Vector3 newPos, Vector3 newAngle, float newDistance) {
-            transform.position = newPos;
+            if (useSmoothing) {
+                transform.DOMove(newPos, 0.4f);
+                transform.DORotateQuaternion(Quaternion.Euler(newAngle), 0.4f);
+                Vector3 newCamPos = camera.transform.localPosition;
+                newCamPos.z = newDistance;
+                zoomTween = camera.transform.DOLocalMove(newCamPos, 0.4f);
+            } else {
+                transform.position = newPos;
+                transform.eulerAngles = newAngle;
 
-            transform.eulerAngles = newAngle;
-            orbitRot = transform.eulerAngles;
-
-            Vector3 newCamPos = camera.transform.localPosition;
-            newCamPos.z = newDistance;
-            zoomDistance = -newDistance;
-
-            camera.transform.localPosition = newCamPos;
+                Vector3 newCamPos = camera.transform.localPosition;
+                newCamPos.z = newDistance;
+                zoomDistance = -newDistance;
+                camera.transform.localPosition = newCamPos;
+            }
 
             panPos = transform.position;
         }
 
         public void MoveFocusPosition(Vector3 newFocusPos) {
+            if (useSmoothing) {
+                transform.DOMove(newFocusPos, 0.4f);
+            } else {
+                transform.position = newFocusPos;
+            }
             panPos = newFocusPos;
-            transform.DOMove(newFocusPos, 0.4f);
         }
 
         //ZOOM
         public void ZoomControl(float input) {
             input *= (zoomDistance * 0.3f);
-            
+
             int inverted = 1;
             if (invertZoom) inverted = -1;
 
@@ -98,32 +107,54 @@ namespace Protobot {
 
             Vector3 newPos = cameraPosition;
             newPos.z = -zoomDistance;
-            zoomTween = camera.transform.DOLocalMove(newPos, 0.4f);
+
+            if (useSmoothing) {
+                zoomTween = camera.transform.DOLocalMove(newPos, 0.4f);
+            } else {
+                camera.transform.localPosition = newPos;
+            }
         }
-        
+
         public void SetInvertZoom(bool value) {
             invertZoom = value;
         }
 
+        public void setUseSmoothing(bool value) {
+            useSmoothing = value;
+        }
 
         //ORBIT
         public void OrbitControl(Vector2 orbitValue) {
             orbitRot += new Vector3(orbitValue.x, orbitValue.y, 0);
 
-            orbitTween = transform.DORotateQuaternion(Quaternion.Euler(orbitRot), 0.4f);
+            if (useSmoothing) {
+                orbitTween = transform.DORotateQuaternion(Quaternion.Euler(orbitRot), 0.4f);
+            } else {
+                transform.eulerAngles = orbitRot;
+            }
         }
 
         public void OrbitSnap() {
             Vector3 snapVector = lookAngle.Round(90);
-            if (Vector3.Distance(snapVector, lookAngle) < snapSensitivity && !moving)
-                transform.DOLocalRotate(snapVector, 0.25f);
+            if (Vector3.Distance(snapVector, lookAngle) < snapSensitivity && !moving) {
+                if (useSmoothing) {
+                    transform.DOLocalRotate(snapVector, 0.25f);
+                } else {
+                    transform.eulerAngles = snapVector;
+                }
+            }
         }
 
         //PAN
         public void PanControl(Vector2 panValue) {
             float zoomFactor = zoomDistance / 5; // makes panning adjust by zoom distance, closer zoom should be less pan distance covered
             panPos += ((transform.right * -panValue.x) + (transform.up * -panValue.y)) * zoomFactor;
-            transform.DOMove(panPos, 0.25f);
+
+            if (useSmoothing) {
+                transform.DOMove(panPos, 0.25f);
+            } else {
+                transform.position = panPos;
+            }
         }
     }
 }
