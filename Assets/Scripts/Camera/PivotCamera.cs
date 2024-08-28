@@ -27,7 +27,7 @@ namespace Protobot {
         private IPivotCameraInput[] inputs;
         private float zoomDistance;
         public bool invertZoom = false;
-        [SerializeField] public bool useSmoothing = true;
+        public bool useSmoothing = true;
         public float snapSensitivity;
 
         void Start() {
@@ -119,7 +119,7 @@ namespace Protobot {
             invertZoom = value;
         }
 
-        public void setUseSmoothing(bool value) {
+        public void SetUseSmoothing(bool value) {
             useSmoothing = value;
         }
 
