@@ -2079,7 +2079,7 @@ Transform:
   m_Children:
   - {fileID: 1462463202}
   - {fileID: 8645419}
-  - {fileID: 2113791682}
+  - {fileID: 1658067581}
   - {fileID: 1794639569}
   - {fileID: 1149744697}
   - {fileID: 305630561}
@@ -3835,7 +3835,7 @@ GameObject:
   - component: {fileID: 161841897}
   - component: {fileID: 161841900}
   - component: {fileID: 161841899}
-  - component: {fileID: 161841898}
+  - component: {fileID: 161841901}
   m_Layer: 5
   m_Name: UseSmoothing Toggle
   m_TagString: Untagged
@@ -3864,7 +3864,45 @@ RectTransform:
   m_AnchoredPosition: {x: -25, y: -5}
   m_SizeDelta: {x: 15.5, y: 15.5}
   m_Pivot: {x: 1, y: 1}
---- !u!114 &161841898
+--- !u!114 &161841899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161841896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 0662458029b9340488052dd30f0663d5, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 1
+  m_FillCenter: 0
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 1
+  m_PixelsPerUnitMultiplier: 15
+--- !u!222 &161841900
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161841896}
+  m_CullTransparentMesh: 0
+--- !u!114 &161841901
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3911,10 +3949,10 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2113791683}
+      - m_Target: {fileID: 1658067582}
         m_TargetAssemblyTypeName: Protobot.Setting, Assembly-CSharp
         m_MethodName: SetValue
-        m_Mode: 6
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3924,44 +3962,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
---- !u!114 &161841899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 161841896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0662458029b9340488052dd30f0663d5, type: 3}
-  m_Type: 1
-  m_PreserveAspect: 1
-  m_FillCenter: 0
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 1
-  m_PixelsPerUnitMultiplier: 15
---- !u!222 &161841900
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 161841896}
-  m_CullTransparentMesh: 0
 --- !u!1 &167002517
 GameObject:
   m_ObjectHideFlags: 0
@@ -7613,7 +7613,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 926006024}
   m_HandleRect: {fileID: 926006023}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -32168,6 +32168,93 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1649481099}
   m_CullTransparentMesh: 0
+--- !u!1 &1658067580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1658067581}
+  - component: {fileID: 1658067582}
+  m_Layer: 0
+  m_Name: Use Smoothing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1658067581
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658067580}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 71664220}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1658067582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658067580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b985ff9f8b2387844b3312834e1baa41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentValue: false
+  OnUpdateIntValue:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUpdateBoolValue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1761028400}
+        m_TargetAssemblyTypeName: Protobot.PivotCamera, Assembly-CSharp
+        m_MethodName: SetUseSmoothing
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnUpdateFloatValue:
+    m_PersistentCalls:
+      m_Calls: []
+  OnInitIntValue:
+    m_PersistentCalls:
+      m_Calls: []
+  OnInitBoolValue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 161841901}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+        m_MethodName: SetIsOnWithoutNotify
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnInitFloatValue:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1658324962
 GameObject:
   m_ObjectHideFlags: 0
@@ -42652,93 +42739,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104443488}
   m_CullTransparentMesh: 0
---- !u!1 &2113791681
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2113791682}
-  - component: {fileID: 2113791683}
-  m_Layer: 0
-  m_Name: Use Smoothing
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2113791682
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113791681}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 71664220}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2113791683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113791681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b985ff9f8b2387844b3312834e1baa41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentValue: false
-  OnUpdateIntValue:
-    m_PersistentCalls:
-      m_Calls: []
-  OnUpdateBoolValue:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1761028400}
-        m_TargetAssemblyTypeName: Protobot.PivotCamera, Assembly-CSharp
-        m_MethodName: setUseSmoothing
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  OnUpdateFloatValue:
-    m_PersistentCalls:
-      m_Calls: []
-  OnInitIntValue:
-    m_PersistentCalls:
-      m_Calls: []
-  OnInitBoolValue:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2088033810}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
-        m_MethodName: SetIsOnWithoutNotify
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnInitFloatValue:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &2114978313
 GameObject:
   m_ObjectHideFlags: 0
