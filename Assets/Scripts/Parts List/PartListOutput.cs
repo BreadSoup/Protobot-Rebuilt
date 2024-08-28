@@ -8,6 +8,7 @@ using Protobot.Builds.Windows;
 using Protobot.Builds;
 using DG.Tweening.Plugins.Core.PathCore;
 using System.Linq;
+using System.Security.Cryptography;
 
 public class PartListOutput : MonoBehaviour
 {
@@ -50,12 +51,15 @@ public class PartListOutput : MonoBehaviour
             partsList = partsList + key + " x" + sortedDict[key] + "\n";
         }
 
-       
+
         //writes the partlist string into a txt file instead of having an in-program ui
 
         string fileLocation = GetFileLocation();
 
-        File.WriteAllText(fileLocation, partsList);
+        if (!(fileLocation == ""))
+        {
+            File.WriteAllText(fileLocation, partsList);
+        }
     }
 
     public string GetFileLocation()
