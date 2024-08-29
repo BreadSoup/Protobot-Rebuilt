@@ -7613,7 +7613,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 926006024}
   m_HandleRect: {fileID: 926006023}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -32357,7 +32357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b985ff9f8b2387844b3312834e1baa41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentValue: false
+  currentValue: True
   OnUpdateIntValue:
     m_PersistentCalls:
       m_Calls: []
