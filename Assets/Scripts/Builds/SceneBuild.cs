@@ -52,6 +52,7 @@ namespace Protobot.Builds {
                 List<ObjectData> connectingObjects = new();
 
                 foreach (ObjectData part in buildData.parts) {
+                    if (part.partId == "Error") continue; //this is jank but I'm avoiding editing main scene
                     if (PartsManager.GetPartType(part.partId).connectingPart) {
                         connectingObjects.Add(part);
                     }

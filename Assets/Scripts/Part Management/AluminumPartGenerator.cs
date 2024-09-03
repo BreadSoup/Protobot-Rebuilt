@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Protobot;
+using TMPro;
 using UnityEngine;
 
 namespace Protobot {
@@ -23,6 +24,26 @@ namespace Protobot {
         public override Mesh GetMesh() => subParts[param1Options.IndexOf(param1.value)].GetMesh(HoleCount);
 
         public override GameObject Generate(Vector3 position, Quaternion rotation) {
+            //This check should *NEVER* return true but somehow Michael was able to create a 2x35x24 which triggers this????
+            if (param1Options.IndexOf(param1.value) == -1)
+            {
+                print(param1.value);
+                print(HoleCount);
+                print("WHJAT");
+                if (GameObject.Find("Error") == null)
+                {
+                    var notfication = new GameObject();
+                    notfication.gameObject.name = "Error";
+                    var text = notfication.AddComponent<TextMeshPro>();
+                    text.text =
+                        "Please send this save to @breadsoup on discord or breadsoup64@gmail.com as it contains an error I cannot replicate " +
+                        "This should never be seen under normal circumstances";
+                    text.color = Color.red;
+                    text.rectTransform.sizeDelta = new Vector2(187, 5);
+                    notfication.AddComponent<SavedObject>().id = "Error";
+                }
+                return null;
+            }
             var partObj = subParts[param1Options.IndexOf(param1.value)].GeneratePart(HoleCount);
             partObj.transform.position = position;
             partObj.transform.rotation = rotation;
