@@ -37,10 +37,13 @@ namespace Protobot {
                     var text = notfication.AddComponent<TextMeshPro>();
                     text.text =
                         "Please send this save to @breadsoup on discord or breadsoup64@gmail.com as it contains an error I cannot replicate " +
-                        "This should never be seen under normal circumstances";
+                        "This should never be seen under normal circumstances. To remove click on the red text and press delete.";
                     text.color = Color.red;
                     text.rectTransform.sizeDelta = new Vector2(187, 5);
                     notfication.AddComponent<SavedObject>().id = "Error";
+                    //little jank method to delete the text but it works
+                    var boxCollider = notfication.AddComponent<BoxCollider>();
+                    boxCollider.size = new Vector2(187, 10);
                 }
                 return null;
             }
