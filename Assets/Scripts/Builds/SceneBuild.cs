@@ -38,9 +38,9 @@ namespace Protobot.Builds {
             Vector3 savedCamPos = new Vector3((float)camData.xPos, (float)camData.yPos, (float)camData.zPos);
             Vector3 savedCamAngle = new Vector3((float)camData.xRot, (float)camData.yRot, (float)camData.zRot);
 
-            PivotCamera.main.SetTransform(savedCamPos, savedCamAngle, (float)camData.zoom);
+            PivotCamera.Main.SetTransform(savedCamPos, savedCamAngle, (float)camData.zoom);
 
-            var projectionSwitcher = PivotCamera.main.GetComponent<ProjectionSwitcher>();
+            var projectionSwitcher = PivotCamera.Main.GetComponent<ProjectionSwitcher>();
 
             if (camData.isOrtho)
                 projectionSwitcher.SwitchToOrtho(0);
@@ -102,7 +102,7 @@ namespace Protobot.Builds {
         /// <remarks>Does not contain lastWriteTime, createTime, fileName, or name</remarks>
         public static BuildData ToBuildData() {
             //Camera
-            PivotCamera cam = PivotCamera.main;
+            PivotCamera cam = PivotCamera.Main;
             ProjectionSwitcher projectionSwitcher = cam.GetComponent<ProjectionSwitcher>();
 
             CameraData newCameraData = new CameraData {

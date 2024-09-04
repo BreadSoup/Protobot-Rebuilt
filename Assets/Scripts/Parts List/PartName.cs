@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class PartName : MonoBehaviour
+namespace Parts_List
 {
-    public string name;
+    public class PartName : MonoBehaviour
+    {
+        public new string name;
+    }
 }
