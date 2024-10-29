@@ -312,7 +312,7 @@ Transform:
   m_GameObject: {fileID: 7716088485723223049}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2106910640134131464}
@@ -482,7 +482,7 @@ MonoBehaviour:
     customLimits: {x: 0, y: 0}
   param2:
     name: Size
-    value: 3
+    value: 6
     custom: 1
     customUnit: in
     customDefault: 6
