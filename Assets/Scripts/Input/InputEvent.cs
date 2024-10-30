@@ -60,5 +60,12 @@ namespace Protobot.InputEvents {
         {
             return defaultAction.GetBindingDisplayString();
         }
+        
+        public bool IsKeyPressed(string keyName)
+        {
+            var key = Keyboard.current.FindKeyOnCurrentKeyboardLayout(keyName);
+            if (key == null) print("Key not found: " + keyName);
+            return key != null && key.isPressed;
+        }
     }
 }

@@ -18,7 +18,10 @@ namespace Protobot.SelectionSystem
         {
             if (sel == null)  
                 return;
-            GameObject targetGameObject = sel.gameObject;
+            ChangeColor(sel.gameObject);
+        }
+        public void ChangeColor(GameObject targetGameObject)
+        {
             Renderer component;
             if (targetGameObject != null)
             {
@@ -38,8 +41,8 @@ namespace Protobot.SelectionSystem
                 if (component == null)
                     return;
             }
-            if (sel.gameObject.TryGetComponent<Renderer>(out component) ||
-                sel.gameObject.transform.parent.gameObject.TryGetComponent<Renderer>(out component))
+            if (targetGameObject.TryGetComponent<Renderer>(out component) ||
+                targetGameObject.transform.parent.gameObject.TryGetComponent<Renderer>(out component))
             {
                 if (component == null)
                     return;
