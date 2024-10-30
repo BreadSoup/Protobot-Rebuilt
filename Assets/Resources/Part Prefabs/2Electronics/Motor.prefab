@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 80507991745804000}
   - component: {fileID: 80507991745804001}
   - component: {fileID: 6622822514233484984}
+  - component: {fileID: 80507992581931585}
   m_Layer: 0
   m_Name: 11W
   m_TagString: Object
@@ -173,6 +174,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shaftHole: {fileID: 80507993073605347}
+--- !u!114 &80507992581931585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80507991745804006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 11W Motor
 --- !u!1 &80507991746179770
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,7 +323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Type
-    value: 
+    value: 11W
     custom: 0
     customUnit: 
     customDefault: 
@@ -478,6 +492,7 @@ GameObject:
   - component: {fileID: 6425842211484980347}
   - component: {fileID: 5888357882718235347}
   - component: {fileID: 3046086505665870182}
+  - component: {fileID: 80507992581931584}
   m_Layer: 0
   m_Name: 5.5W
   m_TagString: Untagged
@@ -628,6 +643,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shaftHole: {fileID: 1366689523767018891}
+--- !u!114 &80507992581931584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306128234194788163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 5.5W Motor
 --- !u!1 &1267116233930034824
 GameObject:
   m_ObjectHideFlags: 0

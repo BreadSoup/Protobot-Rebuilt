@@ -9,13 +9,13 @@ using UnityEngine.InputSystem.Utilities;
 namespace Protobot.InputEvents {
     public class RebindUI : MonoBehaviour {
         [Header("Inputs")] [SerializeField] private InputEvent inputEvent;
-        private RebindAction EventRebindAction => inputEvent.rebindAction;
+        public RebindAction EventRebindAction => inputEvent.rebindAction;
 
         [Header("UI")] [SerializeField] private Text actionNameText;
-        [SerializeField] private Text rebindText;
+        [SerializeField] public Text rebindText;
         [SerializeField] private Button resetButton;
 
-        [SerializeField] private bool rebinding = false;
+        [SerializeField] internal static bool rebinding;
 
         void Start() {
             if (EventRebindAction != null) {

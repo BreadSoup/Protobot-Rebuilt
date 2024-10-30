@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1316777246251422423}
   - component: {fileID: 3401127732667671869}
   - component: {fileID: 470873780385214361}
+  - component: {fileID: 894777426}
   m_Layer: 0
   m_Name: 2.25in
   m_TagString: Screw
@@ -145,6 +146,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &894777426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075374801903351725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 2.25" Screw
 --- !u!1 &5519233413200490527
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,6 +174,7 @@ GameObject:
   - component: {fileID: 2127865162119370331}
   - component: {fileID: 4123217987490988725}
   - component: {fileID: 6039821695639775995}
+  - component: {fileID: 1070346610}
   m_Layer: 0
   m_Name: 2.50in
   m_TagString: Screw
@@ -290,6 +305,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &1070346610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5519233413200490527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 2.50" Screw
 --- !u!1 &7074932535482431805
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,6 +333,7 @@ GameObject:
   - component: {fileID: 7074932535482431801}
   - component: {fileID: 7074932535482431800}
   - component: {fileID: 7074932535482431803}
+  - component: {fileID: 1572525986}
   m_Layer: 0
   m_Name: 7/8in
   m_TagString: Screw
@@ -435,6 +464,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &1572525986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074932535482431805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 7/8" Screw
 --- !u!1 &7074932535504565886
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,6 +492,7 @@ GameObject:
   - component: {fileID: 7074932535504565882}
   - component: {fileID: 7074932535504565885}
   - component: {fileID: 7074932535504565884}
+  - component: {fileID: 847197053}
   m_Layer: 0
   m_Name: 2.00in
   m_TagString: Screw
@@ -580,6 +623,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &847197053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074932535504565886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 2.00" Screw
 --- !u!1 &7074932535607183255
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,6 +651,7 @@ GameObject:
   - component: {fileID: 7074932535607183251}
   - component: {fileID: 7074932535607183250}
   - component: {fileID: 7074932535607183253}
+  - component: {fileID: 1424194750}
   m_Layer: 0
   m_Name: 1.50in
   m_TagString: Screw
@@ -725,6 +782,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &1424194750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074932535607183255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1.50" Screw
 --- !u!1 &7074932535628050118
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +810,7 @@ GameObject:
   - component: {fileID: 7074932535628050114}
   - component: {fileID: 7074932535628050117}
   - component: {fileID: 7074932535628050116}
+  - component: {fileID: 7074932535634450528}
   m_Layer: 0
   m_Name: 1/4in
   m_TagString: Screw
@@ -870,6 +941,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &7074932535634450528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074932535628050118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1/4" Screw
 --- !u!1 &7074932535663284011
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,6 +969,7 @@ GameObject:
   - component: {fileID: 7074932535663284007}
   - component: {fileID: 7074932535663284006}
   - component: {fileID: 7074932535663284009}
+  - component: {fileID: 7074932535634450527}
   m_Layer: 0
   m_Name: 3/8in
   m_TagString: Screw
@@ -1015,6 +1100,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &7074932535634450527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074932535663284011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 3/8" Screw
 --- !u!1 &7074932535733219535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,6 +1128,7 @@ GameObject:
   - component: {fileID: 7074932535733219531}
   - component: {fileID: 7074932535733219530}
   - component: {fileID: 7074932535733219533}
+  - component: {fileID: 175803170}
   m_Layer: 0
   m_Name: 1.75in
   m_TagString: Screw
@@ -1160,6 +1259,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &175803170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074932535733219535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1.75" Screw
 --- !u!1 &7074932535929617507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1175,6 +1287,7 @@ GameObject:
   - component: {fileID: 7074932535929617535}
   - component: {fileID: 7074932535929617534}
   - component: {fileID: 7074932535929617505}
+  - component: {fileID: 63401827}
   m_Layer: 0
   m_Name: 1.00in
   m_TagString: Screw
@@ -1305,6 +1418,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &63401827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074932535929617507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1.00" Screw
 --- !u!1 &7074932536225802394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,7 +1507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Size
-    value: 
+    value: 1/4in
     custom: 0
     customUnit: 
     customDefault: 
@@ -1408,6 +1534,7 @@ GameObject:
   - component: {fileID: 7074932536272152135}
   - component: {fileID: 7074932536272152134}
   - component: {fileID: 7074932536272152137}
+  - component: {fileID: 7074932535634450525}
   m_Layer: 0
   m_Name: 5/8in
   m_TagString: Screw
@@ -1538,6 +1665,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &7074932535634450525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074932536272152139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 5/8" Screw
 --- !u!1 &7074932536853012793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,6 +1693,7 @@ GameObject:
   - component: {fileID: 7074932536853012789}
   - component: {fileID: 7074932536853012788}
   - component: {fileID: 7074932536853012791}
+  - component: {fileID: 7074932535634450524}
   m_Layer: 0
   m_Name: 3/4in
   m_TagString: Screw
@@ -1683,6 +1824,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &7074932535634450524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074932536853012793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 3/4" Screw
 --- !u!1 &7074932536895543758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1698,6 +1852,7 @@ GameObject:
   - component: {fileID: 7074932536895543754}
   - component: {fileID: 7074932536895543757}
   - component: {fileID: 7074932536895543756}
+  - component: {fileID: 1223182808}
   m_Layer: 0
   m_Name: 1.25in
   m_TagString: Screw
@@ -1828,6 +1983,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &1223182808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074932536895543758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1.25" Screw
 --- !u!1 &7074932536932325182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1843,6 +2011,7 @@ GameObject:
   - component: {fileID: 7074932536932325178}
   - component: {fileID: 7074932536932325181}
   - component: {fileID: 7074932536932325180}
+  - component: {fileID: 7074932535634450526}
   m_Layer: 0
   m_Name: 1/2in
   m_TagString: Screw
@@ -1973,3 +2142,16 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &7074932535634450526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074932536932325182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1/2" Screw

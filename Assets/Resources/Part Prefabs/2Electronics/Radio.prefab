@@ -69,7 +69,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5190446102398353305
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,6 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: RDIO
+  connectingPart: 0
   group: 2
   icon: {fileID: 21300000, guid: cc0a61f4267894c4f999c827a0fc36c3, type: 3}
 --- !u!114 &6201231520587230939
@@ -160,6 +162,7 @@ GameObject:
   - component: {fileID: 5190446102586513820}
   - component: {fileID: 5190446102586513821}
   - component: {fileID: 5190446102586513822}
+  - component: {fileID: 8309870103700694955}
   m_Layer: 0
   m_Name: Radio
   m_TagString: Object
@@ -294,8 +297,21 @@ MonoBehaviour:
 
     hole=(-0.75
     > 0, 0, 0.3325)'
-  centerHoleDepth: 0
+  primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &8309870103700694955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190446102586513824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Radio
 --- !u!1 &5190446102819052526
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,4 +381,5 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0

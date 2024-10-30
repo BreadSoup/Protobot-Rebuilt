@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -30.202, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8111770127625177324}
   m_Father: {fileID: 0}
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: PLTE
+  connectingPart: 0
   group: 0
   icon: {fileID: 21300000, guid: 269e13a1f2c984c448188012febe632d, type: 3}
 --- !u!114 &946587813810604524
@@ -62,21 +64,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Length
-    value: 
+    value: 5
     custom: 1
     customUnit: Holes
     customDefault: 5
     customLimits: {x: 1, y: 25}
   param2:
     name: Width
-    value: 
+    value: 5
     custom: 1
     customUnit: Holes
     customDefault: 5
     customLimits: {x: 1, y: 5}
   plateTemplate: {fileID: 8111770127625177327}
   plateHole: {fileID: 8111770127311999989}
-  material: {fileID: 2100000, guid: df807890bcb729e4fb9ddedbdf60bb3f, type: 2}
+  material: {fileID: 2100000, guid: 4cbbf88a6aa3e4b4f9ce73c795161034, type: 2}
 --- !u!1 &8111770127311999991
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,6 +107,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.182, y: 0.182, z: 0.045}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8111770127625177324}
   m_RootOrder: 0
@@ -144,7 +147,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &8111770127625177327
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,6 +178,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: 1, w: -0.00000004371139}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8111770127311999988}
   m_Father: {fileID: 8111770126204061566}
@@ -198,14 +203,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: df807890bcb729e4fb9ddedbdf60bb3f, type: 2}
+  - {fileID: 2100000, guid: 4cbbf88a6aa3e4b4f9ce73c795161034, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -226,6 +233,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &8111770127625177323
 MeshCollider:
   m_ObjectHideFlags: 0

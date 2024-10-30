@@ -209,14 +209,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Type
-    value: 
+    value: Normal
     custom: 0
     customUnit: 
     customDefault: 
     customLimits: {x: 0, y: 0}
   param2:
-    name: Type
-    value: 
+    name: Size
+    value: Normal
     custom: 0
     customUnit: 
     customDefault: 
@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 7221011379137062349}
   - component: {fileID: 7221011379137062386}
   - component: {fileID: 7221011379137062387}
+  - component: {fileID: 7221011379262856436}
   m_Layer: 0
   m_Name: Normal Clamping Shaft Collar
   m_TagString: Motion
@@ -451,6 +452,19 @@ MonoBehaviour:
     0)'
   primaryHole: {fileID: 7221011380146022848}
   allowCenterInserts: 0
+--- !u!114 &7221011379262856436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7221011379137062384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Normal Clamping Shaft Collar
 --- !u!1 &7221011379765375484
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,6 +479,7 @@ GameObject:
   - component: {fileID: 7221011379765375480}
   - component: {fileID: 7221011379765375481}
   - component: {fileID: 7221011379765375486}
+  - component: {fileID: 7221011379262856435}
   m_Layer: 0
   m_Name: High Strength Clamping Shaft Collar
   m_TagString: Motion
@@ -610,6 +625,19 @@ MonoBehaviour:
     0)'
   primaryHole: {fileID: 7221011380131625254}
   allowCenterInserts: 0
+--- !u!114 &7221011379262856435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7221011379765375484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS Clamping Shaft Collar
 --- !u!1 &7221011379937674592
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,6 +863,7 @@ GameObject:
   - component: {fileID: 2864672642325079361}
   - component: {fileID: 199446173735661214}
   - component: {fileID: 6981832917759890855}
+  - component: {fileID: 7221011379262856437}
   m_Layer: 0
   m_Name: shaftcollar
   m_TagString: Untagged
@@ -966,6 +995,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 7905096385531505723}
   allowCenterInserts: 0
+--- !u!114 &7221011379262856437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7796704350143721289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Shaft Collar
 --- !u!1 &7943435091912823342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,6 +1092,7 @@ GameObject:
   - component: {fileID: 2098689455575167041}
   - component: {fileID: 1509286584800960302}
   - component: {fileID: 425192795789717879}
+  - component: {fileID: 7221011379262856434}
   m_Layer: 0
   m_Name: LowProfileHSClamp
   m_TagString: Untagged
@@ -1195,3 +1238,16 @@ MonoBehaviour:
     0)'
   primaryHole: {fileID: 7221011380131625254}
   allowCenterInserts: 0
+--- !u!114 &7221011379262856434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8175000386473230291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Low Profile HS Clamping Shaft Collar

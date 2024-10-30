@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 5088699910159408248}
   - component: {fileID: 8024833049238313956}
   - component: {fileID: 2453162325502121158}
+  - component: {fileID: 5112426444557338865}
   m_Layer: 0
   m_Name: 4.6mm
   m_TagString: Motion
@@ -174,6 +175,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 5044416877142991797}
   allowCenterInserts: 0
+--- !u!114 &5112426444557338865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3275528643866129349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 4.6mm Plastic Spacer
 --- !u!1 &4271726167011910118
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +257,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5112426443753457457
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +362,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5112426443927114109
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,7 +433,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5112426443995210573
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +460,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5112426443995210573}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.51, y: 0, z: 5.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -484,14 +501,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Type
-    value: 
+    value: Nylon
     custom: 0
     customUnit: 
     customDefault: 
     customLimits: {x: 0, y: 0}
   param2:
     name: Size
-    value: 
+    value: 1/4in
     custom: 0
     customUnit: 
     customDefault: 
@@ -510,6 +527,7 @@ GameObject:
   - component: {fileID: 5112426444034614525}
   - component: {fileID: 5112426444034614524}
   - component: {fileID: 5112426444034614527}
+  - component: {fileID: 951351798}
   m_Layer: 0
   m_Name: 1/4in
   m_TagString: Motion
@@ -637,6 +655,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 5112426444933573012}
   allowCenterInserts: 0
+--- !u!114 &951351798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112426444034614513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1/4" HS Spacer
 --- !u!1 &5112426444074949841
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,6 +682,7 @@ GameObject:
   - component: {fileID: 5112426444074949853}
   - component: {fileID: 5112426444074949852}
   - component: {fileID: 5112426444074949855}
+  - component: {fileID: 5112426444557338868}
   m_Layer: 0
   m_Name: 1/4in
   m_TagString: Motion
@@ -778,6 +810,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 5112426443927114107}
   allowCenterInserts: 0
+--- !u!114 &5112426444557338868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112426444074949841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1/4" Nylon Spacer
 --- !u!1 &5112426444488920909
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,6 +837,7 @@ GameObject:
   - component: {fileID: 5112426444488920905}
   - component: {fileID: 5112426444488920904}
   - component: {fileID: 5112426444488920907}
+  - component: {fileID: 1927840620}
   m_Layer: 0
   m_Name: 1/16in
   m_TagString: Motion
@@ -919,6 +965,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 5112426443816966093}
   allowCenterInserts: 0
+--- !u!114 &1927840620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112426444488920909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1/16" HS Spacer
 --- !u!1 &5112426444534556309
 GameObject:
   m_ObjectHideFlags: 0
@@ -988,7 +1047,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5112426444558391781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,7 +1118,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5112426444663938714
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,6 +1134,7 @@ GameObject:
   - component: {fileID: 5112426444663938662}
   - component: {fileID: 5112426444663938713}
   - component: {fileID: 5112426444663938712}
+  - component: {fileID: 5112426444557338866}
   m_Layer: 0
   m_Name: 1/2in
   m_TagString: Motion
@@ -1200,6 +1262,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 5112426444534556307}
   allowCenterInserts: 0
+--- !u!114 &5112426444557338866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112426444663938714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1/2" Nylon Spacer
 --- !u!1 &5112426444807183001
 GameObject:
   m_ObjectHideFlags: 0
@@ -1214,6 +1289,7 @@ GameObject:
   - component: {fileID: 5112426444807182949}
   - component: {fileID: 5112426444807182948}
   - component: {fileID: 5112426444807182951}
+  - component: {fileID: 5112426444557338869}
   m_Layer: 0
   m_Name: 1/8in
   m_TagString: Motion
@@ -1341,6 +1417,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 5112426445210699428}
   allowCenterInserts: 0
+--- !u!114 &5112426444557338869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112426444807183001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1/8" Nylon Spacer
 --- !u!1 &5112426444881236526
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,6 +1444,7 @@ GameObject:
   - component: {fileID: 5112426444881236522}
   - component: {fileID: 5112426444881236525}
   - component: {fileID: 5112426444881236524}
+  - component: {fileID: 1206701323}
   m_Layer: 0
   m_Name: 1/8in
   m_TagString: Motion
@@ -1482,6 +1572,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 5112426445629736401}
   allowCenterInserts: 0
+--- !u!114 &1206701323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112426444881236526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1/8" HS Spacer
 --- !u!1 &5112426444900737450
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,6 +1599,7 @@ GameObject:
   - component: {fileID: 5112426444900737462}
   - component: {fileID: 5112426444900737449}
   - component: {fileID: 5112426444900737448}
+  - component: {fileID: 5112426444557338867}
   m_Layer: 0
   m_Name: 3/8in
   m_TagString: Motion
@@ -1623,6 +1727,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 5112426444558391779}
   allowCenterInserts: 0
+--- !u!114 &5112426444557338867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112426444900737450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 3/8" Nylon Spacer
 --- !u!1 &5112426444933573014
 GameObject:
   m_ObjectHideFlags: 0
@@ -1691,7 +1808,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5112426445072803562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,7 +1878,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5112426445210699430
 GameObject:
   m_ObjectHideFlags: 0
@@ -1830,7 +1949,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5112426445629736403
 GameObject:
   m_ObjectHideFlags: 0
@@ -1899,7 +2019,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5112426445638088781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1914,6 +2035,7 @@ GameObject:
   - component: {fileID: 5112426445638088777}
   - component: {fileID: 5112426445638088776}
   - component: {fileID: 5112426445638088779}
+  - component: {fileID: 1169946354}
   m_Layer: 0
   m_Name: 1/2in
   m_TagString: Motion
@@ -2041,6 +2163,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 5112426445072803560}
   allowCenterInserts: 0
+--- !u!114 &1169946354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112426445638088781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1/2" HS Spacer
 --- !u!1 &6471132970564596477
 GameObject:
   m_ObjectHideFlags: 0
@@ -2055,6 +2190,7 @@ GameObject:
   - component: {fileID: 8362380495447268641}
   - component: {fileID: 6654636890866993028}
   - component: {fileID: 603573351350826491}
+  - component: {fileID: 1753147301}
   m_Layer: 0
   m_Name: 8mm
   m_TagString: Motion
@@ -2182,6 +2318,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 3246486305850467234}
   allowCenterInserts: 0
+--- !u!114 &1753147301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6471132970564596477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 8mm Plastic Spacer
 --- !u!1 &8023691140753846428
 GameObject:
   m_ObjectHideFlags: 0
@@ -2251,7 +2400,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &8417458446976292396
 GameObject:
   m_ObjectHideFlags: 0

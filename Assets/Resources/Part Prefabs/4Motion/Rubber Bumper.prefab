@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3557782646904467022}
   - component: {fileID: 4338322918904215871}
   - component: {fileID: 4651190161873908284}
+  - component: {fileID: 7775467536393440216}
   m_Layer: 0
   m_Name: RubberBumper
   m_TagString: Screw
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2625927423458857529}
   m_LocalRotation: {x: -1, y: -0, z: -0, w: -0.00000014901163}
-  m_LocalPosition: {x: -758.1856, y: -1913.2949, z: -37.377193}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -146,6 +147,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holeDetector: {fileID: 0}
+--- !u!114 &7775467536393440216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2625927423458857529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Rubber Bumper
 --- !u!1 &2863303984188757819
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,7 +185,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2863303984188757819}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: 0, w: 0.7071067}
+  m_LocalRotation: {x: 0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: 0.053466797, y: 0.12255858, z: 0.08327103}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
   m_ConstrainProportionsScale: 0
@@ -179,7 +193,7 @@ Transform:
   - {fileID: 6743063734222351095}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 89.98, y: 0, z: 0}
 --- !u!114 &3934255750341506891
 MonoBehaviour:
   m_ObjectHideFlags: 0

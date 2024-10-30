@@ -69,7 +69,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363390796142045
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,6 +85,7 @@ GameObject:
   - component: {fileID: 4765363390796142033}
   - component: {fileID: 4765363390796142034}
   - component: {fileID: 4765363390796142035}
+  - component: {fileID: 4765363392126906456}
   m_Layer: 0
   m_Name: 24T
   m_TagString: Motion
@@ -212,6 +214,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4765363391421074914}
   allowCenterInserts: 0
+--- !u!114 &4765363392126906456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765363390796142045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Normal 24T Sprocket
 --- !u!1 &4765363390853296653
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +296,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!114 &1029318249567160752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,7 +382,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363390891961753
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,7 +453,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363390920815865
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,7 +524,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!114 &6613822435615687856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -592,7 +611,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391025358308
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,7 +682,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391028700694
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,6 +698,7 @@ GameObject:
   - component: {fileID: 4765363391028700714}
   - component: {fileID: 4765363391028700715}
   - component: {fileID: 4765363391028700692}
+  - component: {fileID: 534529478}
   m_Layer: 0
   m_Name: 18T
   m_TagString: Motion
@@ -825,6 +847,19 @@ MonoBehaviour:
     0)'
   primaryHole: {fileID: 4765363391526247666}
   allowCenterInserts: 1
+--- !u!114 &534529478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765363391028700694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS 18T Sprocket
 --- !u!1 &4765363391076868346
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,7 +929,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391089991909
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,7 +1000,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391108153624
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,7 +1071,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391131702221
 GameObject:
   m_ObjectHideFlags: 0
@@ -1104,7 +1142,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391184697876
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,6 +1158,7 @@ GameObject:
   - component: {fileID: 4765363391184697896}
   - component: {fileID: 4765363391184697897}
   - component: {fileID: 4765363391184697898}
+  - component: {fileID: 4765363392126906457}
   m_Layer: 0
   m_Name: 15T
   m_TagString: Motion
@@ -1247,6 +1287,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4765363392450971939}
   allowCenterInserts: 0
+--- !u!114 &4765363392126906457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765363391184697876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Normal 15T Sprocket
 --- !u!1 &4765363391238759409
 GameObject:
   m_ObjectHideFlags: 0
@@ -1261,6 +1314,7 @@ GameObject:
   - component: {fileID: 4765363391238759413}
   - component: {fileID: 4765363391238759414}
   - component: {fileID: 4765363391238759415}
+  - component: {fileID: 4765363392126906458}
   m_Layer: 0
   m_Name: 10T
   m_TagString: Motion
@@ -1389,6 +1443,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4765363392662331488}
   allowCenterInserts: 0
+--- !u!114 &4765363392126906458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765363391238759409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Normal 10T Sprocket
 --- !u!1 &4765363391262511825
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,7 +1525,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391339889034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1524,14 +1592,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Type
-    value: 
+    value: Normal
     custom: 0
     customUnit: 
     customDefault: 
     customLimits: {x: 0, y: 0}
   param2:
     name: Size
-    value: 
+    value: 10T
     custom: 0
     customUnit: 
     customDefault: 
@@ -1605,7 +1673,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391421074924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1674,7 +1743,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391447847022
 GameObject:
   m_ObjectHideFlags: 0
@@ -1744,7 +1814,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391449886059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1814,7 +1885,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391488307220
 GameObject:
   m_ObjectHideFlags: 0
@@ -1884,7 +1956,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391526247676
 GameObject:
   m_ObjectHideFlags: 0
@@ -1954,7 +2027,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!114 &89585161188296169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2040,7 +2114,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391578638110
 GameObject:
   m_ObjectHideFlags: 0
@@ -2110,7 +2185,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391618210674
 GameObject:
   m_ObjectHideFlags: 0
@@ -2180,7 +2256,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391697400357
 GameObject:
   m_ObjectHideFlags: 0
@@ -2250,7 +2327,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391710284048
 GameObject:
   m_ObjectHideFlags: 0
@@ -2320,7 +2398,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391719142999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2390,7 +2469,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391729584082
 GameObject:
   m_ObjectHideFlags: 0
@@ -2460,7 +2540,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391731951350
 GameObject:
   m_ObjectHideFlags: 0
@@ -2530,7 +2611,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391738194116
 GameObject:
   m_ObjectHideFlags: 0
@@ -2600,7 +2682,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391757285257
 GameObject:
   m_ObjectHideFlags: 0
@@ -2615,6 +2698,7 @@ GameObject:
   - component: {fileID: 4765363391757285261}
   - component: {fileID: 4765363391757285262}
   - component: {fileID: 4765363391757285263}
+  - component: {fileID: 2007581505}
   m_Layer: 0
   m_Name: 30T
   m_TagString: Motion
@@ -2788,6 +2872,19 @@ MonoBehaviour:
     > 0.5, -1, 0)'
   primaryHole: {fileID: 4765363391767391437}
   allowCenterInserts: 1
+--- !u!114 &2007581505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765363391757285257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS 30T Sprocket
 --- !u!1 &4765363391765601396
 GameObject:
   m_ObjectHideFlags: 0
@@ -2857,7 +2954,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391767391439
 GameObject:
   m_ObjectHideFlags: 0
@@ -2927,7 +3025,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!114 &3204833137198574505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3013,7 +3112,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391811621557
 GameObject:
   m_ObjectHideFlags: 0
@@ -3083,7 +3183,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391823734571
 GameObject:
   m_ObjectHideFlags: 0
@@ -3153,7 +3254,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391849669014
 GameObject:
   m_ObjectHideFlags: 0
@@ -3168,6 +3270,7 @@ GameObject:
   - component: {fileID: 4765363391849669034}
   - component: {fileID: 4765363391849669035}
   - component: {fileID: 4765363391849669012}
+  - component: {fileID: 703669250}
   m_Layer: 0
   m_Name: 24T
   m_TagString: Motion
@@ -3333,6 +3436,19 @@ MonoBehaviour:
     -1, 0)'
   primaryHole: {fileID: 4765363392768530351}
   allowCenterInserts: 1
+--- !u!114 &703669250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765363391849669014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS 24T Sprocket
 --- !u!1 &4765363391871943308
 GameObject:
   m_ObjectHideFlags: 0
@@ -3402,7 +3518,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391888363487
 GameObject:
   m_ObjectHideFlags: 0
@@ -3472,7 +3589,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391891072212
 GameObject:
   m_ObjectHideFlags: 0
@@ -3542,7 +3660,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363391985342450
 GameObject:
   m_ObjectHideFlags: 0
@@ -3557,6 +3676,7 @@ GameObject:
   - component: {fileID: 4765363391985342454}
   - component: {fileID: 4765363391985342455}
   - component: {fileID: 4765363391985342448}
+  - component: {fileID: 1707741053}
   m_Layer: 0
   m_Name: 6T
   m_TagString: Motion
@@ -3685,6 +3805,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4765363390920815871}
   allowCenterInserts: 1
+--- !u!114 &1707741053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765363391985342450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS 6T Sprocket
 --- !u!1 &4765363392210496118
 GameObject:
   m_ObjectHideFlags: 0
@@ -3754,7 +3887,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392219186744
 GameObject:
   m_ObjectHideFlags: 0
@@ -3824,7 +3958,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392264305807
 GameObject:
   m_ObjectHideFlags: 0
@@ -3894,7 +4029,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392290989769
 GameObject:
   m_ObjectHideFlags: 0
@@ -3964,7 +4100,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392320186930
 GameObject:
   m_ObjectHideFlags: 0
@@ -4034,7 +4171,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392338133227
 GameObject:
   m_ObjectHideFlags: 0
@@ -4049,6 +4187,7 @@ GameObject:
   - component: {fileID: 4765363392338133224}
   - component: {fileID: 4765363392338133225}
   - component: {fileID: 4765363392338133226}
+  - component: {fileID: 1489304687}
   m_Layer: 0
   m_Name: 12T
   m_TagString: Motion
@@ -4177,6 +4316,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4765363390853296643}
   allowCenterInserts: 1
+--- !u!114 &1489304687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765363392338133227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS 12T Sprocket
 --- !u!1 &4765363392354717999
 GameObject:
   m_ObjectHideFlags: 0
@@ -4246,7 +4398,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392404949984
 GameObject:
   m_ObjectHideFlags: 0
@@ -4352,7 +4505,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392445620656
 GameObject:
   m_ObjectHideFlags: 0
@@ -4457,7 +4611,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392471328256
 GameObject:
   m_ObjectHideFlags: 0
@@ -4526,7 +4681,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392535066210
 GameObject:
   m_ObjectHideFlags: 0
@@ -4596,7 +4752,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392569050443
 GameObject:
   m_ObjectHideFlags: 0
@@ -4666,7 +4823,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392572680741
 GameObject:
   m_ObjectHideFlags: 0
@@ -4736,7 +4894,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392598507101
 GameObject:
   m_ObjectHideFlags: 0
@@ -4751,6 +4910,7 @@ GameObject:
   - component: {fileID: 4765363392598507089}
   - component: {fileID: 4765363392598507090}
   - component: {fileID: 4765363392598507091}
+  - component: {fileID: 4765363392126906454}
   m_Layer: 0
   m_Name: 48T
   m_TagString: Motion
@@ -4901,6 +5061,19 @@ MonoBehaviour:
     hole=(-0.3685, 0.3385, 0.10875)'
   primaryHole: {fileID: 4765363390891916071}
   allowCenterInserts: 0
+--- !u!114 &4765363392126906454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765363392598507101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Normal 48T Sprocket
 --- !u!1 &4765363392645639491
 GameObject:
   m_ObjectHideFlags: 0
@@ -4970,7 +5143,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392654768832
 GameObject:
   m_ObjectHideFlags: 0
@@ -5040,7 +5214,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392662331490
 GameObject:
   m_ObjectHideFlags: 0
@@ -5109,7 +5284,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392699960879
 GameObject:
   m_ObjectHideFlags: 0
@@ -5179,7 +5355,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392768530345
 GameObject:
   m_ObjectHideFlags: 0
@@ -5249,7 +5426,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!114 &8448134977016386462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5280,6 +5458,7 @@ GameObject:
   - component: {fileID: 4765363392810168350}
   - component: {fileID: 4765363392810168351}
   - component: {fileID: 4765363392810168344}
+  - component: {fileID: 4765363392126906455}
   m_Layer: 0
   m_Name: 40T
   m_TagString: Motion
@@ -5430,6 +5609,19 @@ MonoBehaviour:
     hole=(0.315, -0.3885, 0.10875)'
   primaryHole: {fileID: 4765363392471328262}
   allowCenterInserts: 0
+--- !u!114 &4765363392126906455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765363392810168346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Normal 40T Sprocket
 --- !u!1 &4765363392816318379
 GameObject:
   m_ObjectHideFlags: 0
@@ -5499,7 +5691,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &4765363392835497794
 GameObject:
   m_ObjectHideFlags: 0
@@ -5569,4 +5762,5 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0

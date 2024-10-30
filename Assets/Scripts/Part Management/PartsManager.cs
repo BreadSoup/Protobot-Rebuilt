@@ -68,6 +68,10 @@ namespace Protobot {
                     {
                         p2.value = "Normal";
                     }
+                    if (gen.name == "Ring" && p1Val == "")
+                    {
+                        p1.value = "Red";
+                    }
 
                     partObj = gen.Generate(pos, rot);
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Protobot.Outlining;
+using UnityEngine.UIElements;
 
 namespace Protobot.SelectionSystem {
     public class OutlineSelectionResponse : SelectionResponse {

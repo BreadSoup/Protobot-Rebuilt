@@ -14,7 +14,7 @@ namespace Protobot.UI {
         public string text;
 
         private void Start() {
-            rect = GetComponent<RectTransform>();
+            rect = GetComponent<RectTransform>(); // since this is only getting the rect transform of the object this script is attached to
         }
 
         public void OnPointerEnter(PointerEventData eventData) {

@@ -3,7 +3,7 @@ using DG.Tweening;
 
 namespace Protobot {
     public class PivotCamera : MonoBehaviour {
-        public static PivotCamera main;
+        public static PivotCamera Main;
         [SerializeField] public new Camera camera;
 
         //Moving values
@@ -37,12 +37,12 @@ namespace Protobot {
 
             foreach (GameObject cam in mainCams) {
                 if (cam.GetComponent<PivotCamera>() != null) {
-                    main = cam.GetComponent<PivotCamera>();
+                    Main = cam.GetComponent<PivotCamera>();
                     break;
                 }
             }
 
-            if (main == null) Debug.LogError("MAIN PIVOT CAMERA REFERENCE MISSING");
+            if (Main == null) Debug.LogError("MAIN PIVOT CAMERA REFERENCE MISSING");
 
             SetupInputs();
 

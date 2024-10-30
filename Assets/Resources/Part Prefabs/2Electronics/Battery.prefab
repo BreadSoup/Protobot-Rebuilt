@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8699751294082580698}
   - component: {fileID: 4377566964613441428}
   m_Layer: 0
-  m_Name: V5 Battery
+  m_Name: Battery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8699751294324533528}
   m_Father: {fileID: 0}
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: BTRY
+  connectingPart: 0
   group: 2
   icon: {fileID: 21300000, guid: fad83f1f944867b4fb7b4d8b4e84eeaa, type: 3}
 --- !u!114 &4377566964613441428
@@ -63,9 +65,17 @@ MonoBehaviour:
   param1:
     name: 
     value: 
+    custom: 0
+    customUnit: 
+    customDefault: 
+    customLimits: {x: 0, y: 0}
   param2:
     name: 
     value: 
+    custom: 0
+    customUnit: 
+    customDefault: 
+    customLimits: {x: 0, y: 0}
   singleObj: {fileID: 8699751294324533531}
 --- !u!1 &8699751294324533531
 GameObject:
@@ -81,6 +91,7 @@ GameObject:
   - component: {fileID: 8699751294324533535}
   - component: {fileID: 8699751294324533534}
   - component: {fileID: 8699751294324533529}
+  - component: {fileID: 2897201757473132403}
   m_Layer: 0
   m_Name: Battery
   m_TagString: Object
@@ -98,6 +109,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8699751294082580699}
   m_RootOrder: 0
@@ -121,10 +133,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -149,6 +163,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &8699751294324533535
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -192,5 +207,18 @@ MonoBehaviour:
   param1Value: 
   param2Value: 
   holeData: 
-  centerHoleDepth: 0
+  primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &2897201757473132403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8699751294324533531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Battery

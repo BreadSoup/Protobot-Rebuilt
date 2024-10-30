@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 1981275121014930427}
   - component: {fileID: 830067261729006693}
   - component: {fileID: 7216922675433921928}
+  - component: {fileID: 669737116650000456}
   m_Layer: 0
   m_Name: 25mmPiston
   m_TagString: Untagged
@@ -220,6 +221,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8870886256725475529, guid: 4f728b12aa56bb44ea81037964226e75, type: 3}
+--- !u!114 &669737116650000456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200381343642494225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 25mm Piston
 --- !u!1 &707095391892519658
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,14 +374,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Size
-    value: 
+    value: 25mm
     custom: 0
     customUnit: 
     customDefault: 
     customLimits: {x: 0, y: 0}
   param2:
     name: Type
-    value: 
+    value: Normal
     custom: 0
     customUnit: 
     customDefault: 
@@ -670,6 +684,7 @@ GameObject:
   - component: {fileID: 3521557532118980014}
   - component: {fileID: 255146446140610083}
   - component: {fileID: 3456107378946030571}
+  - component: {fileID: 6295507597974943776}
   m_Layer: 0
   m_Name: 75mmextended
   m_TagString: Untagged
@@ -792,6 +807,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &6295507597974943776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3150982878576467855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 75mm Piston
 --- !u!1 &3206282832857185171
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,6 +834,7 @@ GameObject:
   - component: {fileID: 8087704814880851412}
   - component: {fileID: 6326406430251661555}
   - component: {fileID: 4315039026034183279}
+  - component: {fileID: 808873945600125341}
   m_Layer: 0
   m_Name: 50mmextended
   m_TagString: Untagged
@@ -928,6 +957,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &808873945600125341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3206282832857185171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 50mm Piston
 --- !u!1 &4293919375526358681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,6 +1126,7 @@ GameObject:
   - component: {fileID: 8627993782075986115}
   - component: {fileID: 1507802440492773811}
   - component: {fileID: 4684774009397845440}
+  - component: {fileID: 7399281938046787864}
   m_Layer: 0
   m_Name: 50mmPiston
   m_TagString: Untagged
@@ -1219,6 +1262,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4148498921963031395, guid: 0477e5a25930df8458f10c7766781660, type: 3}
+--- !u!114 &7399281938046787864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5674211041883257808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 50mm Piston
 --- !u!1 &6154255021322541540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1233,6 +1289,7 @@ GameObject:
   - component: {fileID: 1154335827504359502}
   - component: {fileID: 9052787031326084867}
   - component: {fileID: 1492647933762315875}
+  - component: {fileID: 7220893348597238752}
   m_Layer: 0
   m_Name: 75mmPiston
   m_TagString: Untagged
@@ -1368,6 +1425,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4148498921963031395, guid: 957e9812b9902d9419332a2cfdd7d140, type: 3}
+--- !u!114 &7220893348597238752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6154255021322541540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 75mm Piston
 --- !u!1 &7301901339267503957
 GameObject:
   m_ObjectHideFlags: 0
@@ -1382,6 +1452,7 @@ GameObject:
   - component: {fileID: 6664135803143284921}
   - component: {fileID: 9135325521690386426}
   - component: {fileID: 6045844817334640632}
+  - component: {fileID: 438640939417180839}
   m_Layer: 0
   m_Name: 25mmextended
   m_TagString: Untagged
@@ -1504,6 +1575,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &438640939417180839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7301901339267503957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 25mm Piston
 --- !u!1 &7540268560038389179
 GameObject:
   m_ObjectHideFlags: 0

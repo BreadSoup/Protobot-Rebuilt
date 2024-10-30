@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Parts_List;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -66,6 +67,7 @@ namespace Protobot {
 
             newPart.transform.position = position;
             newPart.transform.rotation = rotation;
+            newPart.AddComponent<PartName>().name = newPart.name;
             
             RemoveDataScripts(newPart);
             SetId(newPart);

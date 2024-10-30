@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Protobot.UI;
+using Protobot.SelectionSystem;
+using UnityEngine.UIElements;
 
 namespace Protobot.SelectionSystem {
     public class BoxSelector : Selector {
@@ -11,7 +13,6 @@ namespace Protobot.SelectionSystem {
 
         [SerializeField] private BoxSelectUI boxSelectUI;
         [SerializeField] private Camera cam;
-
 
         void Start() {
             boxSelectUI.OnReleaseBox += SetBoxSelection;
@@ -33,6 +34,14 @@ namespace Protobot.SelectionSystem {
                 if (objs.Count > 0) {
                     var selection = new MultiSelection(this, objs);
                     setEvent?.Invoke(selection);
+                    foreach (var obj in objs)
+                    {
+                        ColorSelectionResponse colorResponse = obj.GetComponent<ColorSelectionResponse>();
+                        if (colorResponse == null) {
+                            colorResponse = obj.AddComponent<ColorSelectionResponse>();
+                        }
+                        colorResponse.ChangeColor(obj);
+                    }
                 }
             }
         }

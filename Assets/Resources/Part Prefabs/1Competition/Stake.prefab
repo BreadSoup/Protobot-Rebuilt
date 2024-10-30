@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 1190953085304964471}
   - component: {fileID: 4557210966843083898}
   - component: {fileID: 8482749533165585381}
+  - component: {fileID: 5771205842298818887}
   m_Layer: 0
   m_Name: Stake
   m_TagString: Untagged
@@ -216,3 +217,16 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 84f393175ccf6a7479f7f5c6a6dc1314, type: 2}
+--- !u!114 &5771205842298818887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4607071903020628245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Stake

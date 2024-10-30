@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4288159358445876404}
   - component: {fileID: 4288159358445876405}
   - component: {fileID: 4288159358445876406}
+  - component: {fileID: 417299240}
   m_Layer: 0
   m_Name: 3.00in
   m_TagString: Object
@@ -144,6 +145,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4288159359931779880}
   allowCenterInserts: 0
+--- !u!114 &417299240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288159358445876392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 3.00" Standoff
 --- !u!1 &4288159358524180719
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,6 +227,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
+  detectors: []
   twoSided: 1
 --- !u!1 &4288159358542313834
 GameObject:
@@ -228,6 +243,7 @@ GameObject:
   - component: {fileID: 4288159358542313847}
   - component: {fileID: 4288159358542313832}
   - component: {fileID: 4288159358542313833}
+  - component: {fileID: 4288159358656052624}
   m_Layer: 0
   m_Name: 2.00in
   m_TagString: Object
@@ -358,6 +374,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4288159359189172951}
   allowCenterInserts: 0
+--- !u!114 &4288159358656052624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288159358542313834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 2.00" Standoff
 --- !u!1 &4288159358850226904
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +456,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
+  detectors: []
   twoSided: 1
 --- !u!1 &4288159358942901140
 GameObject:
@@ -442,6 +472,7 @@ GameObject:
   - component: {fileID: 4288159358942901136}
   - component: {fileID: 4288159358942901137}
   - component: {fileID: 4288159358942901138}
+  - component: {fileID: 317937191}
   m_Layer: 0
   m_Name: 6.00in
   m_TagString: Object
@@ -572,6 +603,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4288159359271788173}
   allowCenterInserts: 0
+--- !u!114 &317937191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288159358942901140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 6.00" Standoff
 --- !u!1 &4288159358968521162
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,6 +630,7 @@ GameObject:
   - component: {fileID: 4288159358968521175}
   - component: {fileID: 4288159358968521160}
   - component: {fileID: 4288159358968521161}
+  - component: {fileID: 861936718}
   m_Layer: 0
   m_Name: 1/2in
   m_TagString: Object
@@ -716,6 +761,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4288159360378822433}
   allowCenterInserts: 0
+--- !u!114 &861936718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288159358968521162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1/2" Standoff
 --- !u!1 &4288159359105752296
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,6 +788,7 @@ GameObject:
   - component: {fileID: 4288159359105752309}
   - component: {fileID: 4288159359105752310}
   - component: {fileID: 4288159359105752311}
+  - component: {fileID: 993403248}
   m_Layer: 0
   m_Name: 3/4in
   m_TagString: Object
@@ -859,6 +918,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4288159360362441748}
   allowCenterInserts: 0
+--- !u!114 &993403248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288159359105752296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 3/4" Standoff
 --- !u!1 &4288159359189172937
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,6 +1000,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
+  detectors: []
   twoSided: 1
 --- !u!1 &4288159359248064033
 GameObject:
@@ -943,6 +1016,7 @@ GameObject:
   - component: {fileID: 4288159359248064045}
   - component: {fileID: 4288159359248064046}
   - component: {fileID: 4288159359248064047}
+  - component: {fileID: 617259943}
   m_Layer: 0
   m_Name: 5.00in
   m_TagString: Object
@@ -1073,6 +1147,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4288159358850226918}
   allowCenterInserts: 0
+--- !u!114 &617259943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288159359248064033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 5.00" Standoff
 --- !u!1 &4288159359271788175
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,6 +1229,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
+  detectors: []
   twoSided: 1
 --- !u!1 &4288159359515403192
 GameObject:
@@ -1157,6 +1245,7 @@ GameObject:
   - component: {fileID: 4288159359515403204}
   - component: {fileID: 4288159359515403205}
   - component: {fileID: 4288159359515403206}
+  - component: {fileID: 4288159358656052623}
   m_Layer: 0
   m_Name: 2.50in
   m_TagString: Object
@@ -1287,6 +1376,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4288159359564144661}
   allowCenterInserts: 0
+--- !u!114 &4288159358656052623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288159359515403192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 2.50" Standoff
 --- !u!1 &4288159359564144663
 GameObject:
   m_ObjectHideFlags: 0
@@ -1356,6 +1458,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
+  detectors: []
   twoSided: 1
 --- !u!1 &4288159359591309211
 GameObject:
@@ -1426,6 +1529,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
+  detectors: []
   twoSided: 1
 --- !u!1 &4288159359928072272
 GameObject:
@@ -1441,6 +1545,7 @@ GameObject:
   - component: {fileID: 4288159359928072285}
   - component: {fileID: 4288159359928072286}
   - component: {fileID: 4288159359928072287}
+  - component: {fileID: 4288159358656052626}
   m_Layer: 0
   m_Name: 1.00in
   m_TagString: Object
@@ -1571,6 +1676,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4288159359591309209}
   allowCenterInserts: 0
+--- !u!114 &4288159358656052626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288159359928072272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1.00" Standoff
 --- !u!1 &4288159359931779882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1640,6 +1758,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
+  detectors: []
   twoSided: 1
 --- !u!1 &4288159359939511421
 GameObject:
@@ -1655,6 +1774,7 @@ GameObject:
   - component: {fileID: 4288159359939511418}
   - component: {fileID: 4288159359939511419}
   - component: {fileID: 4288159359939511420}
+  - component: {fileID: 4288159358656052627}
   m_Layer: 0
   m_Name: 1/4in
   m_TagString: Object
@@ -1785,6 +1905,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4288159360095847975}
   allowCenterInserts: 0
+--- !u!114 &4288159358656052627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288159359939511421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1/4" Standoff
 --- !u!1 &4288159360028839101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1799,6 +1932,7 @@ GameObject:
   - component: {fileID: 4288159360028839097}
   - component: {fileID: 4288159360028839098}
   - component: {fileID: 4288159360028839099}
+  - component: {fileID: 4288159358656052625}
   m_Layer: 0
   m_Name: 1.50in
   m_TagString: Object
@@ -1929,6 +2063,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4288159358524180717}
   allowCenterInserts: 0
+--- !u!114 &4288159358656052625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288159360028839101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 1.50" Standoff
 --- !u!1 &4288159360095847961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1998,6 +2145,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
+  detectors: []
   twoSided: 1
 --- !u!1 &4288159360217671144
 GameObject:
@@ -2073,7 +2221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Size
-    value: 
+    value: 3/4in
     custom: 0
     customUnit: 
     customDefault: 
@@ -2099,6 +2247,7 @@ GameObject:
   - component: {fileID: 4288159360250089500}
   - component: {fileID: 4288159360250089501}
   - component: {fileID: 4288159360250089502}
+  - component: {fileID: 2131553689}
   m_Layer: 0
   m_Name: 4.00in
   m_TagString: Object
@@ -2229,6 +2378,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4288159360401156347}
   allowCenterInserts: 0
+--- !u!114 &2131553689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288159360250089503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 4.00" Standoff
 --- !u!1 &4288159360362441750
 GameObject:
   m_ObjectHideFlags: 0
@@ -2298,6 +2460,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
+  detectors: []
   twoSided: 1
 --- !u!1 &4288159360378822435
 GameObject:
@@ -2368,6 +2531,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
+  detectors: []
   twoSided: 1
 --- !u!1 &4288159360401156349
 GameObject:
@@ -2438,4 +2602,5 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 1
+  detectors: []
   twoSided: 1

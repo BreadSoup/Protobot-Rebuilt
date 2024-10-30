@@ -811,6 +811,7 @@ GameObject:
   - component: {fileID: 6969529407807976541}
   - component: {fileID: 3264270051069062231}
   - component: {fileID: 2992523126053707804}
+  - component: {fileID: 2074271061}
   m_Layer: 0
   m_Name: 48T
   m_TagString: Motion
@@ -937,6 +938,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 8444780613852064471}
   allowCenterInserts: 1
+--- !u!114 &2074271061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333857116826213479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS V2 48T Gear
 --- !u!1 &1359515996129579730
 GameObject:
   m_ObjectHideFlags: 0
@@ -2811,6 +2825,7 @@ GameObject:
   - component: {fileID: 3733470108885806354}
   - component: {fileID: 3733470108885806353}
   - component: {fileID: 3733470108885806352}
+  - component: {fileID: 164692329}
   m_Layer: 0
   m_Name: 60T
   m_TagString: Motion
@@ -2985,6 +3000,19 @@ MonoBehaviour:
     hole=(-0.707, -0.707, 0)'
   primaryHole: {fileID: 3733470110835755885}
   allowCenterInserts: 1
+--- !u!114 &164692329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3733470108885806358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS 60T Gear
 --- !u!1 &3733470108895076580
 GameObject:
   m_ObjectHideFlags: 0
@@ -3709,6 +3737,7 @@ GameObject:
   - component: {fileID: 3733470109316886659}
   - component: {fileID: 3733470109316886658}
   - component: {fileID: 3733470109316886657}
+  - component: {fileID: 953906127}
   m_Layer: 0
   m_Name: 36T
   m_TagString: Motion
@@ -3856,6 +3885,19 @@ MonoBehaviour:
     0)'
   primaryHole: {fileID: 3733470110125900540}
   allowCenterInserts: 1
+--- !u!114 &953906127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3733470109316886656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS 36T Gear
 --- !u!1 &3733470109394663480
 GameObject:
   m_ObjectHideFlags: 0
@@ -4579,6 +4621,7 @@ GameObject:
   - component: {fileID: 3733470109744163201}
   - component: {fileID: 3733470109744163200}
   - component: {fileID: 3733470109744163207}
+  - component: {fileID: 3733470109164767390}
   m_Layer: 0
   m_Name: 36T
   m_TagString: Motion
@@ -4709,6 +4752,19 @@ MonoBehaviour:
 '
   primaryHole: {fileID: 3733470110837589332}
   allowCenterInserts: 0
+--- !u!114 &3733470109164767390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3733470109744163205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Normal 36T Gear
 --- !u!1 &3733470109776763017
 GameObject:
   m_ObjectHideFlags: 0
@@ -5538,6 +5594,7 @@ GameObject:
   - component: {fileID: 3733470109952093928}
   - component: {fileID: 3733470109952093935}
   - component: {fileID: 3733470109952093934}
+  - component: {fileID: 3733470109164767388}
   m_Layer: 0
   m_Name: 84T
   m_TagString: Motion
@@ -5711,6 +5768,19 @@ MonoBehaviour:
     > 0.5, -1, -0.085)'
   primaryHole: {fileID: 3733470109703181304}
   allowCenterInserts: 0
+--- !u!114 &3733470109164767388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3733470109952093932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Normal 84T Gear
 --- !u!1 &3733470110046862518
 GameObject:
   m_ObjectHideFlags: 0
@@ -6643,6 +6713,7 @@ GameObject:
   - component: {fileID: 3733470110270342194}
   - component: {fileID: 3733470110270342193}
   - component: {fileID: 3733470110270342192}
+  - component: {fileID: 3733470109164767389}
   m_Layer: 0
   m_Name: 60T
   m_TagString: Motion
@@ -6787,6 +6858,19 @@ MonoBehaviour:
 '
   primaryHole: {fileID: 3733470110093579249}
   allowCenterInserts: 0
+--- !u!114 &3733470109164767389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3733470110270342198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Normal 60T Gear
 --- !u!1 &3733470110336466448
 GameObject:
   m_ObjectHideFlags: 0
@@ -6995,14 +7079,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Type
-    value: 
+    value: Normal
     custom: 0
     customUnit: 
     customDefault: 
     customLimits: {x: 0, y: 0}
   param2:
     name: Size
-    value: 
+    value: 12T
     custom: 0
     customUnit: 
     customDefault: 
@@ -7234,6 +7318,7 @@ GameObject:
   - component: {fileID: 3733470110465867125}
   - component: {fileID: 3733470110465867124}
   - component: {fileID: 3733470110465867131}
+  - component: {fileID: 1693724887}
   m_Layer: 0
   m_Name: 84T
   m_TagString: Motion
@@ -7449,6 +7534,19 @@ MonoBehaviour:
     hole=(-0.75, -1.3, 0)'
   primaryHole: {fileID: 3733470110064391659}
   allowCenterInserts: 1
+--- !u!114 &1693724887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3733470110465867129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS 84T Gear
 --- !u!1 &3733470110479772129
 GameObject:
   m_ObjectHideFlags: 0
@@ -7463,6 +7561,7 @@ GameObject:
   - component: {fileID: 3733470110479772157}
   - component: {fileID: 3733470110479772156}
   - component: {fileID: 3733470110479772131}
+  - component: {fileID: 3733470109164767391}
   m_Layer: 0
   m_Name: 12T
   m_TagString: Motion
@@ -7593,6 +7692,19 @@ MonoBehaviour:
 '
   primaryHole: {fileID: 3733470110681949757}
   allowCenterInserts: 0
+--- !u!114 &3733470109164767391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3733470110479772129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Normal 12T Gear
 --- !u!1 &3733470110490624370
 GameObject:
   m_ObjectHideFlags: 0
@@ -8033,6 +8145,7 @@ GameObject:
   - component: {fileID: 3733470110606824716}
   - component: {fileID: 3733470110606824947}
   - component: {fileID: 3733470110606824946}
+  - component: {fileID: 3733470109164767387}
   m_Layer: 0
   m_Name: 12T
   m_TagString: Motion
@@ -8163,6 +8276,19 @@ MonoBehaviour:
 '
   primaryHole: {fileID: 3733470109883024820}
   allowCenterInserts: 0
+--- !u!114 &3733470109164767387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3733470110606824944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS 12T Gear
 --- !u!1 &3733470110635768720
 GameObject:
   m_ObjectHideFlags: 0
@@ -9682,6 +9808,7 @@ GameObject:
   - component: {fileID: 2710446100095412115}
   - component: {fileID: 1036053086235854728}
   - component: {fileID: 2582961615859979568}
+  - component: {fileID: 2063165524}
   m_Layer: 0
   m_Name: 36T
   m_TagString: Motion
@@ -9804,6 +9931,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 6803029923170009120}
   allowCenterInserts: 1
+--- !u!114 &2063165524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4199409798300074078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS V2 36T Gear
 --- !u!1 &4206199570566934095
 GameObject:
   m_ObjectHideFlags: 0
@@ -10741,6 +10881,7 @@ GameObject:
   - component: {fileID: 1927956036770931006}
   - component: {fileID: 8411852785126681990}
   - component: {fileID: 6468631794568838287}
+  - component: {fileID: 1379616616}
   m_Layer: 0
   m_Name: 72T
   m_TagString: Motion
@@ -10879,6 +11020,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 9215968897578535786}
   allowCenterInserts: 1
+--- !u!114 &1379616616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5945832547331941213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS V2 72T Gear
 --- !u!1 &5988404403296290535
 GameObject:
   m_ObjectHideFlags: 0
@@ -11351,6 +11505,7 @@ GameObject:
   - component: {fileID: 5982689052636863427}
   - component: {fileID: 2573350483619797670}
   - component: {fileID: 1684586195512843476}
+  - component: {fileID: 1931364501}
   m_Layer: 0
   m_Name: 84T
   m_TagString: Motion
@@ -11497,6 +11652,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 4500737672025976536}
   allowCenterInserts: 1
+--- !u!114 &1931364501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6581019810982195748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS V2 84T Gear
 --- !u!1 &6782463550395588926
 GameObject:
   m_ObjectHideFlags: 0
@@ -12221,6 +12389,7 @@ GameObject:
   - component: {fileID: 8760553672458068125}
   - component: {fileID: 8531285289350123299}
   - component: {fileID: 8765195849710056206}
+  - component: {fileID: 1694391712}
   m_Layer: 0
   m_Name: 60T
   m_TagString: Motion
@@ -12351,6 +12520,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 8429520314031968495}
   allowCenterInserts: 1
+--- !u!114 &1694391712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7745375387402584634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS V2 60T Gear
 --- !u!1 &7745677311167276204
 GameObject:
   m_ObjectHideFlags: 0
@@ -12933,6 +13115,7 @@ GameObject:
   - component: {fileID: 2512871696106774460}
   - component: {fileID: 3418049922171420602}
   - component: {fileID: 3859169013050557175}
+  - component: {fileID: 1920032868}
   m_Layer: 0
   m_Name: 24T
   m_TagString: Motion
@@ -13051,3 +13234,16 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 4640565646642041390}
   allowCenterInserts: 1
+--- !u!114 &1920032868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9215653053401264826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: HS V2 24T Gear

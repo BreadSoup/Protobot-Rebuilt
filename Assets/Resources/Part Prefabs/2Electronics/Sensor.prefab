@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6090445890677144170}
   - component: {fileID: 3225553306540434996}
   - component: {fileID: 8715078539190425503}
+  - component: {fileID: 466424138}
   m_Layer: 0
   m_Name: Ultrasonic Range Finder
   m_TagString: Object
@@ -135,6 +136,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &466424138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227918682480688448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Ultrasonic Range Finder
 --- !u!1 &881224588738804892
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,6 +163,7 @@ GameObject:
   - component: {fileID: 6053244653853405119}
   - component: {fileID: 1065745834932285559}
   - component: {fileID: 7542642659125610548}
+  - component: {fileID: 405298145}
   m_Layer: 0
   m_Name: Line Tracker
   m_TagString: Object
@@ -269,6 +284,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &405298145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881224588738804892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Line Tracker
 --- !u!1 &1218502684336912831
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,6 +453,7 @@ GameObject:
   - component: {fileID: 8924931469395733230}
   - component: {fileID: 1856426277255262473}
   - component: {fileID: 2428157849436097712}
+  - component: {fileID: 2117985}
   m_Layer: 0
   m_Name: Vision
   m_TagString: Object
@@ -548,6 +577,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &2117985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951938809780555338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Vision Sensor
 --- !u!1 &1954523021746448338
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,6 +675,7 @@ GameObject:
   - component: {fileID: 3284058849609805183}
   - component: {fileID: 4711324804405878700}
   - component: {fileID: 1994500460974532101}
+  - component: {fileID: 492355327}
   m_Layer: 0
   m_Name: Light Sensor
   m_TagString: Object
@@ -753,6 +796,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &492355327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2282866948630475623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Light Sensor
 --- !u!1 &2369658485472386115
 GameObject:
   m_ObjectHideFlags: 0
@@ -1506,6 +1562,7 @@ GameObject:
   - component: {fileID: 5190446102586513820}
   - component: {fileID: 5190446102586513821}
   - component: {fileID: 5190446102586513822}
+  - component: {fileID: 466424140}
   m_Layer: 0
   m_Name: Potentiometer
   m_TagString: Object
@@ -1627,6 +1684,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 2922666527457203967}
   allowCenterInserts: 0
+--- !u!114 &466424140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190446102586513824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Potentiometer
 --- !u!1 &5190446102819052526
 GameObject:
   m_ObjectHideFlags: 0
@@ -1712,6 +1782,7 @@ GameObject:
   - component: {fileID: 3676809910485846943}
   - component: {fileID: 3954660354237304176}
   - component: {fileID: 3718587158467415886}
+  - component: {fileID: 1393375883}
   m_Layer: 0
   m_Name: Inertial Sensor
   m_TagString: Object
@@ -1830,6 +1901,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &1393375883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5234754851731046367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Inertial Sensor
 --- !u!1 &5614135770531657591
 GameObject:
   m_ObjectHideFlags: 0
@@ -2199,6 +2283,7 @@ GameObject:
   - component: {fileID: 7659200562573795658}
   - component: {fileID: 5103548181186062354}
   - component: {fileID: 5497272409205649491}
+  - component: {fileID: 1198852582}
   m_Layer: 0
   m_Name: Optical Sensor
   m_TagString: Object
@@ -2323,6 +2408,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &1198852582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6543691147661728248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Optical Sensor
 --- !u!1 &7085060498827036351
 GameObject:
   m_ObjectHideFlags: 0
@@ -2478,6 +2576,7 @@ GameObject:
   - component: {fileID: 8228309620400622256}
   - component: {fileID: 6105965660922344368}
   - component: {fileID: 208891463374112331}
+  - component: {fileID: 466424137}
   m_Layer: 0
   m_Name: Rotation Sensor
   m_TagString: Object
@@ -2597,6 +2696,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 1850353065105549890}
   allowCenterInserts: 1
+--- !u!114 &466424137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7394297646430432282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Rotation Sensor
 --- !u!1 &7792885995556039598
 GameObject:
   m_ObjectHideFlags: 0
@@ -2611,6 +2723,7 @@ GameObject:
   - component: {fileID: 9109077710379220440}
   - component: {fileID: 2401801601340605814}
   - component: {fileID: 8433089972146471906}
+  - component: {fileID: 466424139}
   m_Layer: 0
   m_Name: Distance Sensor
   m_TagString: Object
@@ -2735,6 +2848,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &466424139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7792885995556039598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Distance Sensor
 --- !u!1 &7836092879870976340
 GameObject:
   m_ObjectHideFlags: 0
@@ -3246,6 +3372,7 @@ GameObject:
   - component: {fileID: 404230288258754065}
   - component: {fileID: 6911258201010014478}
   - component: {fileID: 262931624513457632}
+  - component: {fileID: 466424136}
   m_Layer: 0
   m_Name: Optical Shaft Encoder
   m_TagString: Object
@@ -3369,6 +3496,19 @@ MonoBehaviour:
   holeData: 
   primaryHole: {fileID: 1905340031826493212}
   allowCenterInserts: 0
+--- !u!114 &466424136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8905245376768879507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Optical Shaft Encoder
 --- !u!1 &9113456632205310335
 GameObject:
   m_ObjectHideFlags: 0

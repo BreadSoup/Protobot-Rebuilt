@@ -767,7 +767,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367666537081069903}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 25.58, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -812,14 +812,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Type
-    value: Old
+    value: V1
     custom: 0
     customUnit: 
     customDefault: 
     customLimits: {x: 0, y: 0}
   param2:
     name: Size
-    value: 2.75in
+    value: 3.25in
     custom: 0
     customUnit: 
     customDefault: 
@@ -838,6 +838,7 @@ GameObject:
   - component: {fileID: 1367666537441297457}
   - component: {fileID: 1367666537441297456}
   - component: {fileID: 1367666537441297459}
+  - component: {fileID: 1367666537291429158}
   m_Layer: 0
   m_Name: 2.75in
   m_TagString: Motion
@@ -967,6 +968,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 1367666537581935449}
   allowCenterInserts: 1
+--- !u!114 &1367666537291429158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367666537441297469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 2.75" Omni Wheel
 --- !u!1 &1367666537469076981
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,6 +995,7 @@ GameObject:
   - component: {fileID: 1367666537469076969}
   - component: {fileID: 1367666537469076968}
   - component: {fileID: 1367666537469076971}
+  - component: {fileID: 1437752759}
   m_Layer: 0
   m_Name: 4.00in
   m_TagString: Motion
@@ -1110,6 +1125,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 1367666536650120370}
   allowCenterInserts: 1
+--- !u!114 &1437752759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367666537469076981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 4" Omni Wheel
 --- !u!1 &1367666537581935451
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,6 +1239,7 @@ GameObject:
   - component: {fileID: 1367666537968119845}
   - component: {fileID: 1367666537968119844}
   - component: {fileID: 1367666537968119847}
+  - component: {fileID: 1367666537291429157}
   m_Layer: 0
   m_Name: 3.25in
   m_TagString: Motion
@@ -1368,6 +1397,19 @@ MonoBehaviour:
     -1 > -0.5, 0)'
   primaryHole: {fileID: 1367666537010176485}
   allowCenterInserts: 1
+--- !u!114 &1367666537291429157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367666537968119841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 3.25" Omni Wheel
 --- !u!1 &1367666538023408263
 GameObject:
   m_ObjectHideFlags: 0
@@ -2092,6 +2134,7 @@ GameObject:
   - component: {fileID: 3761460504522622339}
   - component: {fileID: 3132223396734755507}
   - component: {fileID: 1093188356432315114}
+  - component: {fileID: 1367666537291429156}
   m_Layer: 0
   m_Name: 2.00in New
   m_TagString: Untagged
@@ -2221,6 +2264,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 1367666536650120370}
   allowCenterInserts: 1
+--- !u!114 &1367666537291429156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3098476783679968512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 2" Omni Wheel
 --- !u!1 &3287821461027131796
 GameObject:
   m_ObjectHideFlags: 0
@@ -2535,6 +2591,7 @@ GameObject:
   - component: {fileID: 92554432289755739}
   - component: {fileID: 2652241773105310322}
   - component: {fileID: 1259693577430240725}
+  - component: {fileID: 1367666537291429155}
   m_Layer: 0
   m_Name: 2.75in New
   m_TagString: Untagged
@@ -2672,6 +2729,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 1367666536650120370}
   allowCenterInserts: 1
+--- !u!114 &1367666537291429155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3689884437599766230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 2.75" Omni Wheel
 --- !u!1 &3852376023712893227
 GameObject:
   m_ObjectHideFlags: 0
@@ -3538,6 +3608,7 @@ GameObject:
   - component: {fileID: 7794534296665835166}
   - component: {fileID: 5071393367811155799}
   - component: {fileID: 5230224197952761114}
+  - component: {fileID: 212293509}
   m_Layer: 0
   m_Name: 4.00in New
   m_TagString: Untagged
@@ -3687,6 +3758,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 1367666536650120370}
   allowCenterInserts: 1
+--- !u!114 &212293509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5368407791578221517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 4" Omni Wheel
 --- !u!1 &5410222753865298998
 GameObject:
   m_ObjectHideFlags: 0
@@ -5027,6 +5111,7 @@ GameObject:
   - component: {fileID: 9066877067426089608}
   - component: {fileID: 3623859375855339800}
   - component: {fileID: 1362427292295977319}
+  - component: {fileID: 1367666537291429154}
   m_Layer: 0
   m_Name: 3.25in New
   m_TagString: Untagged
@@ -5168,3 +5253,16 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 1367666536650120370}
   allowCenterInserts: 1
+--- !u!114 &1367666537291429154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9212170645975928205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 3.25" Omni Wheel

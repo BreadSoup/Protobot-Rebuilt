@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: -0.3125}
   m_LocalScale: {x: 0.164, y: 0.164, z: 0.0825}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5227529737453697376}
   m_RootOrder: 4
@@ -68,7 +69,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5227529736062065255
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,6 +99,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.3125}
   m_LocalScale: {x: 0.164, y: 0.164, z: 0.0825}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5227529737453697376}
   m_RootOrder: 2
@@ -137,7 +140,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5227529736709637063
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,6 +170,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.25, y: 0, z: -0.3125}
   m_LocalScale: {x: 0.164, y: 0.164, z: 0.0825}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5227529737453697376}
   m_RootOrder: 3
@@ -206,7 +211,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5227529736950066515
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,6 +241,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.5, y: 0, z: -0.3125}
   m_LocalScale: {x: 0.164, y: 0.164, z: 0.0825}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5227529737453697376}
   m_RootOrder: 0
@@ -275,7 +282,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5227529737237632480
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +296,7 @@ GameObject:
   - component: {fileID: 5227529737237632486}
   - component: {fileID: 2048411999487237583}
   m_Layer: 0
-  m_Name: V5 Battery Clip
+  m_Name: Battery Clip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -304,6 +312,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.21, y: 0, z: -12.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5227529737453697376}
   m_Father: {fileID: 0}
@@ -322,6 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: BTCL
+  connectingPart: 0
   group: 2
   icon: {fileID: 21300000, guid: 3f26f6aac5960ee468cb7699ee286c0e, type: 3}
 --- !u!114 &2048411999487237583
@@ -339,9 +349,17 @@ MonoBehaviour:
   param1:
     name: 
     value: 
+    custom: 0
+    customUnit: 
+    customDefault: 
+    customLimits: {x: 0, y: 0}
   param2:
     name: 
     value: 
+    custom: 0
+    customUnit: 
+    customDefault: 
+    customLimits: {x: 0, y: 0}
   singleObj: {fileID: 5227529737453697374}
 --- !u!1 &5227529737249064385
 GameObject:
@@ -371,6 +389,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.25, y: 0, z: -0.3125}
   m_LocalScale: {x: 0.164, y: 0.164, z: 0.0825}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5227529737453697376}
   m_RootOrder: 1
@@ -411,7 +430,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5227529737453697374
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,6 +446,7 @@ GameObject:
   - component: {fileID: 5227529737453697373}
   - component: {fileID: 5227529737453697372}
   - component: {fileID: 5227529737453697375}
+  - component: {fileID: 1244521211512711578}
   m_Layer: 0
   m_Name: Battery Clip
   m_TagString: Object
@@ -443,6 +464,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5227529736950066512}
   - {fileID: 5227529737249064390}
@@ -471,10 +493,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -499,6 +523,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &5227529737453697373
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -555,5 +580,18 @@ MonoBehaviour:
 
     hole=(-0.5
     > 0.5, 0, -0.3125)'
-  centerHoleDepth: 0
+  primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &1244521211512711578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5227529737453697374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Battery Clip
