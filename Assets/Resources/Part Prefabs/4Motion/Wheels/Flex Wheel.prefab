@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 3" Flex Wheel with Adadpter
+  name: 3" Flex Wheel with Adapter
 --- !u!1 &972609957238980198
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,7 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 1.625" Flex Wheel with Adadpter
+  name: 1.625" Flex Wheel with Adapter
 --- !u!1 &1367666537581935451
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,7 +844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 4" Flex Wheel with Adadpter
+  name: 4" Flex Wheel with Adapter
 --- !u!1 &3281606271635622689
 GameObject:
   m_ObjectHideFlags: 0
@@ -1281,7 +1281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 2" Flex Wheel with Adadpter
+  name: 2" Flex Wheel with Adapter
 --- !u!1 &6947861786008273821
 GameObject:
   m_ObjectHideFlags: 0
