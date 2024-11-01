@@ -795,6 +795,7 @@ GameObject:
   - component: {fileID: 1736956538388814045}
   - component: {fileID: 648027407231809808}
   - component: {fileID: 2803195002066368562}
+  - component: {fileID: 4043334882535370293}
   m_Layer: 0
   m_Name: 2.75in New
   m_TagString: Untagged
@@ -932,6 +933,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4043334882847773901}
   allowCenterInserts: 1
+--- !u!114 &4043334882535370293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2132471013866722595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 2.75" Traction Wheel
 --- !u!1 &2389163438014438179
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,6 +1244,7 @@ GameObject:
   - component: {fileID: 1823742584025208756}
   - component: {fileID: 8644113206713470965}
   - component: {fileID: 6219451399353842957}
+  - component: {fileID: 4043334882535370292}
   m_Layer: 0
   m_Name: 3.25in New
   m_TagString: Untagged
@@ -1379,6 +1394,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4043334882847773901}
   allowCenterInserts: 1
+--- !u!114 &4043334882535370292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2947813022078498105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 3.25" Traction Wheel
 --- !u!1 &3090914766259826170
 GameObject:
   m_ObjectHideFlags: 0
@@ -2103,6 +2131,7 @@ GameObject:
   - component: {fileID: 4043334881669007418}
   - component: {fileID: 4043334881669007417}
   - component: {fileID: 4043334881669007416}
+  - component: {fileID: 4043334882535370296}
   m_Layer: 0
   m_Name: 3.25in
   m_TagString: Motion
@@ -2260,6 +2289,19 @@ MonoBehaviour:
     -1 > -0.5, 0)'
   primaryHole: {fileID: 4043334882625737484}
   allowCenterInserts: 1
+--- !u!114 &4043334882535370296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4043334881669007422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 3.25" Traction Wheel
 --- !u!1 &4043334881669251176
 GameObject:
   m_ObjectHideFlags: 0
@@ -2345,6 +2387,7 @@ GameObject:
   - component: {fileID: 4043334882067384685}
   - component: {fileID: 4043334882067384684}
   - component: {fileID: 4043334882067384595}
+  - component: {fileID: 993834825}
   m_Layer: 0
   m_Name: 2.75in
   m_TagString: Motion
@@ -2474,6 +2517,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4043334882847773901}
   allowCenterInserts: 1
+--- !u!114 &993834825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4043334882067384593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 2.75" Traction Wheel
 --- !u!1 &4043334882132915124
 GameObject:
   m_ObjectHideFlags: 0
@@ -2782,7 +2838,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4043334882471172450}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 17.07, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2827,14 +2883,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Type
-    value: Old
+    value: V1
     custom: 0
     customUnit: 
     customDefault: 
     customLimits: {x: 0, y: 0}
   param2:
     name: Size
-    value: 2.75in
+    value: 3.25in
     custom: 0
     customUnit: 
     customDefault: 
@@ -3381,6 +3437,7 @@ GameObject:
   - component: {fileID: 4043334883462207707}
   - component: {fileID: 4043334883462207706}
   - component: {fileID: 4043334883462207705}
+  - component: {fileID: 4043334882535370294}
   m_Layer: 0
   m_Name: 5.00in
   m_TagString: Motion
@@ -3510,6 +3567,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4043334882390541838}
   allowCenterInserts: 0
+--- !u!114 &4043334882535370294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4043334883462207711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 5" Traction Wheel
 --- !u!1 &4043334883681747321
 GameObject:
   m_ObjectHideFlags: 0
@@ -3524,6 +3594,7 @@ GameObject:
   - component: {fileID: 4043334883681747316}
   - component: {fileID: 4043334883681747323}
   - component: {fileID: 4043334883681747322}
+  - component: {fileID: 4043334882535370295}
   m_Layer: 0
   m_Name: 4.00in
   m_TagString: Motion
@@ -3653,6 +3724,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4043334883309167907}
   allowCenterInserts: 0
+--- !u!114 &4043334882535370295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4043334883681747321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 4" Traction Wheel
 --- !u!1 &4061497975397877266
 GameObject:
   m_ObjectHideFlags: 0
@@ -5348,6 +5432,7 @@ GameObject:
   - component: {fileID: 6128107783146952679}
   - component: {fileID: 4738898025674133583}
   - component: {fileID: 6023653055831452448}
+  - component: {fileID: 882038141}
   m_Layer: 0
   m_Name: 4.00in New
   m_TagString: Untagged
@@ -5505,6 +5590,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 4043334882847773901}
   allowCenterInserts: 1
+--- !u!114 &882038141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249111345815033880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 4" Traction Wheel
 --- !u!1 &7705731864025817038
 GameObject:
   m_ObjectHideFlags: 0

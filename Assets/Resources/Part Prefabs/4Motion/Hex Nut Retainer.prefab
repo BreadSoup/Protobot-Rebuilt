@@ -227,6 +227,7 @@ GameObject:
   - component: {fileID: 5145376993112705984}
   - component: {fileID: 2131164041553740880}
   - component: {fileID: 3642187351812144044}
+  - component: {fileID: 807053796675323553}
   m_Layer: 0
   m_Name: _1_Post_Hex_Nut_Retainer__276_6482_
   m_TagString: Untagged
@@ -357,6 +358,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &807053796675323553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215307665247641078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Hex Nut Retainer
 --- !u!1 &4286227240236181976
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,6 +385,7 @@ GameObject:
   - component: {fileID: 3680087757187107776}
   - component: {fileID: 6598349401699103495}
   - component: {fileID: 262059675772355180}
+  - component: {fileID: 228595300188254894}
   m_Layer: 0
   m_Name: _1_Post_Hex_Nut_Retainer_w__Bearing_Flat__276_6481_
   m_TagString: Untagged
@@ -502,6 +517,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &228595300188254894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4286227240236181976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Hex Nut Retainer with Bearing Flat
 --- !u!1 &5257224139929547266
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +544,7 @@ GameObject:
   - component: {fileID: 3008260214060994759}
   - component: {fileID: 2231883130393217834}
   - component: {fileID: 5129345450930914528}
+  - component: {fileID: 8319150863544569059}
   m_Layer: 0
   m_Name: _4_Post_Hex_Nut_Retainer__276_6483_
   m_TagString: Untagged
@@ -646,6 +675,19 @@ MonoBehaviour:
     hole=(0,0,0)'
   primaryHole: {fileID: 0}
   allowCenterInserts: 0
+--- !u!114 &8319150863544569059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5257224139929547266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Square Hex Nut Retainer
 --- !u!1 &5949665366722959523
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,7 +825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Type
-    value: 
+    value: Nut Retainer
     custom: 0
     customUnit: 
     customDefault: 

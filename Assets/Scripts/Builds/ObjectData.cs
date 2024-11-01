@@ -8,10 +8,12 @@ namespace Protobot.Builds {
     public class ObjectData {
         public double xPos, yPos, zPos;
         public double xRot, yRot, zRot;
+        public double rColor, gColor, bColor;
         public string states;
         [FormerlySerializedAs("meshId")] public string partId;
         public Vector3 GetPos() => new Vector3((float)xPos, (float)yPos, (float)zPos);
         public Quaternion GetRot() => Quaternion.Euler((float)xRot, (float)yRot, (float)zRot);
+        public Color GetColor() => new Color((float)rColor, (float)gColor, (float)bColor, 1);
 
         public override bool Equals(object obj) {
             var data = obj as ObjectData;

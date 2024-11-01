@@ -34,6 +34,11 @@ namespace Protobot.UI {
 
         void Update() {
             if (selecting) {
+                ///* this can be removed before release PLEASE DO NOT FORGET THIS IS AWFUL
+                if (Mouse.current.leftButton.isPressed)
+                {
+                    input.rebindAction.ResetRebinds(); //I hate this ill remove it before full release I think only one person had this issue I hope shouldn't happen ever again
+                }//*/
                 UpdateSelectionBox();
             }
         }
