@@ -1,4 +1,4 @@
-using Ookii.Dialogs;
+//using Ookii.Dialogs; honest to god i have no idea what this if for but it causes build errors on linux
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
