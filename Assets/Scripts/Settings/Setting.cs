@@ -56,6 +56,7 @@ namespace Protobot {
 
         public void SaveValue() {
             PlayerPrefs.SetString(name, currentValue);
+            Debug.Log(currentValue);
         }
 
         public void SetValue(string newValue) {
