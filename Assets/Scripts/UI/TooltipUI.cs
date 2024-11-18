@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Protobot.UI {
@@ -61,10 +62,21 @@ namespace Protobot.UI {
 
             return newPos;
         }
+        private bool MouseWithinRect(RectTransform rect) {
+            Vector2 localMousePosition = Mouse.current.position.ReadValue();
+            Vector3[] worldCorners = new Vector3[4];
+            rect.GetWorldCorners(worldCorners);
+            Rect worldRect = new Rect(
+                worldCorners[0].x, 
+                worldCorners[0].y, 
+                worldCorners[2].x - worldCorners[0].x, 
+                worldCorners[2].y - worldCorners[0].y);
+            return worldRect.Contains(localMousePosition);
+        }
 
         public void ShowTooltip(string text, RectTransform rect, Direction dir) {
             if (text == "") return;
-            
+            if (!MouseWithinRect(rect)) return;
             toolTipText.text = text;
             hoverTimer = 0;
             pos = CalculatePosition(rect, dir);

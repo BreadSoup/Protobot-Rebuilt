@@ -33,7 +33,6 @@ namespace Protobot.SelectionSystem {
             for (int i = 0; i < outlinedObjs.Count; i++) {
                 outlinedObjs[i].DisableOutline();
             }
-            
             outlinedObjs.Clear();
         }
 

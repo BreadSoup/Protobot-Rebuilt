@@ -4,6 +4,8 @@ using UnityEngine;
 using Protobot.StateSystems;
 using Protobot.InputEvents;
 using Protobot.Outlining;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace Protobot {
     public class ObjectDuplicator : MonoBehaviour {
@@ -16,6 +18,10 @@ namespace Protobot {
         public void Awake() {
             movementManager.OnStartMoving += () => {
                 if (input.IsPressed) {
+                    if (input.IsKeyPressed("Tab") && input.GetCurrentKeybind() == "Alt") {
+                        print("ohyeahj");
+                        return;
+                    }
                     DuplicateObject();
                     
                     foreach (GameObject obj in prevDuplicatedObjs) {
@@ -46,6 +52,10 @@ namespace Protobot {
                 foreach (GameObject obj in movingObjs) {
                     GameObject clone = Instantiate(obj, obj.transform.position, obj.transform.rotation);
                     clone.DisableOutline();
+                    if(clone.name != "MultiPivot(Clone)")
+                    {
+                        clone.GetComponent<Renderer>().material = new Material(obj.GetComponent<Renderer>().material);
+                    }
                     prevDuplicatedObjs.Add(clone);
                 }
             }
