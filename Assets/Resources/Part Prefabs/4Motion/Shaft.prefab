@@ -107,7 +107,7 @@ Transform:
   m_GameObject: {fileID: 3424368844093597671}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 11}
+  m_LocalScale: {x: 1, y: 1, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6099956285024894453}
@@ -475,7 +475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Type
-    value: Normal
+    value: High Strength
     custom: 0
     customUnit: 
     customDefault: 
@@ -486,6 +486,6 @@ MonoBehaviour:
     custom: 1
     customUnit: in
     customDefault: 6
-    customLimits: {x: 1, y: 12}
+    customLimits: {x: 1, y: 24}
   normalShaftInch: {fileID: 7716088485723223049}
   hsShaftInch: {fileID: 3424368844093597671}

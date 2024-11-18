@@ -65,7 +65,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   param1:
     name: Type
-    value: 
+    value: Steel
     custom: 0
     customUnit: 
     customDefault: 
@@ -146,7 +146,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5554044778961341227
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,6 +162,7 @@ GameObject:
   - component: {fileID: 5554044778961341231}
   - component: {fileID: 5554044778961341228}
   - component: {fileID: 5554044778961341229}
+  - component: {fileID: 5554044777929544540}
   m_Layer: 0
   m_Name: Teflon
   m_TagString: Motion
@@ -288,9 +290,21 @@ MonoBehaviour:
     axis=z
 
     hole=(0,0,0)'
-  centerHoleDepth: 0.04
   primaryHole: {fileID: 5554044778816389787}
   allowCenterInserts: 0
+--- !u!114 &5554044777929544540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5554044778961341227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Teflon Washer
 --- !u!1 &5554044779118121629
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +374,8 @@ MonoBehaviour:
     rotation: {x: -0, y: -0, z: -0, w: 1}
     forward: {x: 0, y: 0, z: 1}
   holeType: 0
-  detector: {fileID: 0}
+  detectors: []
+  twoSided: 0
 --- !u!1 &5554044779725374952
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,6 +390,7 @@ GameObject:
   - component: {fileID: 5554044779725374956}
   - component: {fileID: 5554044779725374957}
   - component: {fileID: 5554044779725374954}
+  - component: {fileID: 5554044777929544541}
   m_Layer: 0
   m_Name: Steel
   m_TagString: Motion
@@ -502,6 +518,18 @@ MonoBehaviour:
     axis=z
 
     hole=(0,0,0)'
-  centerHoleDepth: 0.03
   primaryHole: {fileID: 5554044779118121631}
   allowCenterInserts: 0
+--- !u!114 &5554044777929544541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5554044779725374952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c70d59fbaa6e7d4d89b42b9cfbcf475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Steel Washer

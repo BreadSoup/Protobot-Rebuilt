@@ -35,12 +35,12 @@ namespace Protobot.Builds {
             //Camera Data
             CameraData camData = buildData.camera;
 
-            Vector3 savedCamPos = new Vector3((float) camData.xPos, (float) camData.yPos, (float) camData.zPos);
-            Vector3 savedCamAngle = new Vector3((float) camData.xRot, (float) camData.yRot, (float) camData.zRot);
+            Vector3 savedCamPos = new Vector3((float)camData.xPos, (float)camData.yPos, (float)camData.zPos);
+            Vector3 savedCamAngle = new Vector3((float)camData.xRot, (float)camData.yRot, (float)camData.zRot);
 
-            PivotCamera.main.SetTransform(savedCamPos, savedCamAngle, (float) camData.zoom);
+            PivotCamera.Main.SetTransform(savedCamPos, savedCamAngle, (float)camData.zoom);
 
-            var projectionSwitcher = PivotCamera.main.GetComponent<ProjectionSwitcher>();
+            var projectionSwitcher = PivotCamera.Main.GetComponent<ProjectionSwitcher>();
 
             if (camData.isOrtho)
                 projectionSwitcher.SwitchToOrtho(0);
@@ -52,23 +52,33 @@ namespace Protobot.Builds {
                 List<ObjectData> connectingObjects = new();
 
                 foreach (ObjectData part in buildData.parts) {
+                    if (part.partId == "Error") continue; //this is jank but I'm avoiding editing main scene
                     if (PartsManager.GetPartType(part.partId).connectingPart) {
                         connectingObjects.Add(part);
                     }
                     else
-                        GenerateObject(part);
+                        GenerateObject(part, buildData);
                 }
 
                 foreach (ObjectData part in connectingObjects)
-                    GenerateObject(part);
+                    GenerateObject(part, buildData);
 
             }
-            
+
             OnGenerateBuild?.Invoke(buildData);
         }
 
-        private static GameObject GenerateObject(ObjectData objectData) => 
-            PartsManager.GeneratePart(objectData.partId, objectData.GetPos(), objectData.GetRot());
+        private static GameObject GenerateObject(ObjectData objectData, BuildData buildData)
+        {
+            GameObject generatedObject = PartsManager.GeneratePart(objectData.partId, objectData.GetPos(), objectData.GetRot());
+            string[] versionsNoColor = new string[] { "1.0", "1.1", "1.1.1", "1.2", "1.3", "1.3.1", "1.3.2", "1.3.3", "1.3.4" };
+            if(!versionsNoColor.Contains(buildData.version))
+            {
+                generatedObject.GetComponent<Renderer>().material.color = objectData.GetColor();
+            }
+            return generatedObject;
+        }
+            
 
 
         /// <summary>
@@ -92,7 +102,7 @@ namespace Protobot.Builds {
         /// <remarks>Does not contain lastWriteTime, createTime, fileName, or name</remarks>
         public static BuildData ToBuildData() {
             //Camera
-            PivotCamera cam = PivotCamera.main;
+            PivotCamera cam = PivotCamera.Main;
             ProjectionSwitcher projectionSwitcher = cam.GetComponent<ProjectionSwitcher>();
 
             CameraData newCameraData = new CameraData {
@@ -117,6 +127,7 @@ namespace Protobot.Builds {
             for (int i = 0; i < newParts.Length; i++) {
                 Transform tForm = sceneObjs[i].transform;
                 SavedObject savedData = tForm.GetComponent<SavedObject>();
+                Renderer savedColor = tForm.GetComponent<Renderer>();
 
                 var position = tForm.position;
                 var eulerAngles = tForm.eulerAngles;
@@ -131,6 +142,10 @@ namespace Protobot.Builds {
                     xRot = eulerAngles.x,
                     yRot = eulerAngles.y,
                     zRot = eulerAngles.z,
+
+                    rColor = savedColor.material.color.r,
+                    bColor = savedColor.material.color.b,
+                    gColor = savedColor.material.color.g,
                 };
             }
 

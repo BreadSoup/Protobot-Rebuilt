@@ -30,7 +30,8 @@ namespace Protobot.InputEvents {
             Keyboard.current.leftShiftKey,
             Keyboard.current.rightShiftKey,
             Keyboard.current.leftAltKey,
-            Keyboard.current.rightAltKey
+            Keyboard.current.rightAltKey,
+            Mouse.current.leftButton
         };
         
         private InputControl CancelInput => Keyboard.current.escapeKey;
