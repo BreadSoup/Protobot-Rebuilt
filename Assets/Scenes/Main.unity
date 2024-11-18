@@ -1325,7 +1325,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c55cf3586e371064fba9f6405a2887b4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c623c38b94fd64a42a5f1f64218ffec1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8207,7 +8207,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 926006024}
   m_HandleRect: {fileID: 926006023}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -10977,7 +10977,7 @@ PrefabInstance:
     - target: {fileID: 734313561374179349, guid: e272231221d4c5647b528cd620cd61b6,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 734313561374179349, guid: e272231221d4c5647b528cd620cd61b6,
         type: 3}
@@ -10986,12 +10986,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 734313561374179349, guid: e272231221d4c5647b528cd620cd61b6,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 734313561374179349, guid: e272231221d4c5647b528cd620cd61b6,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1851306916}
     - target: {fileID: 734313561374179349, guid: e272231221d4c5647b528cd620cd61b6,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 972936409}
+    - target: {fileID: 734313561374179349, guid: e272231221d4c5647b528cd620cd61b6,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 734313561374179349, guid: e272231221d4c5647b528cd620cd61b6,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 734313561374179349, guid: e272231221d4c5647b528cd620cd61b6,
@@ -11001,12 +11016,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 734313561374179349, guid: e272231221d4c5647b528cd620cd61b6,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 734313561374179349, guid: e272231221d4c5647b528cd620cd61b6,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Protobot.Builds.BuildsManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 734313561374179349, guid: e272231221d4c5647b528cd620cd61b6,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 734313561374179349, guid: e272231221d4c5647b528cd620cd61b6,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 734313561374179349, guid: e272231221d4c5647b528cd620cd61b6,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2077458073133007311, guid: e272231221d4c5647b528cd620cd61b6,
@@ -11339,7 +11369,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 2
   outlineTargets:
-  - IsVisible: 0
+  - IsVisible: 1
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
@@ -20478,7 +20508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 963194227}
   toggleButton: {fileID: 1705486539}
-  onColor: {r: 0.9490196, g: 0.9490196, b: 0.9490196, a: 1}
+  onColor: {r: 1, g: 1, b: 1, a: 1}
   offColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   gridOnColor: {r: 0.9490197, g: 0.9490197, b: 0.9490197, a: 0.2}
   gridOffColor: {r: 0.20000002, g: 0.20000002, b: 0.20000002, a: 1}
@@ -31160,7 +31190,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 0
   outlineTargets:
-  - IsVisible: 0
+  - IsVisible: 1
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
@@ -45530,7 +45560,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 2
   outlineTargets:
-  - IsVisible: 0
+  - IsVisible: 1
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
