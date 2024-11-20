@@ -71,9 +71,11 @@ namespace Protobot.Builds {
         private static GameObject GenerateObject(ObjectData objectData, BuildData buildData)
         {
             GameObject generatedObject = PartsManager.GeneratePart(objectData.partId, objectData.GetPos(), objectData.GetRot());
-            string[] versionsNoColor = new string[] { "1.0", "1.1", "1.1.1", "1.2", "1.3", "1.3.1", "1.3.2", "1.3.3", "1.3.4" };
-            if(!versionsNoColor.Contains(buildData.version))
-            {
+            //there are only 2 versions of Protobot legacy publicly released that I could find most before Beta 1.3.1 are just guesses
+            string[] versionsNoColor = new string[] {"1.0", "1.1", "1.1.1", "Beta 1.2", "Beta 1.3", "Beta 1.3.1", "1.3.2", "1.3.3", "1.3.4" };
+            //Debug.Log(buildData.version);    
+            if(!versionsNoColor.Contains(buildData.version) && buildData.version != null)
+            { 
                 generatedObject.GetComponent<Renderer>().material.color = objectData.GetColor();
             }
             return generatedObject;
