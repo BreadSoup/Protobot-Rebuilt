@@ -457,6 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Linear Slide Bracket
+  weightInGrams: 49.9
 --- !u!1 &1431256243825446179
 GameObject:
   m_ObjectHideFlags: 0
@@ -1236,6 +1237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Outer Slide Trunk
+  weightInGrams: 9.07
 --- !u!1 &3882497969396436373
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,6 +1457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Inner Slide Trunk
+  weightInGrams: 9.07
 --- !u!1 &4020267957727431983
 GameObject:
   m_ObjectHideFlags: 0

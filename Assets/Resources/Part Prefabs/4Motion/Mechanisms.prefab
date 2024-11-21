@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Worm Gear
+  weightInGrams: 3
 --- !u!1 &499900821900596186
 GameObject:
   m_ObjectHideFlags: 0
@@ -874,6 +875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 32T Bevel Gear
+  weightInGrams: 3
 --- !u!1 &2361413980858439665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1384,6 +1386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Lead Screw
+  weightInGrams: 0
 --- !u!1 &3869780406986262068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,6 +1746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Worm Wheel
+  weightInGrams: 4
 --- !u!1 &4271535666042592732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,6 +1894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Rack Gear v2
+  weightInGrams: 12
 --- !u!1 &4366761781803188899
 GameObject:
   m_ObjectHideFlags: 0
@@ -2117,6 +2122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Cam Follower
+  weightInGrams: 9
 --- !u!1 &4488949371863004038
 GameObject:
   m_ObjectHideFlags: 0
@@ -2987,6 +2993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Drop Off Cam
+  weightInGrams: 19
 --- !u!1 &5983849611679763987
 GameObject:
   m_ObjectHideFlags: 0
@@ -3498,6 +3505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Lead Screw Bracket
+  weightInGrams: 10
 --- !u!1 &6473134528712028314
 GameObject:
   m_ObjectHideFlags: 0
@@ -3644,6 +3652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 16T Bevel Gear
+  weightInGrams: 2
 --- !u!1 &6544027697243018381
 GameObject:
   m_ObjectHideFlags: 0
@@ -4711,6 +4720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Lead Screw
+  weightInGrams: 4
 --- !u!1 &8504642755107692874
 GameObject:
   m_ObjectHideFlags: 0
@@ -5070,6 +5080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Hand Crank
+  weightInGrams: 3
 --- !u!1 &8942095055915627506
 GameObject:
   m_ObjectHideFlags: 0
@@ -5291,6 +5302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Lead Screw Nut
+  weightInGrams: 6
 --- !u!1 &9018555969250471532
 GameObject:
   m_ObjectHideFlags: 0

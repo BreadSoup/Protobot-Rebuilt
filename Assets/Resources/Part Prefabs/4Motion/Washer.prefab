@@ -305,6 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Teflon Washer
+  weightInGrams: 0.28
 --- !u!1 &5554044779118121629
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,3 +534,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Steel Washer
+  weightInGrams: 0.5

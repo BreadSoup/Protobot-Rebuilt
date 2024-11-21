@@ -26,6 +26,11 @@ namespace Protobot {
         public override void Execute() {
             DeleteObject();
             OnExecute?.Invoke();
+            // Call OutputPartsList to update the weight display after placing a part
+                PartListOutput partListOutput = FindObjectOfType<PartListOutput>();
+                if (partListOutput != null) {
+                    partListOutput.CalculatePartsList(); // Recalculate and notify weight update
+                }
         }
     }
 }

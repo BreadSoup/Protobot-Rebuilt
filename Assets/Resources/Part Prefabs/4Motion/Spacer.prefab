@@ -188,6 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 4.6mm Plastic Spacer
+  weightInGrams: 0.1
 --- !u!1 &4271726167011910118
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,6 +669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 1/4" HS Spacer
+  weightInGrams: 0.3
 --- !u!1 &5112426444074949841
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,6 +825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 1/4" Nylon Spacer
+  weightInGrams: 1.2
 --- !u!1 &5112426444488920909
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,6 +981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 1/16" HS Spacer
+  weightInGrams: 0.04
 --- !u!1 &5112426444534556309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,6 +1279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 1/2" Nylon Spacer
+  weightInGrams: 2.4
 --- !u!1 &5112426444807183001
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,6 +1435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 1/8" Nylon Spacer
+  weightInGrams: 0.6
 --- !u!1 &5112426444881236526
 GameObject:
   m_ObjectHideFlags: 0
@@ -1585,6 +1591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 1/8" HS Spacer
+  weightInGrams: 0.1
 --- !u!1 &5112426444900737450
 GameObject:
   m_ObjectHideFlags: 0
@@ -1740,6 +1747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 3/8" Nylon Spacer
+  weightInGrams: 1.8
 --- !u!1 &5112426444933573014
 GameObject:
   m_ObjectHideFlags: 0
@@ -2176,6 +2184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 1/2" HS Spacer
+  weightInGrams: 0.7
 --- !u!1 &6471132970564596477
 GameObject:
   m_ObjectHideFlags: 0
@@ -2331,6 +2340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 8mm Plastic Spacer
+  weightInGrams: 0.3
 --- !u!1 &8023691140753846428
 GameObject:
   m_ObjectHideFlags: 0

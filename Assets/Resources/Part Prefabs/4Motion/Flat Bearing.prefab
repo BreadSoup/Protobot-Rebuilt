@@ -303,6 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Bearing Flat
+  weightInGrams: 1.2
 --- !u!1 &916879701886060014
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS Bearing Flat
+  weightInGrams: 2
 --- !u!1 &916879702539534672
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,6 +1140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Low Profile Bearing Flat
+  weightInGrams: 1
 --- !u!1 &2389634833167383194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1583,3 +1586,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Shaft Collar Retainer with Bearing Flat
+  weightInGrams: 1

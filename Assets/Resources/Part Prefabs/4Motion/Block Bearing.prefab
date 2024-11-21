@@ -460,6 +460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Block Bearing
+  weightInGrams: 1.4
 --- !u!1 &5339055131414414683
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,3 +834,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS Block Bearing
+  weightInGrams: 2.4

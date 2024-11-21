@@ -160,6 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Rubber Bumper
+  weightInGrams: 5
 --- !u!1 &2863303984188757819
 GameObject:
   m_ObjectHideFlags: 0
