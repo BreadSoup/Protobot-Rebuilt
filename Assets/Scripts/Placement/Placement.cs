@@ -195,6 +195,12 @@ namespace Protobot {
                 var generator = ((PartPlacementData)currentPlacementData).partGenerator;
                 GameObject placedObj = generator.Generate(displacePos, displaceRot);
 
+                // Call OutputPartsList to update the weight display after placing a part
+                PartListOutput partListOutput = FindObjectOfType<PartListOutput>();
+                if (partListOutput != null) {
+                    partListOutput.CalculatePartsList(); // Recalculate and notify weight update
+                }
+
                 ObjectElement prevElement = new ObjectElement(placedObj);
                 prevElement.existing = false;
                 StateSystem.AddElement(prevElement);
@@ -210,7 +216,6 @@ namespace Protobot {
             rotating = false;
             OnStopRotate?.Invoke();
         }
-
         public void InitRotation() {
             initMouseVector = MouseVector;
 

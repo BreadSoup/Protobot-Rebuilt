@@ -230,3 +230,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Stake
+  weightInGrams: 950

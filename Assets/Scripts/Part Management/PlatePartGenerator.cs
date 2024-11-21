@@ -67,7 +67,11 @@ namespace Protobot {
 
             newPart.transform.position = position;
             newPart.transform.rotation = rotation;
-            newPart.AddComponent<PartName>().name = newPart.name;
+    
+            var partList = newPart.AddComponent<PartName>();
+
+            partList.name = newPart.name;
+            partList.weightInGrams = Length * Width * .53f;
             
             RemoveDataScripts(newPart);
             SetId(newPart);

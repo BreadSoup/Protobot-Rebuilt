@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Mecanum Wheel
+  weightInGrams: 186
 --- !u!1 &6024303986096254187
 GameObject:
   m_ObjectHideFlags: 0

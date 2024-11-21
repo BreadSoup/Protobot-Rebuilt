@@ -380,6 +380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Cortex Bumper Switch
+  weightInGrams: 18
 --- !u!1 &1417019991379016195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,6 +1265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: V5 Bumper Switch
+  weightInGrams: 18
 --- !u!1 &5190446102819052526
 GameObject:
   m_ObjectHideFlags: 0
@@ -1572,6 +1574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Limit Switch
+  weightInGrams: 13.6
 --- !u!1 &7852883216083515978
 GameObject:
   m_ObjectHideFlags: 0

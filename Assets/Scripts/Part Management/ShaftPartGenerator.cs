@@ -55,17 +55,31 @@ public class ShaftPartGenerator : PartGenerator {
 
     public override GameObject Generate(Vector3 position, Quaternion rotation) {
         GameObject temp = normalShaftInch;
-        if (param1.value == "High Strength") temp = hsShaftInch;
-        
+        if (param1.value == "High Strength") 
+        {
+            temp = hsShaftInch;
+        }
+
         Vector3 scale = temp.transform.localScale;
         scale.z = float.Parse(param2.value);
         temp.transform.localScale = scale;
 
         GameObject newObj = Instantiate(temp, position, rotation);
         string shaftType;
-        if(param1.value == "High Strength") { shaftType = "\" HS Shaft"; } else { shaftType = "\" Shaft"; }
-        newObj.AddComponent<PartName>().name = float.Parse(param2.value) + shaftType;
-        
+        var partList = newObj.AddComponent<PartName>();
+
+        if(param1.value == "High Strength") 
+        { 
+            shaftType = "\" HS Shaft"; 
+            partList.weightInGrams = float.Parse(param2.value) * 6.5f;
+        } else 
+        { 
+            shaftType = "\" Shaft"; 
+            partList.weightInGrams = float.Parse(param2.value) * 1.9f;
+        }
+
+        partList.name = float.Parse(param2.value) + shaftType;
+
         SetId(newObj);
         RemoveDataScripts(newObj);
 

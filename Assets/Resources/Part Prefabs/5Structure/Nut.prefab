@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Keps Nut
+  weightInGrams: 2
 --- !u!1 &1239412833018801197
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,6 +528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Low Profile Nut
+  weightInGrams: 0.8
 --- !u!1 &6295243280857996246
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,6 +757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Nylock Nut
+  weightInGrams: 2
 --- !u!1 &6295243282703558368
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,3 +994,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Hex Nut
+  weightInGrams: 1.5
