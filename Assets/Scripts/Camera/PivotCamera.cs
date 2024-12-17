@@ -6,7 +6,7 @@ namespace Protobot {
         public static PivotCamera Main;
         [SerializeField] public new Camera camera;
 
-        //Moving values
+        // Moving values
         public bool moving => DOTween.IsTweening(transform);
 
         private Tweener orbitTween;
@@ -23,12 +23,14 @@ namespace Protobot {
 
         private Vector3 panPos = Vector3.zero;
 
-
         [CacheComponent] private ProjectionSwitcher projectionSwitcher;
         private IPivotCameraInput[] inputs;
         private float zoomDistance;
         public bool invertZoom = false;
         public float snapSensitivity;
+
+        // New smoothing toggle
+        public bool smoothing = false;
 
         void Start() {
             orbitRot = transform.eulerAngles;
@@ -50,6 +52,7 @@ namespace Protobot {
         }
 
         void Update() {
+            Debug.Log("Smoothing is now " + (smoothing ? "Enabled" : "Disabled"));
             if (projectionSwitcher != null && projectionSwitcher.isOrtho) {
                 camera.orthographicSize = -cameraPosition.z / 2;
                 OrbitSnap();
@@ -83,13 +86,16 @@ namespace Protobot {
 
         public void MoveFocusPosition(Vector3 newFocusPos) {
             panPos = newFocusPos;
-            transform.DOMove(newFocusPos, 0.4f);
+            if (smoothing)
+                transform.DOMove(newFocusPos, 0.4f); // Use tween if smoothing is enabled
+            else
+                transform.position = newFocusPos; // Instant move if smoothing is disabled
         }
 
-        //ZOOM
+        // ZOOM
         public void ZoomControl(float input) {
             input *= (zoomDistance * 0.3f);
-            
+
             int inverted = 1;
             if (invertZoom) inverted = -1;
 
@@ -98,19 +104,31 @@ namespace Protobot {
 
             Vector3 newPos = cameraPosition;
             newPos.z = -zoomDistance;
-            zoomTween = camera.transform.DOLocalMove(newPos, 0.4f);
+
+            // Use tweening for smooth zoom if smoothing is enabled
+            if (smoothing)
+                zoomTween = camera.transform.DOLocalMove(newPos, 0.4f);
+            else
+                camera.transform.localPosition = newPos; // Instant zoom if smoothing is disabled
         }
-        
+
         public void SetInvertZoom(bool value) {
             invertZoom = value;
         }
 
+        public void SetSmoothing(bool value) {
+            smoothing = value;
+        }
 
-        //ORBIT
+        // ORBIT
         public void OrbitControl(Vector2 orbitValue) {
             orbitRot += new Vector3(orbitValue.x, orbitValue.y, 0);
 
-            orbitTween = transform.DORotateQuaternion(Quaternion.Euler(orbitRot), 0.4f);
+            // Use tweening for smooth orbit if smoothing is enabled
+            if (smoothing)
+                orbitTween = transform.DORotateQuaternion(Quaternion.Euler(orbitRot), 0.4f);
+            else
+                transform.eulerAngles = orbitRot; // Instant orbit if smoothing is disabled
         }
 
         public void OrbitSnap() {
@@ -119,11 +137,16 @@ namespace Protobot {
                 transform.DOLocalRotate(snapVector, 0.25f);
         }
 
-        //PAN
+        // PAN
         public void PanControl(Vector2 panValue) {
             float zoomFactor = zoomDistance / 5; // makes panning adjust by zoom distance, closer zoom should be less pan distance covered
             panPos += ((transform.right * -panValue.x) + (transform.up * -panValue.y)) * zoomFactor;
-            transform.DOMove(panPos, 0.25f);
+
+            // Use tweening for smooth pan if smoothing is enabled
+            if (smoothing)
+                transform.DOMove(panPos, 0.25f);
+            else
+                transform.position = panPos; // Instant pan if smoothing is disabled
         }
     }
 }
