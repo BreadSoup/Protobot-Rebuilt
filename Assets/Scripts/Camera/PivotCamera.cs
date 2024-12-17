@@ -52,7 +52,6 @@ namespace Protobot {
         }
 
         void Update() {
-            Debug.Log("Smoothing is now " + (smoothing ? "Enabled" : "Disabled"));
             if (projectionSwitcher != null && projectionSwitcher.isOrtho) {
                 camera.orthographicSize = -cameraPosition.z / 2;
                 OrbitSnap();
