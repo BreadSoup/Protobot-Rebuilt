@@ -19,11 +19,18 @@ public class ChainGenerator : MonoBehaviour {
     public Color defaultColor = Color.white; // Default color for the button
     public UnityEvent onSelectionError;
     public UnityEvent onChainGenerated;
+    public bool a = true;
 
     //splines
      // Reference to the Prefab. Drag a Prefab into this field in the Inspector.
     public GameObject myPrefab;
-    
+
+    [SerializeField] private GameObject myObject;
+    [SerializeField] private GameObject ChainPoint1;
+    [SerializeField] private GameObject ChainPoint2;
+    [SerializeField] private List<Vector3> points = new List<Vector3>();
+    [SerializeField] private List<GameObject> gameObjs = new List<GameObject>();
+
     //declaring variables
     static public string ChainType = "High Strength"; //default: High Strength, others: 6P
     static public float Point1x = -10.5f;//a (This should be the first sprockets X)
@@ -38,6 +45,7 @@ public class ChainGenerator : MonoBehaviour {
     static public float Funny = 0f; //make float point error on purpose :)
     static public float Stupid = 0f;//by default is 1, should be -1 if a > c. Should be 1 if a < c.
     static public float Stupid2 = 0f;
+    //static public Quaternion Rot1;
     //static public float Size3 = Size1 - Size2; //calculated C3
     [SerializeField] private List<GameObject> disabledObjects = new List<GameObject>();
     static public float Size3(float Size1, float Size2)//R3
@@ -319,7 +327,7 @@ public class ChainGenerator : MonoBehaviour {
 
     private bool isSelectingSprocket = false;
     private bool isFirstSprocketSelected = false;
-    private GameObject firstSprocket;
+    [SerializeField] private GameObject firstSprocket;
 
     public void OnToggle(){ //everything inside this is activated once button is pressed
         //some where in this script should be the sprocket selection, should happen after the button is pressed.
@@ -382,7 +390,7 @@ public class ChainGenerator : MonoBehaviour {
                     if (savedObject != null && savedObject.id.Contains("SPKT")) {
                         if (!isFirstSprocketSelected) { // First sprocket selection
                             isFirstSprocketSelected = true;
-                            firstSprocket = selectedObject;
+                            ChainPoint1 = selectedObject;
 
                             // Log some information about the selected object
                             Debug.Log("Selected First Sprocket: " + selectedObject.name);
@@ -425,10 +433,13 @@ public class ChainGenerator : MonoBehaviour {
                             Point1y = selectedTransform.position.y;
                             Point1z = selectedTransform.position.z;
 
+                            //Rot1 = selectedTransform.rotation;
+
                             // Change the button's color to green
                             buttonImage1.color = selectedColor;
                         }
-                        else if (selectedObject != firstSprocket) {
+                        else if (selectedObject != ChainPoint1) {
+                            ChainPoint2 = selectedObject;
                             if (savedObject.id.Contains(ChainType)){
                                 // Second sprocket selection
                                 Debug.Log("Selected Second Sprocket: " + selectedObject.name);
@@ -492,16 +503,20 @@ public class ChainGenerator : MonoBehaviour {
    {
     Debug.Log("This is the Size2 at start of Generate Chain " + Size2);
         // Instantiate at position (0, 0, 0) and zero rotation.
-        GameObject myObject = Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
+        myObject = Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         myObject.name = "Chain Container2.0";
 
-        GameObject ChainPoint1 = new GameObject();
-        ChainPoint1.name = "ChainPoint1";
-        ChainPoint1.gameObject.transform.Translate(Point1x, Point1y, 0);
 
-        GameObject ChainPoint2 = new GameObject();
-        ChainPoint2.name = "ChainPoint2";
-        ChainPoint2.gameObject.transform.Translate(Point2x, Point2y, 0);
+        /*while (a)
+        {
+            myObject = Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            myObject.name = "Chain Container2.0";
+            //myObject.transform.Translate(Point1x,Point1y,Point1z);
+
+            a = false;
+        }*/
+
 
         if (Point1x > Point2x)//by default is 1, should be -1 if a > c. Should be 1 if a < c.
         {
@@ -558,66 +573,102 @@ public class ChainGenerator : MonoBehaviour {
         float upoint12 = Upoint12(Point2x, Size2, upoint4, upoint8, length2);
         float ipoint12 = Ipoint12(Point2y, Size2, ipoint4, ipoint8, length2);
 
-        /*float tangent1In = 1;
-        float tangent1Out = 1;
-        float tangent2In = 1;
-        float tangent2Out = 1;
-        float tangent3In = 1;
-        float tangent3Out = 1;
-        float tangent4In = 1;
-        float tangent4Out = 1;*/
-
-        //reading out variables for testing purposes
-        /*Debug.Log("R1 " + Size1);
-        Debug.Log("a " + Point1x);
-        Debug.Log("b " + Point1y);
-        Debug.Log("R2 " + Size2);
-        Debug.Log("c " + Point2x);
-        Debug.Log("d " + Point2y);
-    
-        Debug.Log("u2 " + upoint2);
-        Debug.Log("u8 " + upoint8);
-        Debug.Log("i2 " + ipoint2);
-        Debug.Log("i8 " + ipoint8);
-
-        Debug.Log("L1 " + length1);
-        Debug.Log("L2 " + length2);
-        Debug.Log("u9 " + upoint9);
-        Debug.Log("i9 " + ipoint9);
-        Debug.Log("u10 " + upoint10);
-        Debug.Log("i10 " + ipoint10);
-        Debug.Log("u11 " + upoint11);
-        Debug.Log("i11 " + ipoint11);
-        Debug.Log("u12 " + upoint12);
-        Debug.Log("i12 " + ipoint12);
-
-
-        Debug.Log("u2" + upoint2);
-        Debug.Log("i2" + ipoint2);
-        Debug.Log("u4" + upoint4);
-        Debug.Log("i4" + ipoint4);*/
 
         //adding spline part
-        // Add a SplineContainer component to the ChainContainer GameObject.
+        //Add a SplineContainer component to the ChainContainer GameObject.
+        
+        //cancelling the chain gen for gizmos
         var container = myObject.AddComponent<SplineContainer>();
-        // Create a new Spline on the SplineContainer.
+
+        SplineInstantiate b = myObject.GetComponent<SplineInstantiate>();
+        b.Container = container;
+
+        //Create a new Spline on the SplineContainer.
         var spline1 = container.AddSpline();
         container.RemoveSplineAt(0);
 
+        quaternion _chainPoint1Rot = ChainPoint1.transform.rotation;
+        if(ChainPoint1.transform.rotation.y != 0 || ChainPoint1.transform.rotation.z != 0)
+        {
+            ChainPoint1.transform.rotation = new quaternion(ChainPoint1.transform.rotation.x, 0, 0, 0);
+        }
+
+        quaternion _chainPoint2Rot = ChainPoint2.transform.rotation;
+
+        if (ChainPoint2.transform.rotation.y != 0 || ChainPoint2.transform.rotation.z != 0)
+        {
+            ChainPoint2.transform.rotation = new quaternion(ChainPoint2.transform.rotation.x, 0, 0, 0);
+        }
+
+        GameObject knot0 = new GameObject();
+        knot0.transform.position = new Vector3(upoint10, ipoint10, Point1z);
+        knot0.transform.parent = ChainPoint1.transform;
+
+        GameObject knot1 = new GameObject();
+        knot1.transform.position = new Vector3(upoint7, ipoint7, Point1z);
+        knot1.transform.parent = ChainPoint1.transform;
+
+        GameObject knot2 = new GameObject();
+        knot2.transform.position = new Vector3(upoint9, ipoint9, Point1z);
+        knot2.transform.parent = ChainPoint1.transform;
+
+        GameObject knot3 = new GameObject();
+        knot3.transform.position = new Vector3(upoint1, ipoint1, Point1z);
+        knot3.transform.parent = ChainPoint1.transform;
         
-        // Set some knot values.
+        GameObject knot4 = new GameObject();
+        knot4.transform.position = new Vector3(upoint2, ipoint2, Point2z);
+        knot4.transform.parent = ChainPoint2.transform;
+
+        GameObject knot5 = new GameObject();
+        knot5.transform.position = new Vector3(upoint11, ipoint11, Point2z);
+        knot5.transform.parent = ChainPoint2.transform;
+
+        GameObject knot6 = new GameObject();
+        knot6.transform.position = new Vector3(upoint8, ipoint8, Point2z);
+        knot6.transform.parent = ChainPoint2.transform;
+
+        GameObject knot7 = new GameObject();
+        knot7.transform.position = new Vector3(upoint12, ipoint12, Point2z);
+        knot7.transform.parent = ChainPoint2.transform;
+
+        GameObject knot8 = new GameObject();
+        knot8.transform.position = new Vector3(upoint4, ipoint4, Point2z);
+        knot8.transform.parent = ChainPoint2.transform;
+
+        GameObject knot9 = new GameObject();
+        knot9.transform.position = new Vector3(upoint3, ipoint3, Point1z);
+        knot9.transform.parent = ChainPoint1.transform;
+
+        ChainPoint1.transform.rotation = _chainPoint1Rot;
+        ChainPoint2.transform.rotation = _chainPoint2Rot;
+
+        gameObjs = new List<GameObject>();
+        gameObjs.Add(knot0);
+        gameObjs.Add(knot1);
+        gameObjs.Add(knot2);
+        gameObjs.Add(knot3);
+        gameObjs.Add(knot4);
+        gameObjs.Add(knot5);
+        gameObjs.Add(knot6);
+        gameObjs.Add(knot7);
+        gameObjs.Add(knot8);
+        gameObjs.Add(knot9);
+
         var knots = new BezierKnot[10];
-        knots[0] = new BezierKnot(new float3(upoint10,  ipoint10, Point1z));//extra 3
-        knots[1] = new BezierKnot(new float3(upoint7,  ipoint7, Point1z));//extra 2
-        knots[2] = new BezierKnot(new float3(upoint9,  ipoint9, Point1z));//extra 1
-        knots[3] = new BezierKnot(new float3(upoint1,  ipoint1, Point1z));//tangent 1
-        knots[4] = new BezierKnot(new float3(upoint2,  ipoint2, Point1z));//tangent 2
-        knots[5] = new BezierKnot(new float3(upoint11, ipoint11, Point1z));//extra 6
-        knots[6] = new BezierKnot(new float3(upoint8, ipoint8, Point1z));//extra 5
-        knots[7] = new BezierKnot(new float3(upoint12, ipoint12, Point1z));//extra 4
-        knots[8] = new BezierKnot(new float3(upoint4, ipoint4, Point1z));//tangent 4 (not a typo, order calculated is Tangent: 1>2>4>3)
-        knots[9] = new BezierKnot(new float3(upoint3, ipoint3, Point1z));//tanent 3
-        
+        quaternion zrot = new Quaternion(0, 0, 180, 1);
+        float a = 90 + ChainPoint1.transform.rotation.y;
+        quaternion yrot = new Quaternion(0, a, 0, 1);
+        knots[0] = new BezierKnot(new float3(knot0.transform.position));//extra 3
+        knots[1] = new BezierKnot(new float3(knot1.transform.position), knot0.transform.position, knot2.transform.position, yrot);//extra 2          yrot         
+        knots[2] = new BezierKnot(new float3(knot2.transform.position), knot1.transform.position, knot3.transform.position, zrot);//extra 1           zrot
+        knots[3] = new BezierKnot(new float3(knot3.transform.position), knot2.transform.position, knot4.transform.position, zrot);//tangent 1        zrot
+        knots[4] = new BezierKnot(new float3(knot4.transform.position), knot3.transform.position, knot5.transform.position, zrot);//tangent 2        zrot
+        knots[5] = new BezierKnot(new float3(knot5.transform.position), knot4.transform.position, knot6.transform.position, zrot);//extra 6          zrot
+        knots[6] = new BezierKnot(new float3(knot6.transform.position), knot5.transform.position, knot7.transform.position, yrot);//extra 5          yrot          
+        knots[7] = new BezierKnot(new float3(knot7.transform.position));//extra 4
+        knots[8] = new BezierKnot(new float3(knot8.transform.position));//tangent 4 (not a typo, order calculated is Tangent: 1>2>4>3)
+        knots[9] = new BezierKnot(new float3(knot9.transform.position));//tanent 3
         spline1.Knots = knots;
         spline1.Closed = true;
         //Work in progress, all API found here: https://docs.unity3d.com/Packages/com.unity.splines@2.0/api/index.html
@@ -628,10 +679,14 @@ public class ChainGenerator : MonoBehaviour {
             spline1.SetTangentMode(i, TangentMode.AutoSmooth);
         }
 
+        //spline1.SetTangentMode(1, TangentMode.Broken);
+        //spline1.SetTangentMode(6, TangentMode.Broken);
 
         onChainGenerated.Invoke();
-   }
 
+        CancelToolUi();
+        this.GetComponentInParent<Toggle>().isOn = false;
+   }
     //this function is assigned the the gameobject chain tool toggle and activates whenever escape is pressed
     public void CancelToolUi()
     {
@@ -641,6 +696,97 @@ public class ChainGenerator : MonoBehaviour {
             Panel.gameObject.SetActive (false);
         }
         disabledObjects.Clear();
+    }
+
+    public void GeneratePointGizmo()
+    {
+
+        float Distance = Vector3.Distance(ChainPoint1.transform.position, ChainPoint2.transform.position); //finds distance between two points
+        float size3 = Size3(Size1, Size2);
+        float hline = Hline(Distance, Size1, Size2);//H
+        float yline = Yline(Hline(Distance, Size1, Size2), Size2);//Y
+        float theta1 = Theta1(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2));//theta1
+        float ypoint1 = Ypoint1(Point2y, Point1y);//x1
+        float xpoint1 = Xpoint1(Point2x, Point1x);//y1
+        float theta2 = Theta2(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2), Ypoint1(Point2y, Point1y), Xpoint1(Point2x, Point1x));//theta2
+        float upoint1 = Upoint1(Point1x, Size1, theta2); //X position of first tangent, u1
+        float ipoint1 = Ipoint1(Point1y, Size1, theta2); //Y position of first tangent, i1
+        float upoint5 = Upoint5(Point1x, size3, theta2); //u5
+        float ipoint5 = Ipoint5(Point1y, size3, theta2); //i5
+        float upoint2 = Upoint2(Point2x, upoint1, upoint5); //X poisiton of second tangent, u2
+        float ipoint2 = Ipoint2(Point2y, ipoint1, ipoint5); //Y position of second tangent, i2
+        float theta3 = Theta3(Theta1(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2)), Ypoint1(Point2y, Point1y), Xpoint1(Point2x, Point1x));//theta3
+        float upoint6 = Upoint6(Point1x, size3, Theta3(Theta1(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2)), Ypoint1(Point2y, Point1y), Xpoint1(Point2x, Point1x)));//u6
+        float ipoint6 = Ipoint6(Point1y, size3, Theta3(Theta1(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2)), Ypoint1(Point2y, Point1y), Xpoint1(Point2x, Point1x)));//i6
+        float upoint3 = Upoint3(Point1x, Size1, Theta3(Theta1(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2)), Ypoint1(Point2y, Point1y), Xpoint1(Point2x, Point1x))); //X position of third tangent, u3
+        float ipoint3 = Ipoint3(Point1y, Size1, Theta3(Theta1(Size1, Distance, Yline(Hline(Distance, Size1, Size2), Size2)), Ypoint1(Point2y, Point1y), Xpoint1(Point2x, Point1x))); //Y position of third tangent, i3
+        float upoint4 = Upoint4(Point2x, upoint3, upoint6);//X position of fourth tangent, u4
+        float ipoint4 = Ipoint4(Point2y, ipoint3, ipoint6);//Y position of fourth tangent, i4
+        float upoint7 = Upoint7(Size1, Point1x, Point2x, Point1y, Point2y, Stupid, Funny);
+        float ipoint7 = Ipoint7(Size1, Point1x, Point2x, Point1y, Point2y, Stupid, Funny);
+        float upoint8 = Upoint8(Size2, Point1x, Point2x, Point1y, Point2y, Stupid2, Funny);
+        float ipoint8 = Ipoint8(Size2, Point1x, Point2x, Point1y, Point2y, Stupid2, Funny);
+        float length1 = Length1(upoint7, upoint1, ipoint7, ipoint1, Point1x, Point1y);
+        float length2 = Length2(upoint2, upoint8, ipoint2, ipoint8, Point2x, Point2y);
+        float upoint9 = Upoint9(Point1x, Size1, upoint7, upoint1, length1);
+        float ipoint9 = Ipoint9(Point1y, Size1, ipoint7, ipoint1, length1);
+        float upoint10 = Upoint10(Point1x, Size1, upoint7, upoint3, length1);
+        float ipoint10 = Ipoint10(Point1y, Size1, ipoint7, ipoint3, length1);
+        float upoint11 = Upoint11(Point2x, Size2, upoint2, upoint8, length2);
+        float ipoint11 = Ipoint11(Point2y, Size2, ipoint2, ipoint8, length2);
+        float upoint12 = Upoint12(Point2x, Size2, upoint4, upoint8, length2);
+        float ipoint12 = Ipoint12(Point2y, Size2, ipoint4, ipoint8, length2);
+
+
+        points.Clear();
+
+        points.Add(new Vector3(upoint10, ipoint10, Point1z));
+        points.Add(new Vector3(upoint7, ipoint7, Point1z));
+        points.Add(new Vector3(upoint9, ipoint9, Point1z));
+        points.Add(new Vector3(upoint1, ipoint1, Point1z));
+
+        points.Add(new Vector3(upoint2, ipoint2, Point2z));
+        points.Add(new Vector3(upoint11, ipoint11, Point2z));
+        points.Add(new Vector3(upoint8, ipoint8, Point2z));
+        points.Add(new Vector3(upoint12, ipoint12, Point2z));
+        points.Add(new Vector3(upoint4, ipoint4, Point2z));
+
+        points.Add(new Vector3(upoint3, ipoint3, Point1z));
+
+    }
+
+    /*private void Awake()
+    {
+        myObject = null;
+        ChainPoint1 = null;
+        ChainPoint2 = null;
+    }
+    public void LateUpdate()
+    {
+        Point1x = ChainPoint1.transform.position.x;
+        Point1y = ChainPoint1.transform.position.y;
+        Point1z = ChainPoint1.transform.position.z;
+
+        Point2x = ChainPoint2.transform.position.x;
+        Point2y = ChainPoint2.transform.position.y;
+        Point2z = ChainPoint2.transform.position.z;
+
+        GeneratePointGizmo();
+    }*/
+
+    private void OnDrawGizmos()
+    {
+        foreach (var point in points)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(point, .5f);
+        }
+
+        foreach (var obj in gameObjs)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawSphere(obj.transform.position, .25f);
+        }
     }
 }
 
