@@ -29,7 +29,7 @@ public class BasicSample : MonoBehaviour {
         }
         GUILayout.Space(5);
         if (GUILayout.Button("Open File Extension")) {
-            WriteResult(StandaloneFileBrowser.OpenFilePanel("Open File", "", "Build", true));
+            WriteResult(StandaloneFileBrowser.OpenFilePanel("Open File", "", "txt", true));
         }
         GUILayout.Space(5);
         if (GUILayout.Button("Open File Directory")) {
@@ -68,8 +68,7 @@ public class BasicSample : MonoBehaviour {
         // Save File Samples
 
         if (GUILayout.Button("Save File")) {
-            _path = StandaloneFileBrowser.SaveFilePanel("Save File", "", "", "Build");
-            print("PATH: " + _path);
+            _path = StandaloneFileBrowser.SaveFilePanel("Save File", "", "", "");
         }
         GUILayout.Space(5);
         if (GUILayout.Button("Save File Async")) {
@@ -105,7 +104,6 @@ public class BasicSample : MonoBehaviour {
 
     public void WriteResult(string[] paths) {
         if (paths.Length == 0) {
-            print("NOTHING CANCELLED");
             return;
         }
 
@@ -116,8 +114,6 @@ public class BasicSample : MonoBehaviour {
     }
 
     public void WriteResult(string path) {
-        print("PATH: " + path);
-        
         _path = path;
     }
 }
