@@ -1,35 +1,58 @@
-name: Build Unity Project
+name: Memory-Optimized Unity Build
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: [main]
+    paths:
+      - "Assets/**"
+      - "Packages/**"
+      - "ProjectSettings/**"
 
 jobs:
-  buildForAllSupportedPlatforms:
-    name: Build for ${{ matrix.targetPlatform }}
+  buildWithMemoryOpt:
+    name: Build ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
         targetPlatform:
           - StandaloneWindows64
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
-          lfs: true
+          lfs: false
+          fetch-depth: 1
 
-      - uses: actions/cache@v4
+      # Clear system memory before build
+      - name: Free system memory
+        run: |
+          sudo service docker stop || true
+          sudo systemctl stop docker.socket || true
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+
+      # Configure swap space
+      - name: Configure additional swap space
+        run: |
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          sudo fallocate -l 8G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+
+      - uses: actions/cache@v3
         with:
-          path: Library
-          key: Library-${{ matrix.targetPlatform }}
-          restore-keys: Library-
+          path: |
+            Library
+            Temp
+            obj
+          key: FastBuild-${{ matrix.targetPlatform }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            FastBuild-${{ matrix.targetPlatform }}-
 
-      - uses: game-ci/unity-builder@v4
+      - uses: game-ci/unity-builder@v3
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -38,8 +61,20 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           buildName: YourGameName
           buildMethod: Builder.Build
+          customParameters: >-
+            -nographics
+            -fastLane
+            -force-gc
+            -disable-assembly-updater
+            -ignoreCompilerErrors
+            -reduced-security-checks
+          allowDirtyBuild: true
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v3
+        if: always()
         with:
-          name: Build-${{ matrix.targetPlatform }}
-          path: build/${{ matrix.targetPlatform }}
+          name: Build-Logs
+          path: |
+            Logs/**
+            *.log
+          retention-days: 1
