@@ -1,30 +1,17 @@
 name: Unity Build
 
 on:
-  workflow_dispatch:
-    inputs:
-      buildTarget:
-        description: "Build Target Platform"
-        required: true
-        default: "StandaloneWindows64"
-        type: choice
-        options:
-          - StandaloneWindows64
-          - StandaloneLinux64
-          - WebGL
-          - Android
-          - iOS
-      unityVersion:
-        description: "Unity Version"
-        required: true
-        default: "2021.3.5f1"
-        type: string
+  push:
+    branches:
+      - main # or your main branch
+  pull_request:
+    branches:
+      - main # or your main branch
 
 jobs:
-  build:
-    name: Build Unity Project
+  build-windows:
+    name: Build Windows
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -35,9 +22,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: Library
-          key: Library-${{ github.sha }}
+          key: Library-Windows-${{ github.sha }}
           restore-keys: |
-            Library-
+            Library-Windows-
 
       - name: Build Unity Project
         uses: game-ci/unity-builder@v4
@@ -46,11 +33,77 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          targetPlatform: ${{ github.event.inputs.buildTarget }}
-          unityVersion: ${{ github.event.inputs.unityVersion }}
+          targetPlatform: StandaloneWindows64
+          unityVersion: 2021.3.5f1
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Build-${{ github.event.inputs.buildTarget }}
-          path: build/${{ github.event.inputs.buildTarget }}
+          name: Build-StandaloneWindows64
+          path: build/StandaloneWindows64
+
+  build-linux:
+    name: Build Linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Cache Library
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-Linux-${{ github.sha }}
+          restore-keys: |
+            Library-Linux-
+
+      - name: Build Unity Project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: StandaloneLinux64
+          unityVersion: 2021.3.5f1
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build-StandaloneLinux64
+          path: build/StandaloneLinux64
+
+  build-webgl:
+    name: Build WebGL
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Cache Library
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-WebGL-${{ github.sha }}
+          restore-keys: |
+            Library-WebGL-
+
+      - name: Build Unity Project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: WebGL
+          unityVersion: 2021.3.5f1
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build-WebGL
+          path: build/WebGL
