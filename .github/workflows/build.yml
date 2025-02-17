@@ -32,7 +32,7 @@ jobs:
           lfs: true
 
       - name: Cache Library
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: Library
           key: Library-${{ github.sha }}
@@ -50,7 +50,7 @@ jobs:
           unityVersion: ${{ github.event.inputs.unityVersion }}
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Build-${{ github.event.inputs.buildTarget }}
           path: build/${{ github.event.inputs.buildTarget }}
