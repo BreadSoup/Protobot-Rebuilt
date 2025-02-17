@@ -19,11 +19,24 @@ on:
         required: true
         default: "2021.3.5f1"
         type: string
+  pull_request:
+    branches:
+      - main # Or your main branch name, e.g., develop, master
+  push:
+    branches:
+      - main # Or your main branch name, e.g., develop, master
 
 jobs:
   build:
     name: Build Unity Project
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        buildTarget:
+          - StandaloneWindows64
+          - StandaloneLinux64
+          - WebGL
 
     steps:
       - name: Checkout Repository
@@ -35,22 +48,22 @@ jobs:
         uses: actions/cache@v4
         with:
           path: Library
-          key: Library-${{ github.sha }}
+          key: Library-${{ github.sha }}-${{ matrix.buildTarget }}
           restore-keys: |
-            Library-
+            Library-${{ github.sha }}-${{ matrix.buildTarget }}
+            Library-  # Fallback to a general library cache
 
-      - name: Unity - Builder
+      - name: Build Unity Project
         uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          targetPlatform: ${{ github.event.inputs.buildTarget }}
-          unityVersion: ${{ github.event.inputs.unityVersion }}
-
+          targetPlatform: ${{ matrix.buildTarget }}
+          unityVersion: ${{ github.event.inputs.unityVersion || '2021.3.5f1' }} # Use workflow input or default if not provided.  Important to handle missing input on push/pull_request
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Build-${{ github.event.inputs.buildTarget }}
-          path: build/${{ github.event.inputs.buildTarget }}
+          name: Build-${{ matrix.buildTarget }}
+          path: build/${{ matrix.buildTarget }}
