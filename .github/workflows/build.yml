@@ -1,80 +1,56 @@
-name: Memory-Optimized Unity Build
+name: Unity Build
+
 on:
-  push:
-    branches: [main]
-    paths:
-      - "Assets/**"
-      - "Packages/**"
-      - "ProjectSettings/**"
+  workflow_dispatch:
+    inputs:
+      buildTarget:
+        description: "Build Target Platform"
+        required: true
+        default: "StandaloneWindows64"
+        type: choice
+        options:
+          - StandaloneWindows64
+          - StandaloneLinux64
+          - WebGL
+          - Android
+          - iOS
+      unityVersion:
+        description: "Unity Version"
+        required: true
+        default: "2021.3.5f1"
+        type: string
 
 jobs:
-  buildWithMemoryOpt:
-    name: Build ${{ matrix.targetPlatform }}
+  build:
+    name: Build Unity Project
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        targetPlatform:
-          - StandaloneWindows64
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
-          lfs: false
-          fetch-depth: 1
+          lfs: true
 
-      # Clear system memory before build
-      - name: Free system memory
-        run: |
-          sudo service docker stop || true
-          sudo systemctl stop docker.socket || true
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-
-      # Configure swap space
-      - name: Configure additional swap space
-        run: |
-          sudo swapoff -a
-          sudo rm -f /swapfile
-          sudo fallocate -l 8G /swapfile
-          sudo chmod 600 /swapfile
-          sudo mkswap /swapfile
-          sudo swapon /swapfile
-
-      - uses: actions/cache@v3
+      - name: Cache Library
+        uses: actions/cache@v3
         with:
-          path: |
-            Library
-            Temp
-            obj
-          key: FastBuild-${{ matrix.targetPlatform }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          path: Library
+          key: Library-${{ github.sha }}
           restore-keys: |
-            FastBuild-${{ matrix.targetPlatform }}-
+            Library-
 
-      - uses: game-ci/unity-builder@v3
+      - name: Unity - Builder
+        uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          targetPlatform: ${{ matrix.targetPlatform }}
-          buildName: YourGameName
-          buildMethod: Builder.Build
-          customParameters: >-
-            -nographics
-            -fastLane
-            -force-gc
-            -disable-assembly-updater
-            -ignoreCompilerErrors
-            -reduced-security-checks
-          allowDirtyBuild: true
+          targetPlatform: ${{ github.event.inputs.buildTarget }}
+          unityVersion: ${{ github.event.inputs.unityVersion }}
 
-      - uses: actions/upload-artifact@v3
-        if: always()
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
         with:
-          name: Build-Logs
-          path: |
-            Logs/**
-            *.log
-          retention-days: 1
+          name: Build-${{ github.event.inputs.buildTarget }}
+          path: build/${{ github.event.inputs.buildTarget }}
