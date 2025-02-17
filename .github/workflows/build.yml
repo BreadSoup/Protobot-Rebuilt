@@ -16,8 +16,6 @@ jobs:
       matrix:
         targetPlatform:
           - StandaloneWindows64
-          - StandaloneLinux64
-          - WebGL
 
     steps:
       - uses: actions/checkout@v4
@@ -25,7 +23,7 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: Library
           key: Library-${{ matrix.targetPlatform }}
