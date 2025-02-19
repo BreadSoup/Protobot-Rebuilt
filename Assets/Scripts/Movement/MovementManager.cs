@@ -82,9 +82,12 @@ namespace Protobot {
                 FormPivot(movingObjs);
             }
             movementTween = displacement.Displace(movementPivot.gameObject, duration);
+
+            Debug.Log(MovingObj.transform.position);
         }
 
         public void MoveTo(Vector3 position) {
+            Debug.Log("Moved");
             var displacement = new Displacement(position, MovingObj.transform.rotation);
             DisplaceTo(displacement);
         }
