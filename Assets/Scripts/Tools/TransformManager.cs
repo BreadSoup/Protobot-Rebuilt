@@ -87,14 +87,14 @@ public class TransformManager : MonoBehaviour
 
     private void UpdateTextFields(Vector3 position)
     {
-        x.text = position.x.ToString();
-        y.text = position.y.ToString();
-        z.text = position.z.ToString();
+        x.text = position.x.ToString() + "in";
+        y.text = position.y.ToString() + "in";
+        z.text = position.z.ToString() + "in";
     }
 
     public void SetXPosition(string xPos)
     {
-        Debug.Log(xPos);
+        xPos = xPos.Replace("in", "");
         if (_movingObject == null) return;
 
         Debug.Log(_movingObject);
@@ -112,6 +112,7 @@ public class TransformManager : MonoBehaviour
 
     public void SetYPosition(string yPos)
     {
+        yPos = yPos.Replace("in", "");
         if (_movingObject == null) return;
 
         if (float.TryParse(yPos, out float yValue))
@@ -126,6 +127,7 @@ public class TransformManager : MonoBehaviour
 
     public void SetZPosition(string zPos)
     {
+        zPos = zPos.Replace("in", "");
         if (_movingObject == null) return;
 
         if (float.TryParse(zPos, out float zValue))
