@@ -3776,6 +3776,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectLink: {fileID: 1718958752}
+  OnMovementEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2142784234}
+        m_TargetAssemblyTypeName: TransformManager, Assembly-CSharp
+        m_MethodName: OnMovement
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &134764216
 Transform:
   m_ObjectHideFlags: 0
@@ -26582,7 +26597,19 @@ MonoBehaviour:
   conditions: []
   OnUpdateSelection:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2142784234}
+        m_TargetAssemblyTypeName: TransformManager, Assembly-CSharp
+        m_MethodName: OnMovement
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnClearSelection:
     m_PersistentCalls:
       m_Calls: []

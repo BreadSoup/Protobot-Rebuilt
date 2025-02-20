@@ -66,7 +66,6 @@ public class TransformManager : MonoBehaviour
             if (_movingObject != null)
             {
                 _lastPosition = _movingObject.transform.position;
-                UpdateTextFields(_lastPosition);
                 FadeInTransformMenu();
             }
             else
@@ -80,7 +79,6 @@ public class TransformManager : MonoBehaviour
             if (movingObject.transform.position != _lastPosition)
             {
                 _lastPosition = movingObject.transform.position;
-                UpdateTextFields(_lastPosition);
             }
         }
     }
@@ -156,5 +154,12 @@ public class TransformManager : MonoBehaviour
             _canvasGroup.interactable = false;
             _canvasGroup.blocksRaycasts = false;
         }
+    }
+
+    public void OnMovement()
+    {
+        Debug.Log("moved!");
+        GameObject movingObject = movementManager.MovingObj;
+        UpdateTextFields(movingObject.transform.position);
     }
 }
