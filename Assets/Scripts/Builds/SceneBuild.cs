@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using UnityEditor;
 
 namespace Protobot.Builds {
     public static class SceneBuild {
@@ -64,8 +65,20 @@ namespace Protobot.Builds {
                     GenerateObject(part, buildData);
 
             }
-
+            
             OnGenerateBuild?.Invoke(buildData);
+
+            if (AppPlatform.OnMac)
+            {
+                try
+                {
+                    GameObject.Find("Mac Support Check").GetComponent<MacRebind>().RebindCheck();
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError("An error occurred while performing Mac rebind check: " + ex.Message);
+                }
+            }
         }
 
         private static GameObject GenerateObject(ObjectData objectData, BuildData buildData)
