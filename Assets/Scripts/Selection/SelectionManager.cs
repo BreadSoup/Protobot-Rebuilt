@@ -105,7 +105,9 @@ namespace Protobot.SelectionSystem {
                 current = newSelection;
                 current.Select();
                 RunSetResponses(newSelection);
+                OnUpdateSelection?.Invoke(newSelection.gameObject);
             }
+
         }
 
         public void ClearCurrent(bool setting = false, bool noSelector = false) {
