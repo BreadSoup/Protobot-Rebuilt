@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: V5 Pneumatic Air Reservoir
+  weightInGrams: 321
 --- !u!1 &2530643500621783279
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,3 +374,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Legacy Pneumatic Air Reservoir
+  weightInGrams: 247

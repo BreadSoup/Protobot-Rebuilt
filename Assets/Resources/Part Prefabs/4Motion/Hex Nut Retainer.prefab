@@ -371,6 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Hex Nut Retainer
+  weightInGrams: 0.8
 --- !u!1 &4286227240236181976
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,6 +531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Hex Nut Retainer with Bearing Flat
+  weightInGrams: 1
 --- !u!1 &5257224139929547266
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,6 +690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Square Hex Nut Retainer
+  weightInGrams: 1
 --- !u!1 &5949665366722959523
 GameObject:
   m_ObjectHideFlags: 0

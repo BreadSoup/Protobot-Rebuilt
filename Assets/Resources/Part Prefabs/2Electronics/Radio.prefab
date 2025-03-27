@@ -312,6 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Radio
+  weightInGrams: 25
 --- !u!1 &5190446102819052526
 GameObject:
   m_ObjectHideFlags: 0

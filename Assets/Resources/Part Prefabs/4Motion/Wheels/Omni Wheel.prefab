@@ -981,6 +981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 2.75" Omni Wheel
+  weightInGrams: 75
 --- !u!1 &1367666537469076981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,6 +1139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 4" Omni Wheel
+  weightInGrams: 100
 --- !u!1 &1367666537581935451
 GameObject:
   m_ObjectHideFlags: 0
@@ -1410,6 +1412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 3.25" Omni Wheel
+  weightInGrams: 55
 --- !u!1 &1367666538023408263
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,6 +2280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 2" Omni Wheel
+  weightInGrams: 90
 --- !u!1 &3287821461027131796
 GameObject:
   m_ObjectHideFlags: 0
@@ -2742,6 +2746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 2.75" Omni Wheel
+  weightInGrams: 70
 --- !u!1 &3852376023712893227
 GameObject:
   m_ObjectHideFlags: 0
@@ -3771,6 +3776,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 4" Omni Wheel
+  weightInGrams: 105
 --- !u!1 &5410222753865298998
 GameObject:
   m_ObjectHideFlags: 0
@@ -5266,3 +5272,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 3.25" Omni Wheel
+  weightInGrams: 60
