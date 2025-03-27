@@ -67,5 +67,18 @@ namespace Protobot.InputEvents {
             if (key == null) print("Key not found: " + keyName);
             return key != null && key.isPressed;
         }
+        //i have no idea what im doing
+        public void Rebind(string newBinding)
+        {
+            if (defaultAction != null)
+            {
+                defaultAction.ApplyBindingOverride(newBinding);
+                Debug.Log($"Rebound to {newBinding}");
+            }
+            else
+            {
+                Debug.LogError("inputAction is null! Cannot rebind.");
+            }
+        }
     }
 }
