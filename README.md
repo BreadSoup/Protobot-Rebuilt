@@ -10,6 +10,11 @@ Official binaries for Protobot Rebuilt can be found on the [Releases]() page of 
 
 Pull requests are welcome and very much appreciated. You can also contribute by submitting issues for problems you find in the software.
 
+If you have any questions or concerns you can
+* **message** me on discord `@breadsoup` (Dont just add me I have far too many friend requests)\
+ *OR*
+* ping me in the [`#protobot`](https://discord.gg/ZPKqEYbD4t) channel in the Vex Cad Server
+
 #### Notes
 - This version of Protobot uses Unity **2021.3.5f1** please have all changes support this version and have [`ProjectVersion.txt`](https://github.com/BreadSoup/Protobot-Rebuilt/blob/main/ProjectSettings/ProjectVersion.txt) `m_EditorVersion:` be `2021.3.5f1`
 - Documentation for the code itself is limited and there may be unused sections of code, this should be expected.
