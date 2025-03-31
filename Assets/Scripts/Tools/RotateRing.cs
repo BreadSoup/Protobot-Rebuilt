@@ -23,6 +23,8 @@ namespace Protobot.Tools {
         public override Quaternion FinalRotation => finalRotation;
 
         private const float Increment = 15;
+        
+        private PositionManager positionManager;
 
         //Main functions
         public override void Rotate() {
@@ -40,17 +42,23 @@ namespace Protobot.Tools {
             finalRotation = newRot;
         }
 
-        public override void Initialize() {
+        public override void Initialize()
+        {
+            positionManager = FindObjectOfType<PositionManager>();
             initMouseVector = MouseVector;
-
+            
             initRot = refObj.transform.rotation;
             initRotVector = rotVectorLink.Vector;
         }
 
         //Input Events
-        public override void OnDrag() {
+        public override void OnDrag()
+        {
             if (MouseInput.LeftButton.isPressed)
+            {
                 Rotate();
+                positionManager.UpdateValues();
+            }
         }
 
         public override void OnEndDrag() {

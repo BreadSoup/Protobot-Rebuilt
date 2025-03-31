@@ -22,6 +22,7 @@ namespace Protobot.Tools {
         public override void Initialize() {
             planeCast.GetComponent<LookAt>().vectorLink = normal;
             initObjPos = refObj.transform.position;
+            PositionManager = FindObjectOfType<PositionManager>();
         }
     }
 }
