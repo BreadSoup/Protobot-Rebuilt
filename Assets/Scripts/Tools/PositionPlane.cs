@@ -10,12 +10,14 @@ namespace Protobot.Tools {
 
         public override void Move() {
             if (planeCast.hasHit) {
+                PositionManager.UpdateValues();
                 finalPosition = MoveToPos(planeCast.point);
             }
         }
 
         public override void Initialize() {
             planeCast.transform.forward = normal.Vector;
+            PositionManager = FindObjectOfType<PositionManager>();
         }
     }
 }

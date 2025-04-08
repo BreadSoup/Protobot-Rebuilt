@@ -9,7 +9,8 @@ namespace Protobot.Tools {
     public abstract class CastPositionTool : PositionTool {
         public PlaneCast planeCast;
         public InputEvent dragInput;
-
+        
+        internal PositionManager PositionManager;
         public void DisablePlaneObj() {
             planeCast.gameObject.SetActive(false);
         }
@@ -27,6 +28,7 @@ namespace Protobot.Tools {
         public override void OnDrag() {
             if (dragInput.IsPressed) {
                 Move();
+                PositionManager.UpdateValues();
             }
         }
 
