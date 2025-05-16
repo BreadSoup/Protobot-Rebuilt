@@ -35,8 +35,11 @@ namespace Protobot.Transformations {
         }
 
         public Tween Rotate(GameObject gameObject, float duration = 0.25f) {
+            Debug.Log($"[Displacement.Rotate] Applying Rotation (Euler): {Orientation.eulerAngles}");
+    
             return gameObject.transform.DOLocalRotateQuaternion(Orientation, duration);
         }
+
     }
 
     public class Displacement {

@@ -69,12 +69,13 @@ public class PositionManager : MonoBehaviour
         posZText.text = obj.transform.position.z.ToString();
         posZ = obj.transform.position.z.ToString();
         
-        rotXText.text = obj.transform.rotation.eulerAngles.x.ToString();
-        rotX = obj.transform.rotation.eulerAngles.x.ToString();
-        rotYText.text = obj.transform.rotation.eulerAngles.y.ToString();
-        rotY = obj.transform.rotation.eulerAngles.y.ToString();
-        rotZText.text = obj.transform.rotation.eulerAngles.z.ToString();
-        rotZ = obj.transform.rotation.eulerAngles.z.ToString();
+        rotXText.text = Mathf.Round(obj.transform.rotation.x).ToString();
+        rotX = Mathf.Round(obj.transform.rotation.x).ToString();
+        rotYText.text = Mathf.Round(obj.transform.rotation.y).ToString();
+        rotY = Mathf.Round(obj.transform.rotation.y).ToString();
+        rotZText.text = Mathf.Round(WrapAngle(obj.transform.rotation.eulerAngles.z)).ToString();
+        rotZ = rotZText.text;
+        print(WrapAngle(obj.transform.rotation.eulerAngles.z));
     }
 
     public void ApplyValues(InputField input)
@@ -138,5 +139,14 @@ public class PositionManager : MonoBehaviour
     {
         posZ = newValue;
         Debug.Log("posZ changed to: " + posZ);
+    }
+    private static float WrapAngle(float angle)
+    {
+        // https://discussions.unity.com/t/solved-how-to-get-rotation-value-that-is-in-the-inspector/657911/4
+        angle%=360;
+        if(angle >180)
+            return angle - 360;
+
+        return angle;
     }
 }

@@ -90,8 +90,14 @@ namespace Protobot {
         }
 
         public void RotateTo(Quaternion rotation) {
+            Debug.Log($"[RotateTo] Input Rotation (Euler): {rotation.eulerAngles}");
+
             var displacement = new Displacement(MovingObj.transform.position, rotation);
+    
+            Debug.Log($"[RotateTo] Displacement Rotation (Euler): {displacement.rotation.Orientation.eulerAngles}");
+
             DisplaceTo(displacement);
         }
+
     }
 }

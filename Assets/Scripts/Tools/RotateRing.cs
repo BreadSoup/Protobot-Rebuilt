@@ -22,7 +22,7 @@ namespace Protobot.Tools {
         private Quaternion finalRotation = Quaternion.identity;
         public override Quaternion FinalRotation => finalRotation;
 
-        private const float Increment = 15;
+        private const float Increment = 5;
         
         private PositionManager positionManager;
 
@@ -36,7 +36,10 @@ namespace Protobot.Tools {
 
             float camDot = Vector3.Dot(refCamera.transform.forward, initRotVector); //finds the dot product between the camera direction vs. the look direction of this rotate ring
             Quaternion newRot = Quaternion.AngleAxis(angle, -initRotVector * Mathf.Sign(camDot)) * initRot;
-            
+            Debug.Log($"[Rotate] Computed Angle: {angle}");
+            Debug.Log($"[Rotate] Initial Rotation (Euler): {initRot.eulerAngles}");
+            Debug.Log($"[Rotate] New Rotation (Euler): {newRot.eulerAngles}");
+
             movementManager.RotateTo(newRot);
 
             finalRotation = newRot;
@@ -61,8 +64,9 @@ namespace Protobot.Tools {
             }
         }
 
-        public override void OnEndDrag() {
-
+        public override void OnEndDrag()
+        {
+            
         }
     }
 }
