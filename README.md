@@ -12,4 +12,4 @@ Minimal patches to get command working and other polishes for Mac OS
 
 Get the latest release from releases.
 
-Skip notarization, run the following command:
+Run `xattr -cr /path/to/app.app` to clear notarization requirements.
