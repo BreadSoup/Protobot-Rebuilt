@@ -66,6 +66,7 @@ public class PartListOutput : MonoBehaviour
     public string GetFileLocation()
     {
         //allows the user to specify the file path to save the txt file to
-        return StandaloneFileBrowser.SaveFilePanel("Save Parts List", "", "Parts", "txt");
+        string fullPath = StandaloneFileBrowser.SaveFilePanel("Save Parts List", "", "Parts", "txt");
+        return fullPath;
     }
 }

@@ -21,7 +21,7 @@ namespace Protobot.UI {
         [SerializeField] private StringUnityEvent OnRenameSuccess;
 
         public void UpdateTopBarUI(BuildData buildData) {
-            fileTitleText.text = buildData.name;
+            fileTitleText.text = System.IO.Path.GetFileName(buildData.name);
 
             var width = Mathf.Clamp(fileTitleText.preferredWidth + 25, 150f, 300f);
             buildNameContainer.sizeDelta = new Vector2(width, buildNameContainer.sizeDelta.y);

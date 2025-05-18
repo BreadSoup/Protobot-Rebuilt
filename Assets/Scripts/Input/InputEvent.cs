@@ -33,6 +33,7 @@ namespace Protobot.InputEvents {
             };
 
             if (rebindAction.IsEmpty) {
+                // Remove invalid default binding code. Set up default bindings in Input Actions asset or via AddBinding only.
                 defaultAction.Enable();
             }
         }
