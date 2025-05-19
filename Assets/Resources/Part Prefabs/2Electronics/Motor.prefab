@@ -187,6 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 11W Motor
+  weightInGrams: 155
 --- !u!1 &80507991746179770
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,6 +657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 5.5W Motor
+  weightInGrams: 90.7
 --- !u!1 &1267116233930034824
 GameObject:
   m_ObjectHideFlags: 0

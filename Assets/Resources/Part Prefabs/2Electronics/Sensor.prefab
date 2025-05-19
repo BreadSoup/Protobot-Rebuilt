@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Ultrasonic Range Finder
+  weightInGrams: 33
 --- !u!1 &881224588738804892
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,6 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Line Tracker
+  weightInGrams: 12
 --- !u!1 &1218502684336912831
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,6 +592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Vision Sensor
+  weightInGrams: 46
 --- !u!1 &1954523021746448338
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,6 +812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Light Sensor
+  weightInGrams: 33
 --- !u!1 &2369658485472386115
 GameObject:
   m_ObjectHideFlags: 0
@@ -1697,6 +1701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Potentiometer
+  weightInGrams: 11
 --- !u!1 &5190446102819052526
 GameObject:
   m_ObjectHideFlags: 0
@@ -1914,6 +1919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Inertial Sensor
+  weightInGrams: 9
 --- !u!1 &5614135770531657591
 GameObject:
   m_ObjectHideFlags: 0
@@ -2421,6 +2427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Optical Sensor
+  weightInGrams: 9
 --- !u!1 &7085060498827036351
 GameObject:
   m_ObjectHideFlags: 0
@@ -2709,6 +2716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Rotation Sensor
+  weightInGrams: 22.6
 --- !u!1 &7792885995556039598
 GameObject:
   m_ObjectHideFlags: 0
@@ -2861,6 +2869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Distance Sensor
+  weightInGrams: 9
 --- !u!1 &7836092879870976340
 GameObject:
   m_ObjectHideFlags: 0
@@ -3509,6 +3518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Optical Shaft Encoder
+  weightInGrams: 30
 --- !u!1 &9113456632205310335
 GameObject:
   m_ObjectHideFlags: 0

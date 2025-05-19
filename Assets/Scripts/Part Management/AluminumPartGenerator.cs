@@ -52,22 +52,39 @@ namespace Protobot {
             partObj.transform.position = position;
             partObj.transform.rotation = rotation;
             var partName = partObj.AddComponent<PartName>();
+
             //messy code that could probably been simplified but the general purpose is to assign the part name
             //since we're not able to do it in inspector for these parts and this is the
             //most plausable way that I (Rose) could figure out
             if(gameObject.name == "C-Channel")
             {
                 partName.name = param1.value + "x1 C-Channel " + "(" + HoleCount + ")";
+                if(param1.value == "1x2"){
+                    partName.weightInGrams = 2.08f * HoleCount;
+                }else if(param1.value == "1x3"){
+                    partName.weightInGrams = 3.05f * HoleCount;
+                }else if(param1.value == "1x5"){
+                    partName.weightInGrams = 3.84f * HoleCount;
+                }
             }else if(gameObject.name == "Angle")
             {
                 partName.name = param1.value + " Angle " + "(" + HoleCount + ")";
+                if(param1.value == "1x1"){
+                    partName.weightInGrams = 1.30f * HoleCount;
+                }else if(param1.value == "2x2"){
+                    partName.weightInGrams = 2.00f * HoleCount;
+                }else if(param1.value == "3x3"){
+                    partName.weightInGrams = 6.69f * HoleCount;
+                }
             }else if(gameObject.name == "Rails")
             {
                 partName.name = param1.value + " (" + HoleCount + ")";
+                partName.weightInGrams = .942f * HoleCount;
             }
             else if(gameObject.name == "U-Channel")
             {
                 partName.name = param1.value + "x2 U-Channel " + "(" + HoleCount + ")";
+                partName.weightInGrams = 3.4f * HoleCount;
             }
 
             RemoveDataScripts(partObj);

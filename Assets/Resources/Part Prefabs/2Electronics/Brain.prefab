@@ -456,6 +456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Brain
+  weightInGrams: 285
 --- !u!1 &322688556826408217
 GameObject:
   m_ObjectHideFlags: 0
