@@ -793,6 +793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Angle Pack
+  weightInGrams: 5
 --- !u!1 &302209440981042919
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,6 +1085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 45 Degree Plate
+  weightInGrams: 4.54
 --- !u!1 &386947118498881473
 GameObject:
   m_ObjectHideFlags: 0
@@ -1525,6 +1527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 30 Degree Bent
+  weightInGrams: 4.54
 --- !u!1 &574158224469722697
 GameObject:
   m_ObjectHideFlags: 0
@@ -1790,6 +1793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 45 Degree Bent
+  weightInGrams: 4.54
 --- !u!1 &987666020192111226
 GameObject:
   m_ObjectHideFlags: 0
@@ -2466,6 +2470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 90 Degree Plate
+  weightInGrams: 2.72
 --- !u!1 &1587828331075697197
 GameObject:
   m_ObjectHideFlags: 0
@@ -3106,6 +3111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 30 Degree Flat
+  weightInGrams: 4.54
 --- !u!1 &1867275452752753808
 GameObject:
   m_ObjectHideFlags: 0
@@ -3853,6 +3859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 90 Degree Flat
+  weightInGrams: 4.54
 --- !u!1 &2379513059334440273
 GameObject:
   m_ObjectHideFlags: 0
@@ -4527,6 +4534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 45 Degree Flat
+  weightInGrams: 4.54
 --- !u!1 &2715585056754431783
 GameObject:
   m_ObjectHideFlags: 0
@@ -5586,6 +5594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 90 Degree Angle
+  weightInGrams: 4.54
 --- !u!1 &3169962082845642989
 GameObject:
   m_ObjectHideFlags: 0
@@ -7839,6 +7848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Pivot Pack
+  weightInGrams: 5
 --- !u!1 &4417177748828021901
 GameObject:
   m_ObjectHideFlags: 0
@@ -7996,6 +8006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 90 Degree Bent
+  weightInGrams: 4.54
 --- !u!1 &4434243517777510316
 GameObject:
   m_ObjectHideFlags: 0
@@ -9424,6 +9435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Angle Coupler
+  weightInGrams: 7.26
 --- !u!1 &5219241761095333519
 GameObject:
   m_ObjectHideFlags: 0
@@ -11439,6 +11451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 60 Degree Bent
+  weightInGrams: 4.54
 --- !u!1 &6117347143930773786
 GameObject:
   m_ObjectHideFlags: 0
@@ -13838,6 +13851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: C-Channel Coupler
+  weightInGrams: 8.16
 --- !u!1 &7383478113240082888
 GameObject:
   m_ObjectHideFlags: 0
@@ -14198,6 +14212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Plus Pack
+  weightInGrams: 3
 --- !u!1 &7490979592040218405
 GameObject:
   m_ObjectHideFlags: 0
@@ -15048,6 +15063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 60 Degree Flat
+  weightInGrams: 4.54
 --- !u!1 &8286874287594347964
 GameObject:
   m_ObjectHideFlags: 0
@@ -16392,3 +16408,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Angle Corner
+  weightInGrams: 14.51

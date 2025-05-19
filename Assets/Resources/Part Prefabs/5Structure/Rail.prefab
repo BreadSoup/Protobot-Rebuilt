@@ -4448,6 +4448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 2x35 Rail
+  weightInGrams: 117
 --- !u!1 &14275206979834999
 GameObject:
   m_ObjectHideFlags: 0
@@ -10753,6 +10754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 2x25 Rail
+  weightInGrams: 84.8
 --- !u!1 &14275207772306678
 GameObject:
   m_ObjectHideFlags: 0

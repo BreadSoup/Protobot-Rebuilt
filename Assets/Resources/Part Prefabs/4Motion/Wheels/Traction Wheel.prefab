@@ -946,6 +946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 2.75" Traction Wheel
+  weightInGrams: 44
 --- !u!1 &2389163438014438179
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,6 +1408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 3.25" Traction Wheel
+  weightInGrams: 58
 --- !u!1 &3090914766259826170
 GameObject:
   m_ObjectHideFlags: 0
@@ -2302,6 +2304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 3.25" Traction Wheel
+  weightInGrams: 30
 --- !u!1 &4043334881669251176
 GameObject:
   m_ObjectHideFlags: 0
@@ -2530,6 +2533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 2.75" Traction Wheel
+  weightInGrams: 50
 --- !u!1 &4043334882132915124
 GameObject:
   m_ObjectHideFlags: 0
@@ -3580,6 +3584,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 5" Traction Wheel
+  weightInGrams: 130
 --- !u!1 &4043334883681747321
 GameObject:
   m_ObjectHideFlags: 0
@@ -3737,6 +3742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 4" Traction Wheel
+  weightInGrams: 90
 --- !u!1 &4061497975397877266
 GameObject:
   m_ObjectHideFlags: 0
@@ -5603,6 +5609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 4" Traction Wheel
+  weightInGrams: 74
 --- !u!1 &7705731864025817038
 GameObject:
   m_ObjectHideFlags: 0

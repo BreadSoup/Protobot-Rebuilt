@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace Protobot {
     public class PartsListUI : MonoBehaviour {
         [SerializeField] private GameObject listObjectPrefab;
         [SerializeField] private Transform menuContainer;
+
 
         public void ClearCurrentList() {
             for (int i = 0; i < menuContainer.childCount; i++) {

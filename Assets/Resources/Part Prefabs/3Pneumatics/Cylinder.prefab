@@ -234,6 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 25mm Piston
+  weightInGrams: 42
 --- !u!1 &707095391892519658
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,6 +821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 75mm Piston
+  weightInGrams: 54
 --- !u!1 &3206282832857185171
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,6 +972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 50mm Piston
+  weightInGrams: 47
 --- !u!1 &4293919375526358681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,6 +1278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 50mm Piston
+  weightInGrams: 47
 --- !u!1 &6154255021322541540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,6 +1442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 75mm Piston
+  weightInGrams: 54
 --- !u!1 &7301901339267503957
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,6 +1593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 25mm Piston
+  weightInGrams: 42
 --- !u!1 &7540268560038389179
 GameObject:
   m_ObjectHideFlags: 0

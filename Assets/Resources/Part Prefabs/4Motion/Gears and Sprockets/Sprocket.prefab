@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Normal 24T Sprocket
+  weightInGrams: 0
 --- !u!1 &4765363390853296653
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,6 +861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS 18T Sprocket
+  weightInGrams: 13
 --- !u!1 &4765363391076868346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,6 +1302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Normal 15T Sprocket
+  weightInGrams: 0
 --- !u!1 &4765363391238759409
 GameObject:
   m_ObjectHideFlags: 0
@@ -1456,6 +1459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Normal 10T Sprocket
+  weightInGrams: 0.8
 --- !u!1 &4765363391262511825
 GameObject:
   m_ObjectHideFlags: 0
@@ -2885,6 +2889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS 30T Sprocket
+  weightInGrams: 29
 --- !u!1 &4765363391765601396
 GameObject:
   m_ObjectHideFlags: 0
@@ -3449,6 +3454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS 24T Sprocket
+  weightInGrams: 20
 --- !u!1 &4765363391871943308
 GameObject:
   m_ObjectHideFlags: 0
@@ -3818,6 +3824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS 6T Sprocket
+  weightInGrams: 2
 --- !u!1 &4765363392210496118
 GameObject:
   m_ObjectHideFlags: 0
@@ -4329,6 +4336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS 12T Sprocket
+  weightInGrams: 7
 --- !u!1 &4765363392354717999
 GameObject:
   m_ObjectHideFlags: 0
@@ -5074,6 +5082,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Normal 48T Sprocket
+  weightInGrams: 0
 --- !u!1 &4765363392645639491
 GameObject:
   m_ObjectHideFlags: 0
@@ -5622,6 +5631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Normal 40T Sprocket
+  weightInGrams: 0
 --- !u!1 &4765363392816318379
 GameObject:
   m_ObjectHideFlags: 0
