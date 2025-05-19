@@ -149,5 +149,14 @@ namespace Protobot.InputEvents {
 
             OnResetRebinds?.Invoke();
         }
+
+        public void ManuelRebind(string binding)
+        {
+            action.ApplyBindingOverride(0, binding);
+            SaveRebinds();
+
+            Debug.Log($"Manually rebound action to {binding}");
+            OnCompleteRebind?.Invoke();
+        }
     }
 }
