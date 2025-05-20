@@ -1066,7 +1066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partsList: 
-  weightDisplay: {fileID: 459473129}
+  weightDisplay: {fileID: 0}
 --- !u!114 &29818442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11937,7 +11937,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 2
   outlineTargets:
-  - IsVisible: 0
+  - IsVisible: 1
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
@@ -12909,7 +12909,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 246119430474503455}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc743e69daf85714a8136d19802c3cb3, type: 3}
   m_Name: 
@@ -15097,7 +15097,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 246119430474503455}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc743e69daf85714a8136d19802c3cb3, type: 3}
   m_Name: 
@@ -25093,7 +25093,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1859459259}
   m_Direction: 3
   m_Value: 1
-  m_Size: 0.9999992
+  m_Size: 0.9999996
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -32212,7 +32212,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 0
   outlineTargets:
-  - IsVisible: 0
+  - IsVisible: 1
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
@@ -33303,7 +33303,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 246119430474503455}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc743e69daf85714a8136d19802c3cb3, type: 3}
   m_Name: 
@@ -38938,7 +38938,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Beta 1.3.5
+  m_text: Beta 1.3.6
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 732e93ad980879c42afd239a752c2032, type: 2}
   m_sharedMaterial: {fileID: -6062331675715260687, guid: 732e93ad980879c42afd239a752c2032,
@@ -46582,7 +46582,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 2
   outlineTargets:
-  - IsVisible: 0
+  - IsVisible: 1
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
