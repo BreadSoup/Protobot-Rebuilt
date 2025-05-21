@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6011822095294301634}
   - component: {fileID: 310577523016378485}
   - component: {fileID: 5096525878153185906}
+  - component: {fileID: 7625242129765244684}
   m_Layer: 0
   m_Name: UnSTUPDI STUPID SUTPID STUSDPIDJIOSGDtitled
   m_TagString: Untagged
@@ -139,6 +140,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: PUBA
   state: 
+--- !u!64 &7625242129765244684
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4966176955122702978}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7362623055218842549, guid: e890a610782e5214fa4ae7f3ea7fb49c, type: 3}
 --- !u!1 &5416653044962480679
 GameObject:
   m_ObjectHideFlags: 0
