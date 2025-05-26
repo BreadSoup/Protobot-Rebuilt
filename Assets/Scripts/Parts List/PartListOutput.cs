@@ -100,9 +100,10 @@ public class PartListOutput : MonoBehaviour
             return totalWeight;
         }
 
-        public string GetFileLocation()
-        {
-            //allows the user to specify the file path to save the txt file to
-            return StandaloneFileBrowser.SaveFilePanel("Save Parts List", "", "Parts", "txt");
-        }
+    public string GetFileLocation()
+    {
+        //allows the user to specify the file path to save the txt file to
+        string fullPath = StandaloneFileBrowser.SaveFilePanel("Save Parts List", "", "Parts", "txt");
+        return fullPath;
+    }
 }

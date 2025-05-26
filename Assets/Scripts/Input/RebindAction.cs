@@ -63,34 +63,42 @@ namespace Protobot.InputEvents {
 
         public void AttemptRebind() {
             Rebinding = true;
-            
+            // Wait for a non-modifier key (not just a modifier)
             InputSystem.onAnyButtonPress.CallOnce(input => {
                 if (input == CancelInput) {
                     OnCancelRebind?.Invoke();
                     OnEndRebind?.Invoke();
                 }
-                else if (IgnoredInputs.Contains(input)) {
+                else if (IgnoredInputs.Contains(input) || IsModifierKey(input)) {
+                    // If only a modifier is pressed, keep waiting for a non-modifier key
                     AttemptRebind();
                 }
                 else {
                     var keyPaths = GetPressedModifiers();
-                        
                     for (int i = 0; i <= 2; i++) {
                         if (i < keyPaths.Count) {
                             action.ApplyBindingOverride(i, keyPaths[i]);
-                        }
-                        else {
+                        } else {
                             action.RemoveBindingOverride(i);
                         }
                     }
-
                     action.ApplyBindingOverride(3, ConvertToBindingPath(input.path));
-                    
                     SaveRebinds();
                     OnCompleteRebind?.Invoke();
                     OnEndRebind?.Invoke();
                 }
             });
+        }
+
+        private bool IsModifierKey(InputControl input) {
+            // Check for Command, Control, Shift, Alt (all platforms)
+            if (input == Keyboard.current.leftCtrlKey || input == Keyboard.current.rightCtrlKey ||
+                input == Keyboard.current.leftShiftKey || input == Keyboard.current.rightShiftKey ||
+                input == Keyboard.current.leftAltKey || input == Keyboard.current.rightAltKey ||
+                (Keyboard.current.leftMetaKey != null && input == Keyboard.current.leftMetaKey) ||
+                (Keyboard.current.rightMetaKey != null && input == Keyboard.current.rightMetaKey))
+                return true;
+            return false;
         }
 
         public string ConvertToBindingPath(string path) {
@@ -100,17 +108,22 @@ namespace Protobot.InputEvents {
 
         public List<string> GetPressedModifiers() {
             Keyboard curKeyboard = Keyboard.current;
-
-            var modifiers = new List<ButtonControl> {
-                curKeyboard.ctrlKey,
-                curKeyboard.shiftKey,
-                curKeyboard.altKey,
-            };
+            var modifiers = new List<ButtonControl>();
+#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+            // On Mac, use Command (Meta) key
+            modifiers.Add(curKeyboard.leftMetaKey);
+            modifiers.Add(curKeyboard.rightMetaKey);
+#else
+            // On Windows/Linux, use Control key
+            modifiers.Add(curKeyboard.ctrlKey);
+#endif
+            modifiers.Add(curKeyboard.shiftKey);
+            modifiers.Add(curKeyboard.altKey);
 
             var keyPaths = new List<string>();
 
             foreach (ButtonControl modifier in modifiers) {
-                if (modifier.isPressed) {
+                if (modifier != null && modifier.isPressed) {
                     string path = modifier.path;
                     path = path.Replace("/Keyboard", "<Keyboard>");
                     keyPaths.Add(path);

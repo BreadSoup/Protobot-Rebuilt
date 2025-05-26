@@ -28,7 +28,8 @@ namespace Protobot.UI {
         void UpdateDisplay() {
             var path = buildsManager.buildPath;
             tooltip.text = path;
-            text.text = (path == "") ? "untitled.pbb" : buildsManager.GetFileName();
+            string fileName = (path == "") ? "untitled.pbb" : System.IO.Path.GetFileName(path);
+            text.text = fileName;
         }
     }
 }
