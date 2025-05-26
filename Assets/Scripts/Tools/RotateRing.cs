@@ -22,7 +22,7 @@ namespace Protobot.Tools {
         private Quaternion finalRotation = Quaternion.identity;
         public override Quaternion FinalRotation => finalRotation;
 
-        private const float Increment = 15;
+        private const float Increment = 5;
 
         //Main functions
         public override void Rotate() {

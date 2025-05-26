@@ -198,7 +198,7 @@ MonoBehaviour:
   id: 
   connectingPart: 0
   group: 0
-  icon: {fileID: 21300000, guid: 2c14c90abb668f84287b6cd91981864b, type: 3}
+  icon: {fileID: 21300000, guid: d80243e3372a3bf4286fcb1ea9ec0d13, type: 3}
 --- !u!114 &-596067318696765169
 MonoBehaviour:
   m_ObjectHideFlags: 0
