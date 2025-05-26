@@ -20,10 +20,22 @@ namespace Protobot.Tools {
 
         public override void OnPointerUp() {
         }
-
-        public Vector3 MoveToPos(Vector3 pos) {
+        public Vector3 MoveToPos(Vector3 pos)
+        {
             if (snapping)
-                pos = pos.Round(0.125f);
+            {
+                var refObj = movementManager.MovingObj;
+                if (refObj != null)
+                {
+                    var relativePos = pos - refObj.transform.position;
+                    relativePos = relativePos.Round(0.125f);
+                    pos = refObj.transform.position + relativePos;
+                }
+                else
+                {
+                    pos = pos.Round(0.125f);
+                }
+            }
 
             movementManager.MoveTo(pos);
             return pos;
