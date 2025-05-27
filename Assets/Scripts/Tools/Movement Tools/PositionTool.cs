@@ -6,7 +6,7 @@ using Protobot.StateSystems;
 
 namespace Protobot.Tools {
     public abstract class PositionTool : ClickDragTool {
-        public static bool snapping = true;
+        public static bool snapping = false;
         public abstract Vector3 FinalPosition {get;}
 
         /// <summary> Executes right when mouse is down before dragging </summary>
