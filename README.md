@@ -6,6 +6,12 @@ Protobot Rebuilt is a continuation of the Protobot project started by davegersh.
 
 Official binaries for Protobot Rebuilt can be found on the [Releases]() page of this repository. Unzip the "Protobot Rebuilt.zip" file and double-click the "Protobot Rebuilt.exe" file to start the program.
 
+Video Guide: 
+
+https://github.com/user-attachments/assets/7b37e938-61f8-463c-8c47-1981fb4ccd90
+
+
+
 ## Contributing
 
 Pull requests are welcome and very much appreciated. You can also contribute by submitting issues for problems you find in the software.
