@@ -7,7 +7,7 @@ using Protobot.StateSystems;
 
 namespace Protobot.Tools {
     public class RotateRing : RotationTool {
-        public static bool snapping = true;
+        public static bool snapping = false;
         
         [SerializeField] private Camera refCamera = null; //used for dot product angle comparison
 
@@ -22,7 +22,7 @@ namespace Protobot.Tools {
         private Quaternion finalRotation = Quaternion.identity;
         public override Quaternion FinalRotation => finalRotation;
 
-        private const float Increment = 15;
+        private const float Increment = 5;
 
         //Main functions
         public override void Rotate() {

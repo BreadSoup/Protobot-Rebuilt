@@ -34593,6 +34593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Base Plate
+  weightInGrams: 635
 --- !u!1 &5485291761487388166
 GameObject:
   m_ObjectHideFlags: 0

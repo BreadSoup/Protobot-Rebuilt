@@ -951,6 +951,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS V2 48T Gear
+  weightInGrams: 24
 --- !u!1 &1359515996129579730
 GameObject:
   m_ObjectHideFlags: 0
@@ -3013,6 +3014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS 60T Gear
+  weightInGrams: 24
 --- !u!1 &3733470108895076580
 GameObject:
   m_ObjectHideFlags: 0
@@ -3898,6 +3900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS 36T Gear
+  weightInGrams: 11
 --- !u!1 &3733470109394663480
 GameObject:
   m_ObjectHideFlags: 0
@@ -4765,6 +4768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Normal 36T Gear
+  weightInGrams: 5
 --- !u!1 &3733470109776763017
 GameObject:
   m_ObjectHideFlags: 0
@@ -5781,6 +5785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Normal 84T Gear
+  weightInGrams: 27
 --- !u!1 &3733470110046862518
 GameObject:
   m_ObjectHideFlags: 0
@@ -6871,6 +6876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Normal 60T Gear
+  weightInGrams: 12
 --- !u!1 &3733470110336466448
 GameObject:
   m_ObjectHideFlags: 0
@@ -7547,6 +7553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS 84T Gear
+  weightInGrams: 31
 --- !u!1 &3733470110479772129
 GameObject:
   m_ObjectHideFlags: 0
@@ -7705,6 +7712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Normal 12T Gear
+  weightInGrams: 0.6
 --- !u!1 &3733470110490624370
 GameObject:
   m_ObjectHideFlags: 0
@@ -8289,6 +8297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS 12T Gear
+  weightInGrams: 8
 --- !u!1 &3733470110635768720
 GameObject:
   m_ObjectHideFlags: 0
@@ -9944,6 +9953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS V2 36T Gear
+  weightInGrams: 18
 --- !u!1 &4206199570566934095
 GameObject:
   m_ObjectHideFlags: 0
@@ -11033,6 +11043,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS V2 72T Gear
+  weightInGrams: 41
 --- !u!1 &5988404403296290535
 GameObject:
   m_ObjectHideFlags: 0
@@ -11665,6 +11676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS V2 84T Gear
+  weightInGrams: 51
 --- !u!1 &6782463550395588926
 GameObject:
   m_ObjectHideFlags: 0
@@ -12533,6 +12545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS V2 60T Gear
+  weightInGrams: 31
 --- !u!1 &7745677311167276204
 GameObject:
   m_ObjectHideFlags: 0
@@ -13247,3 +13260,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS V2 24T Gear
+  weightInGrams: 40

@@ -465,6 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Normal Clamping Shaft Collar
+  weightInGrams: 4
 --- !u!1 &7221011379765375484
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: HS Clamping Shaft Collar
+  weightInGrams: 4
 --- !u!1 &7221011379937674592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,6 +1010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Shaft Collar
+  weightInGrams: 3.7
 --- !u!1 &7943435091912823342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,3 +1254,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Low Profile HS Clamping Shaft Collar
+  weightInGrams: 8

@@ -595,3 +595,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Battery Clip
+  weightInGrams: 3
