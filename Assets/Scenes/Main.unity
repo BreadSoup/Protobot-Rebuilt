@@ -49378,6 +49378,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 161684558303373068, guid: 214af0adb0da0994783eb710d8530bed,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 246119428735506766, guid: 214af0adb0da0994783eb710d8530bed,
         type: 3}
       propertyPath: m_RootOrder
@@ -49437,6 +49442,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Keybindings
+      objectReference: {fileID: 0}
+    - target: {fileID: 3917512044165205978, guid: 214af0adb0da0994783eb710d8530bed,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7663549718172339997, guid: 214af0adb0da0994783eb710d8530bed,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7756342857818145820, guid: 214af0adb0da0994783eb710d8530bed,
         type: 3}
