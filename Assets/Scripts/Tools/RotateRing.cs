@@ -7,7 +7,7 @@ using Protobot.StateSystems;
 
 namespace Protobot.Tools {
     public class RotateRing : RotationTool {
-        public static bool snapping = true;
+        public static bool snapping = false;
         
         [SerializeField] private Camera refCamera = null; //used for dot product angle comparison
 
