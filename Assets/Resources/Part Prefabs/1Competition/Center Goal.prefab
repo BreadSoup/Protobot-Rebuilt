@@ -112,7 +112,7 @@ MonoBehaviour:
   id: CGOL
   connectingPart: 0
   group: 0
-  icon: {fileID: 21300000, guid: 2c14c90abb668f84287b6cd91981864b, type: 3}
+  icon: {fileID: 21300000, guid: d5cd4c8b65170e947a30ecc8f01fe487, type: 3}
 --- !u!114 &-271350885918221265
 MonoBehaviour:
   m_ObjectHideFlags: 0

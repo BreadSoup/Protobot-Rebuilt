@@ -12909,7 +12909,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 246119430474503455}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc743e69daf85714a8136d19802c3cb3, type: 3}
   m_Name: 
@@ -15097,7 +15097,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 246119430474503455}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc743e69daf85714a8136d19802c3cb3, type: 3}
   m_Name: 
@@ -25093,7 +25093,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1859459259}
   m_Direction: 3
   m_Value: 0
-  m_Size: 0.9999998
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -33303,7 +33303,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 246119430474503455}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc743e69daf85714a8136d19802c3cb3, type: 3}
   m_Name: 
@@ -33551,14 +33551,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<style="Title"><size=125%>Creator:<line-height=100%>
+  m_text: '<style="Title"><size=100%>Creator:<line-height=100%>
 
     <size=75%>Dave
     Gershman<line-height=100%>
 
     <line-height=125%>
 
-    <line-height=125%><size=125%>Contributors:
+    <line-height=100%><size=125%>Contributors:
     <line-height=100%>
 
     <size=75%>Drake | 97817V
@@ -33570,7 +33570,9 @@ MonoBehaviour:
 
     Rose | 32174A
 
-    dnos | QUEEN'
+    dnos | QUEEN
+
+    Justin | 2790C'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 732e93ad980879c42afd239a752c2032, type: 2}
   m_sharedMaterial: {fileID: -6062331675715260687, guid: 732e93ad980879c42afd239a752c2032,
