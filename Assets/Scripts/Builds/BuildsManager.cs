@@ -137,6 +137,10 @@ namespace Protobot.Builds {
         }
 
         public void OpenBuild() {
+#if UNITY_WEBGL && !UNITY_EDITOR
+                Debug.LogWarning("File upload not supported in WebGL builds. Please use a different platform to load builds.");
+            //ShowFileUploadDialog();
+#endif
             var paths = StandaloneFileBrowser.OpenFilePanel("Open Build File", "", "pbb", false);
 
             if (paths.Length == 0 || paths[0] == "") return;
