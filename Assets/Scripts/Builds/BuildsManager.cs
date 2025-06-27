@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.UI;
@@ -135,9 +136,11 @@ namespace Protobot.Builds {
 
             return !sceneBuild.CompareData(savedBuildData);
         }
-
+        [DllImport("__Internal")]
+        private static extern void WebGl_Open();
         public void OpenBuild() {
 #if UNITY_WEBGL && !UNITY_EDITOR
+            WebGl_Open();
                 Debug.LogWarning("File upload not supported in WebGL builds. Please use a different platform to load builds.");
             //ShowFileUploadDialog();
 #endif
