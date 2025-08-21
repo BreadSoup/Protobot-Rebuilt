@@ -137,21 +137,36 @@ namespace Protobot.Builds {
             return !sceneBuild.CompareData(savedBuildData);
         }
         [DllImport("__Internal")]
-        private static extern void WebGl_Open();
-        public void OpenBuild() {
+        private static extern void WebGl_Open(string gameObjectName, string methodName);
+        public void OpenBuild()
+        {
+            //gameObject.SetActive(true);
+            Debug.Log("GameObject active? " + gameObject.activeInHierarchy);
+            Debug.Log("GameObject name: " + gameObject.name);
 #if UNITY_WEBGL && !UNITY_EDITOR
-            WebGl_Open();
-                Debug.LogWarning("File upload not supported in WebGL builds. Please use a different platform to load builds.");
+            gameObject.SetActive(true); //for some reason WebGL deactivates the GameObject when built???
+            WebGl_Open("BuildsManager", "WebGL_OpenBuild");
             //ShowFileUploadDialog();
-#endif
+#else
             var paths = StandaloneFileBrowser.OpenFilePanel("Open Build File", "", "pbb", false);
-
             if (paths.Length == 0 || paths[0] == "") return;
 
             var path = paths[0];
 
             var build = ParsePath(path);
             AttemptLoad(build, path);
+#endif
+        }
+
+        public void WebGL_OpenBuild(string base64Data)
+        {
+            byte[] bytes = Convert.FromBase64String(base64Data);
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                BuildData build = (BuildData)bf.Deserialize(ms);
+                SceneBuild.GenerateBuild(build);
+            }
         }
         
         /// <summary>
@@ -161,12 +176,20 @@ namespace Protobot.Builds {
             if (!File.Exists(filePath) || !filePath.Contains(".pbb")) return null;
             
             BinaryFormatter bf = new BinaryFormatter();
+            
+#if UNITY_WEBGL && !UNITY_EDITOR
+            byte[] bytes = Convert.FromBase64String(filePath); 
+            using (MemoryStream ms = new MemoryStream(bytes)) {
+                return (BuildData)bf.Deserialize(ms);
+            }
+#else
             FileStream file = File.Open(filePath, FileMode.Open);
-
+            
             BuildData build = (BuildData)bf.Deserialize(file);
             file.Close();
 
             return build;
+#endif
         }
         
         /// <summary>

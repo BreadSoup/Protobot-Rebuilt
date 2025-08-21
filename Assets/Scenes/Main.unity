@@ -8526,7 +8526,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 926006024}
   m_HandleRect: {fileID: 926006023}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -17769,7 +17769,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_IsOn: 0 
+  m_IsOn: 0
 --- !u!114 &799905694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42884,7 +42884,7 @@ GameObject:
   m_Icon: {fileID: 2800000, guid: b6f9c997901a22b478ca6d47530e2946, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1851306915
 Transform:
   m_ObjectHideFlags: 0
