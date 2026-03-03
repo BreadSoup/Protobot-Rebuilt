@@ -41,24 +41,25 @@ namespace Protobot.UI {
 
         // ---- Colors ----------------------------------------------------------------
         // Axis colors matching the rest of the app (red=X, green=Y, blue=Z)
-        private static readonly Color ColorX      = new Color(0.75f, 0.22f, 0.22f, 1f);
-        private static readonly Color ColorY      = new Color(0.20f, 0.65f, 0.20f, 1f);
-        private static readonly Color ColorZ      = new Color(0.20f, 0.40f, 0.80f, 1f);
-        // Panel background — same dark shade used across the app's UI panels
-        private static readonly Color PanelBg     = new Color(0.14f, 0.14f, 0.16f, 0.97f);
-        // Header bar — blue accent matching the Preferences / toolbar blue
+        private static readonly Color ColorX = new Color(0.75f, 0.22f, 0.22f, 1f);
+        private static readonly Color ColorY = new Color(0.20f, 0.65f, 0.20f, 1f);
+        private static readonly Color ColorZ = new Color(0.20f, 0.40f, 0.80f, 1f);
+        // Panel background — matches the transform buttons / sidebar panels (0.26 gray)
+        private static readonly Color PanelBg     = new Color(0.26f, 0.26f, 0.26f, 1f);
+        // Header bar — blue accent matching the Preferences panel and toolbar
         private static readonly Color HeaderColor = new Color(0.22f, 0.45f, 0.78f, 1f);
+        // Dim / secondary text
+        private static readonly Color DimColor   = new Color(0.60f, 0.60f, 0.65f, 1f);
         // Divider lines
-        private static readonly Color DividerColor = new Color(1f, 1f, 1f, 0.10f);
-        // Secondary / dim text
-        private static readonly Color DimColor    = new Color(0.60f, 0.60f, 0.65f, 1f);
+        private static readonly Color DividerColor = new Color(1f, 1f, 1f, 0.12f);
         // Dark box inside each input field
-        private static readonly Color InputBg     = new Color(0.08f, 0.08f, 0.10f, 0.90f);
-        // Placeholder text inside inputs
-        private static readonly Color PlaceholderColor = new Color(0.40f, 0.40f, 0.45f, 1f);
+        private static readonly Color InputBg     = new Color(0.15f, 0.15f, 0.17f, 1f);
+        // Placeholder text
+        private static readonly Color PlaceholderColor = new Color(0.45f, 0.45f, 0.50f, 1f);
 
-        // Cached font (grabbed from an existing Text object in the scene)
-        private Font uiFont;
+        // Cached at startup
+        private Font   uiFont;
+        private Sprite roundedSprite; // the "Rounded Square" 9-slice sprite used project-wide
 
         // -----------------------------------------------------------------------
         // Unity Lifecycle
@@ -74,11 +75,20 @@ namespace Protobot.UI {
                 return;
             }
 
-            // Grab the font from whatever Text object is already in the scene
+            // Grab the font from whatever Text already exists in the scene
             var existingText = FindObjectOfType<Text>();
             uiFont = existingText != null
                 ? existingText.font
                 : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+
+            // Find the shared "Rounded Square" 9-slice sprite used across all panels.
+            // We scan existing Image components rather than hard-coding an asset path.
+            foreach (var img in FindObjectsOfType<Image>()) {
+                if (img.sprite != null && img.sprite.name.Contains("Rounded")) {
+                    roundedSprite = img.sprite;
+                    break;
+                }
+            }
 
             BuildUI();
             SetupInputListeners();
@@ -120,72 +130,98 @@ namespace Protobot.UI {
             // --- Root panel ---
             panel = MakeElement("Properties Menu", canvas.transform);
             var panelRT = panel.GetComponent<RectTransform>();
-            // Anchor to top-left, offset right of the tool icons strip (~50 px)
+            // Offset far enough from the top-left to clear the tool icon strip.
+            // Anchor = top-left corner of canvas.
             panelRT.anchorMin        = new Vector2(0f, 1f);
             panelRT.anchorMax        = new Vector2(0f, 1f);
             panelRT.pivot            = new Vector2(0f, 1f);
-            panelRT.anchoredPosition = new Vector2(52f, -10f);
-            panelRT.sizeDelta        = new Vector2(230f, 0f); // width fixed; height auto
+            panelRT.anchoredPosition = new Vector2(115f, -65f);
+            panelRT.sizeDelta        = new Vector2(230f, 0f); // width fixed, height auto
 
+            // Background image — rounded 9-slice sprite matching every other panel
             var panelImg = panel.AddComponent<Image>();
             panelImg.color = PanelBg;
+            if (roundedSprite != null) {
+                panelImg.sprite                  = roundedSprite;
+                panelImg.type                    = Image.Type.Sliced;
+                panelImg.pixelsPerUnitMultiplier = 10f;
+            }
 
-            // Vertical stack layout — rows stack top to bottom automatically
+            // Vertical stack — header + content rows stack top-to-bottom
             var vLayout = panel.AddComponent<VerticalLayoutGroup>();
             vLayout.childControlWidth     = true;
             vLayout.childForceExpandWidth  = true;
             vLayout.childControlHeight    = false;
             vLayout.childForceExpandHeight = false;
-            vLayout.spacing               = 3f;
+            vLayout.spacing               = 0f;
             vLayout.padding               = new RectOffset(0, 0, 0, 8);
 
-            // Auto-resize the panel height to fit its contents
+            // Auto-resize panel height to fit contents
             var fitter = panel.AddComponent<ContentSizeFitter>();
             fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-            // --- Blue header bar (matches the app's blue accent) ---
-            MakeHeader(panel.transform);
+            // ── Blue header bar ──────────────────────────────────────────────
+            var header = MakeElement("Header", panel.transform);
+            header.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 26f);
+            var headerImg = header.AddComponent<Image>();
+            headerImg.color = HeaderColor;
+            if (roundedSprite != null) {
+                headerImg.sprite                  = roundedSprite;
+                headerImg.type                    = Image.Type.Sliced;
+                headerImg.pixelsPerUnitMultiplier = 10f;
+            }
+            var headerTitle = MakeElement("Title", header.transform);
+            var headerTitleRT = headerTitle.GetComponent<RectTransform>();
+            headerTitleRT.anchorMin        = Vector2.zero;
+            headerTitleRT.anchorMax        = Vector2.one;
+            headerTitleRT.offsetMin        = new Vector2(10f, 0f);
+            headerTitleRT.offsetMax        = Vector2.zero;
+            var headerText = headerTitle.AddComponent<Text>();
+            headerText.text      = "PROPERTIES";
+            headerText.font      = uiFont;
+            headerText.fontSize  = 11;
+            headerText.fontStyle = FontStyle.Bold;
+            headerText.color     = Color.white;
+            headerText.alignment = TextAnchor.MiddleLeft;
 
-            // --- Part info rows (inside a padded inner container) ---
-            var body = MakeElement("Body", panel.transform);
-            body.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 0f);
-            var bodyLayout = body.AddComponent<VerticalLayoutGroup>();
-            bodyLayout.childControlWidth     = true;
-            bodyLayout.childForceExpandWidth  = true;
-            bodyLayout.childControlHeight    = false;
-            bodyLayout.childForceExpandHeight = false;
-            bodyLayout.spacing               = 3f;
-            bodyLayout.padding               = new RectOffset(8, 8, 4, 0);
-            var bodyFitter = body.AddComponent<ContentSizeFitter>();
-            bodyFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            // ── Content area (padded inner section) ─────────────────────────
+            var content = MakeElement("Content", panel.transform);
+            content.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 0f);
+            var contentLayout = content.AddComponent<VerticalLayoutGroup>();
+            contentLayout.childControlWidth     = true;
+            contentLayout.childForceExpandWidth  = true;
+            contentLayout.childControlHeight    = false;
+            contentLayout.childForceExpandHeight = false;
+            contentLayout.spacing               = 4f;
+            contentLayout.padding               = new RectOffset(8, 8, 6, 0);
+            var contentFitter = content.AddComponent<ContentSizeFitter>();
+            contentFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-            partNameText  = MakeText("Part Name",  body.transform, "Part: ---", 12, bold: true);
-            partGroupText = MakeText("Part Group", body.transform, "",          10);
+            // Part name and group
+            partNameText  = MakeText("Part Name",  content.transform, "Part: ---", 13, bold: true);
+            partGroupText = MakeText("Part Group", content.transform, "",           11);
             partGroupText.color = DimColor;
 
-            MakeDivider(body.transform);
+            MakeDivider(content.transform);
 
             // Parameter rows (shown/hidden per part type)
-            param1Row = MakeParamRow(body.transform, out param1LabelText, out param1ValueText);
-            param2Row = MakeParamRow(body.transform, out param2LabelText, out param2ValueText);
+            param1Row = MakeParamRow(content.transform, out param1LabelText, out param1ValueText);
+            param2Row = MakeParamRow(content.transform, out param2LabelText, out param2ValueText);
 
-            MakeDivider(body.transform);
+            MakeDivider(content.transform);
 
-            // --- Position ---
-            MakeText("PosHeader", body.transform, "POSITION", 9).color = DimColor;
-
-            var posRow = MakeElement("Pos Row", body.transform);
+            // Position fields
+            MakeText("PosHeader", content.transform, "POSITION", 10).color = DimColor;
+            var posRow = MakeElement("Pos Row", content.transform);
             SetRowLayout(posRow, 24f);
             posXInput = MakeAxisField("Pos X", posRow.transform, "X", ColorX, 0.1f, "F3");
             posYInput = MakeAxisField("Pos Y", posRow.transform, "Y", ColorY, 0.1f, "F3");
             posZInput = MakeAxisField("Pos Z", posRow.transform, "Z", ColorZ, 0.1f, "F3");
 
-            // --- Rotation ---
-            MakeText("RotHeader", body.transform, "ROTATION", 9).color = DimColor;
-
-            var rotRow = MakeElement("Rot Row", body.transform);
+            // Rotation fields — scroll nudges 5° to match ring snap increment
+            MakeText("RotHeader", content.transform, "ROTATION", 10).color = DimColor;
+            var rotRow = MakeElement("Rot Row", content.transform);
             SetRowLayout(rotRow, 24f);
-            // Rotation scroll increment = 5° to match the ring snapping increment
             rotXInput = MakeAxisField("Rot X", rotRow.transform, "X", ColorX, 5f, "F1");
             rotYInput = MakeAxisField("Rot Y", rotRow.transform, "Y", ColorY, 5f, "F1");
             rotZInput = MakeAxisField("Rot Z", rotRow.transform, "Z", ColorZ, 5f, "F1");
@@ -196,30 +232,24 @@ namespace Protobot.UI {
         // -----------------------------------------------------------------------
 
         private void SetupInputListeners() {
-            // Position: move the entire connected group so screws stay in their holes
+            // Position: move the whole connected group so screws stay in their holes
             posXInput.onValueChanged.AddListener(val => {
                 if (!selectedObject.active || !float.TryParse(val, out float f)) return;
-                var root = RootObject;
-                if (root == null) return;
-                float delta = f - root.transform.position.x;
-                MoveGroupBy(new Vector3(delta, 0f, 0f), root);
+                var root = RootObject; if (root == null) return;
+                MoveGroupBy(new Vector3(f - root.transform.position.x, 0f, 0f), root);
             });
             posYInput.onValueChanged.AddListener(val => {
                 if (!selectedObject.active || !float.TryParse(val, out float f)) return;
-                var root = RootObject;
-                if (root == null) return;
-                float delta = f - root.transform.position.y;
-                MoveGroupBy(new Vector3(0f, delta, 0f), root);
+                var root = RootObject; if (root == null) return;
+                MoveGroupBy(new Vector3(0f, f - root.transform.position.y, 0f), root);
             });
             posZInput.onValueChanged.AddListener(val => {
                 if (!selectedObject.active || !float.TryParse(val, out float f)) return;
-                var root = RootObject;
-                if (root == null) return;
-                float delta = f - root.transform.position.z;
-                MoveGroupBy(new Vector3(0f, 0f, delta), root);
+                var root = RootObject; if (root == null) return;
+                MoveGroupBy(new Vector3(0f, 0f, f - root.transform.position.z), root);
             });
 
-            // Rotation: sets the selected part's rotation directly
+            // Rotation: sets the selected part's euler angles directly
             rotXInput.onValueChanged.AddListener(val => {
                 if (!selectedObject.active || !float.TryParse(val, out float f)) return;
                 var r = RootTransform.eulerAngles; r.x = f; RootTransform.eulerAngles = r;
@@ -235,8 +265,8 @@ namespace Protobot.UI {
         }
 
         /// <summary>
-        /// Moves all objects in the connected group (or just root if no group) by delta.
-        /// This keeps screws attached to parts when position is changed via the menu.
+        /// Moves all objects in the connected group by delta in world space,
+        /// so screws and the parts they're attached to move together.
         /// </summary>
         private void MoveGroupBy(Vector3 delta, GameObject root) {
             if (delta == Vector3.zero) return;
@@ -287,7 +317,6 @@ namespace Protobot.UI {
             var pos = RootTransform.position;
             var rot = RootTransform.eulerAngles;
 
-            // Only update a field if the user isn't currently typing in it
             if (!posXInput.isFocused) posXInput.SetTextWithoutNotify(pos.x.ToString("F3"));
             if (!posYInput.isFocused) posYInput.SetTextWithoutNotify(pos.y.ToString("F3"));
             if (!posZInput.isFocused) posZInput.SetTextWithoutNotify(pos.z.ToString("F3"));
@@ -300,7 +329,7 @@ namespace Protobot.UI {
         // Helpers — selection
         // -----------------------------------------------------------------------
 
-        /// <summary>Root part object (has PartName). Falls back to selected object.</summary>
+        /// <summary>Root part object (has PartName). Falls back to the selected object.</summary>
         private GameObject RootObject {
             get {
                 if (!selectedObject.active) return null;
@@ -325,37 +354,11 @@ namespace Protobot.UI {
             return go;
         }
 
-        /// <summary>Creates the blue header bar at the top of the panel.</summary>
-        private void MakeHeader(Transform parent) {
-            var header = MakeElement("Header", parent);
-            header.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 26f);
-            header.AddComponent<Image>().color = HeaderColor;
-
-            // Horizontal layout: icon letter + title text
-            var hLayout = header.AddComponent<HorizontalLayoutGroup>();
-            hLayout.childControlWidth     = false;
-            hLayout.childForceExpandWidth  = false;
-            hLayout.childControlHeight    = true;
-            hLayout.childForceExpandHeight = true;
-            hLayout.spacing               = 0f;
-            hLayout.padding               = new RectOffset(8, 8, 0, 0);
-
-            var title = MakeElement("Title", header.transform);
-            title.GetComponent<RectTransform>().sizeDelta = new Vector2(200f, 0f);
-            var titleText = title.AddComponent<Text>();
-            titleText.text      = "PROPERTIES";
-            titleText.font      = uiFont;
-            titleText.fontSize  = 11;
-            titleText.fontStyle = FontStyle.Bold;
-            titleText.color     = Color.white;
-            titleText.alignment = TextAnchor.MiddleLeft;
-        }
-
         /// <summary>Creates a Text label with a fixed row height.</summary>
         private Text MakeText(string name, Transform parent, string content,
                               int fontSize, bool bold = false) {
             var go = MakeElement(name, parent);
-            go.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, fontSize + 7f);
+            go.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, fontSize + 8f);
             var t = go.AddComponent<Text>();
             t.text      = content;
             t.font      = uiFont;
@@ -368,21 +371,21 @@ namespace Protobot.UI {
 
         /// <summary>Creates a thin horizontal divider line.</summary>
         private void MakeDivider(Transform parent) {
-            var go  = MakeElement("Divider", parent);
+            var go = MakeElement("Divider", parent);
             go.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 1f);
             go.AddComponent<Image>().color = DividerColor;
         }
 
-        /// <summary>Creates a two-column row with a dim label and a white value text.</summary>
+        /// <summary>Creates a two-column row: dim label on the left, white value on the right.</summary>
         private GameObject MakeParamRow(Transform parent, out Text label, out Text value) {
             var row = MakeElement("Param Row", parent);
             SetRowLayout(row, 20f);
 
-            label = MakeText("Label", row.transform, "", 10);
+            label = MakeText("Label", row.transform, "", 11);
             label.color = DimColor;
             label.GetComponent<RectTransform>().sizeDelta = new Vector2(72f, 20f);
 
-            value = MakeText("Value", row.transform, "", 10);
+            value = MakeText("Value", row.transform, "", 11);
             value.GetComponent<RectTransform>().sizeDelta = new Vector2(130f, 20f);
 
             return row;
@@ -401,18 +404,18 @@ namespace Protobot.UI {
 
         /// <summary>
         /// Creates a colored axis InputField (red X, green Y, or blue Z).
-        /// scrollIncrement controls how much the value changes per scroll tick —
-        /// use 0.1 for position, 5 for rotation.
+        /// scrollIncrement is how much one scroll tick changes the value
+        /// (0.1 for position, 5 for rotation).
         /// </summary>
         private InputField MakeAxisField(string name, Transform parent,
                                          string axisLabel, Color axisColor,
                                          float scrollIncrement, string scrollFormat) {
-            // Outer container — colored axis background
+            // Outer box — colored axis background
             var container = MakeElement(name, parent);
             container.GetComponent<RectTransform>().sizeDelta = new Vector2(66f, 24f);
             container.AddComponent<Image>().color = axisColor;
 
-            // Axis letter (X / Y / Z) on the left
+            // Axis letter (X / Y / Z) pinned to the left
             var letterGO = MakeElement("Letter", container.transform);
             var letterRT = letterGO.GetComponent<RectTransform>();
             letterRT.anchorMin        = new Vector2(0f, 0f);
@@ -428,13 +431,13 @@ namespace Protobot.UI {
             letterText.color     = Color.white;
             letterText.alignment = TextAnchor.MiddleCenter;
 
-            // Dark input box
+            // Dark input box — fills the right portion of the container
             var inputGO = MakeElement("Input", container.transform);
             var inputRT = inputGO.GetComponent<RectTransform>();
-            inputRT.anchorMin  = Vector2.zero;
-            inputRT.anchorMax  = Vector2.one;
-            inputRT.offsetMin  = new Vector2(17f, 2f);
-            inputRT.offsetMax  = new Vector2(-2f, -2f);
+            inputRT.anchorMin = Vector2.zero;
+            inputRT.anchorMax = Vector2.one;
+            inputRT.offsetMin = new Vector2(17f, 2f);
+            inputRT.offsetMax = new Vector2(-2f, -2f);
             inputGO.AddComponent<Image>().color = InputBg;
 
             // Text inside the input
@@ -450,7 +453,7 @@ namespace Protobot.UI {
             inputText.color     = Color.white;
             inputText.alignment = TextAnchor.MiddleLeft;
 
-            // Placeholder text
+            // Placeholder
             var phGO = MakeElement("Placeholder", inputGO.transform);
             var phRT = phGO.GetComponent<RectTransform>();
             phRT.anchorMin = Vector2.zero;
@@ -464,13 +467,13 @@ namespace Protobot.UI {
             phText.fontStyle = FontStyle.Italic;
             phText.text      = "0.000";
 
-            // InputField component — decimal numbers only
+            // InputField — decimal numbers only
             var inputField = inputGO.AddComponent<InputField>();
             inputField.textComponent = inputText;
             inputField.placeholder   = phText;
             inputField.contentType   = InputField.ContentType.DecimalNumber;
 
-            // Scroll-wheel support — init with the correct increment for this field type
+            // Scroll-wheel support — different increment for pos vs rot fields
             inputGO.AddComponent<ScrollableInputField>().Init(scrollIncrement, scrollFormat);
 
             return inputField;
