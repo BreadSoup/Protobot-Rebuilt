@@ -86,9 +86,20 @@ namespace Protobot.UI {
         // -----------------------------------------------------------------------
 
         private void BuildUI() {
-            Canvas canvas = FindObjectOfType<Canvas>();
+            // Find the Screen Space Overlay canvas specifically.
+            // The scene has multiple canvases (World Space tool canvases, etc.),
+            // so FindObjectOfType<Canvas>() would often return the wrong one and
+            // place the panel inside the 3D scene instead of on screen.
+            Canvas canvas = null;
+            foreach (var c in FindObjectsOfType<Canvas>()) {
+                if (c.renderMode == RenderMode.ScreenSpaceOverlay) {
+                    canvas = c;
+                    break;
+                }
+            }
             if (canvas == null) {
-                Debug.LogError("[PropertiesMenuUI] No Canvas found in the scene.");
+                Debug.LogError("[PropertiesMenuUI] No Screen Space Overlay Canvas found in the scene. " +
+                               "The Properties Menu needs one to display correctly.");
                 return;
             }
 
