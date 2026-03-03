@@ -72,6 +72,10 @@ namespace Protobot {
 
             partList.name = newPart.name;
             partList.weightInGrams = Length * Width * .53f;
+            partList.param1Label   = "Length";
+            partList.param1Display = Length + " holes";
+            partList.param2Label   = "Width";
+            partList.param2Display = Width + " holes";
             
             RemoveDataScripts(newPart);
             SetId(newPart);

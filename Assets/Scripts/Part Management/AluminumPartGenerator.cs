@@ -66,6 +66,10 @@ namespace Protobot {
                 }else if(param1.value == "1x5"){
                     partName.weightInGrams = 3.84f * HoleCount;
                 }
+                partName.param1Label  = "Size";
+                partName.param1Display = param1.value + "x1";
+                partName.param2Label  = "Length";
+                partName.param2Display = HoleCount + " holes";
             }else if(gameObject.name == "Angle")
             {
                 partName.name = param1.value + " Angle " + "(" + HoleCount + ")";
@@ -76,15 +80,27 @@ namespace Protobot {
                 }else if(param1.value == "3x3"){
                     partName.weightInGrams = 6.69f * HoleCount;
                 }
+                partName.param1Label  = "Size";
+                partName.param1Display = param1.value;
+                partName.param2Label  = "Length";
+                partName.param2Display = HoleCount + " holes";
             }else if(gameObject.name == "Rails")
             {
                 partName.name = param1.value + " (" + HoleCount + ")";
                 partName.weightInGrams = .942f * HoleCount;
+                partName.param1Label  = "Type";
+                partName.param1Display = param1.value;
+                partName.param2Label  = "Length";
+                partName.param2Display = HoleCount + " holes";
             }
             else if(gameObject.name == "U-Channel")
             {
                 partName.name = param1.value + "x2 U-Channel " + "(" + HoleCount + ")";
                 partName.weightInGrams = 3.4f * HoleCount;
+                partName.param1Label  = "Size";
+                partName.param1Display = param1.value + "x2";
+                partName.param2Label  = "Length";
+                partName.param2Display = HoleCount + " holes";
             }
 
             RemoveDataScripts(partObj);

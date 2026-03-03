@@ -79,6 +79,10 @@ public class ShaftPartGenerator : PartGenerator {
         }
 
         partList.name = float.Parse(param2.value) + shaftType;
+        partList.param1Label   = "Type";
+        partList.param1Display = param1.value;
+        partList.param2Label   = "Length";
+        partList.param2Display = param2.value + "\"";
 
         SetId(newObj);
         RemoveDataScripts(newObj);
