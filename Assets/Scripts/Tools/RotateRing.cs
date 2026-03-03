@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using Protobot.StateSystems;
 
 namespace Protobot.Tools {
@@ -43,8 +44,10 @@ namespace Protobot.Tools {
         /// or the global snap toggle. Returns 0 for free (unsnapped) rotation.
         /// </summary>
         private float GetSnapIncrement() {
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) return 15f;
-            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) return 5f;
+            // Uses the new Input System (Keyboard.current) — NOT the old Input.GetKey.
+            var kb = Keyboard.current;
+            if (kb != null && (kb.leftShiftKey.isPressed || kb.rightShiftKey.isPressed)) return 15f;
+            if (kb != null && (kb.leftCtrlKey.isPressed  || kb.rightCtrlKey.isPressed))  return 5f;
             if (snapping) return 5f;
             return 0f;
         }

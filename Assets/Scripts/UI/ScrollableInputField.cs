@@ -26,6 +26,15 @@ namespace Protobot.UI {
         }
 
         /// <summary>
+        /// Overrides the increment and display format at runtime.
+        /// Called by PropertiesMenuUI when creating rotation fields (increment=5, format="F1").
+        /// </summary>
+        public void Init(float inc, string fmt = null) {
+            increment = inc;
+            if (fmt != null) format = fmt;
+        }
+
+        /// <summary>
         /// Called by Unity's EventSystem when the scroll wheel moves over this element.
         /// Increments or decrements the field's numeric value by the configured amount.
         /// </summary>
