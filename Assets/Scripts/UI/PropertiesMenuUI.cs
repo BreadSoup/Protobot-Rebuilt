@@ -55,6 +55,22 @@ namespace Protobot.UI {
         // of manualEuler instead of trying to find the "closest" representation.
         private GameObject prevSelectedObj    = null;
 
+        // ── Hole-count resizing ──────────────────────────────────────────────────
+        // Shown only for aluminum parts that have an AluminumResizeData component.
+        private GameObject holeSection;      // parent row — hidden when not resizable
+        private InputField  holeCountInput;  // shows current / target hole count
+        private Button      flipBtn;         // flips which end is modified
+        private Text        flipBtnText;     // label on the flip button
+
+        private bool        resizeFromLeft = true; // which end the preview targets
+
+        // ── Preview objects (3-D overlays in world space) ────────────────────────
+        // Red (removal) or green (addition) ghost mesh + blue edge indicator.
+        private readonly System.Collections.Generic.List<GameObject> _previewObjs
+            = new System.Collections.Generic.List<GameObject>();
+        private GameObject _previewArrow;   // blue sphere at the modified edge
+        private Material   _previewRemoveMat, _previewAddMat, _previewArrowMat;
+
         // ── Colors (matched to the transform-tool panel family) ──────────────────
         private static readonly Color PanelBg      = new Color(0.14f, 0.14f, 0.14f, 0.749f);
         private static readonly Color HeaderColor   = new Color(0.22f, 0.45f, 0.78f, 1f);
@@ -108,6 +124,11 @@ namespace Protobot.UI {
             // On startup, sync all ring containers to the current IsLocalSpace value
             // (the prefab ships with matchRotation=1, so we reset to match the default false).
             SyncRingLocalSpace(RotateRing.IsLocalSpace);
+
+            // Create transparent materials used by the 3-D resize preview.
+            _previewRemoveMat = MakeTransparentMat(new Color(0.90f, 0.15f, 0.15f, 0.40f));
+            _previewAddMat    = MakeTransparentMat(new Color(0.15f, 0.85f, 0.15f, 0.40f));
+            _previewArrowMat  = MakeTransparentMat(new Color(0.20f, 0.50f, 1.00f, 0.85f));
         }
 
         private void Update() {
@@ -115,10 +136,14 @@ namespace Protobot.UI {
 
             bool show = selectedObject.active;
             panel.SetActive(show);
-            if (!show) return;
+            if (!show) {
+                ClearHolePreview(); // remove 3-D overlays when nothing is selected
+                return;
+            }
 
             RefreshInfo();
             RefreshTransform();
+            RefreshHoleSection();
         }
 
         // ── RootObject resolution ────────────────────────────────────────────────
@@ -245,6 +270,9 @@ namespace Protobot.UI {
                 posHeaderText.text = val ? "LOCAL POSITION" : "GLOBAL POSITION";
                 rotHeaderText.text = val ? "LOCAL ROTATION"  : "GLOBAL ROTATION";
             });
+
+            // ── Hole-count section (hidden until a resizable part is selected) ──
+            BuildHoleSection(content.transform);
         }
 
         // ── Listeners ────────────────────────────────────────────────────────────
@@ -305,6 +333,12 @@ namespace Protobot.UI {
                 if (!selectedObject.active || !float.TryParse(val, out float f)) return;
                 float d = f - manualEuler.z; manualEuler.z = f; ApplyDelta(0f, 0f, d);
             });
+
+            // Hole count — live preview on every keystroke, apply on EndEdit.
+            holeCountInput.onValueChanged.AddListener(OnHoleCountChanged);
+            holeCountInput.onEndEdit.AddListener(OnHoleCountEndEdit);
+
+            flipBtn.onClick.AddListener(OnFlipSide);
         }
 
         // ── Refresh ──────────────────────────────────────────────────────────────
@@ -627,6 +661,241 @@ namespace Protobot.UI {
             inputGO.AddComponent<ScrollableInputField>().Init(scrollInc, scrollFmt);
 
             return inputField;
+        }
+
+        // ── Hole-count section ────────────────────────────────────────────────────
+
+        /// <summary>
+        /// Builds the HOLES UI block: a header, an integer input field, a flip
+        /// button, and a small hint label showing which end will be modified.
+        /// The whole block starts hidden and is shown only for resizable parts.
+        /// </summary>
+        private void BuildHoleSection(Transform parent) {
+            holeSection = MakeEl("HoleSection", parent);
+            AddVLayout(holeSection, new RectOffset(0, 0, 0, 0), 3f, autoHeight: true);
+
+            MakeDivider(holeSection.transform);
+
+            var holeHeader = MakeText("HH", holeSection.transform, "HOLES", 9);
+            holeHeader.color = DimColor;
+
+            // ── Row: [  count field  ]  [← FLIP →] ───────────────────────────
+            var holeRow = MakeEl("HoleRow", holeSection.transform);
+            SetHRow(holeRow, 22f);
+
+            // Integer input field  (72 + spacing3 + 120 = 195, fits within 196px content width)
+            var fieldContainer = MakeEl("HFC", holeRow.transform);
+            fieldContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(72f, 22f);
+            ApplyPanelImage(fieldContainer, InputBg);
+
+            var ftGO = MakeEl("FT", fieldContainer.transform);
+            var ftRT = ftGO.GetComponent<RectTransform>();
+            ftRT.anchorMin = Vector2.zero; ftRT.anchorMax = Vector2.one;
+            ftRT.offsetMin = new Vector2(4f, 2f); ftRT.offsetMax = new Vector2(-4f, -2f);
+            var ftText = ftGO.AddComponent<Text>();
+            ftText.font = uiFont; ftText.fontSize = 10;
+            ftText.color = Color.white; ftText.alignment = TextAnchor.MiddleLeft;
+
+            var fphGO = MakeEl("FP", fieldContainer.transform);
+            var fphRT = fphGO.GetComponent<RectTransform>();
+            fphRT.anchorMin = Vector2.zero; fphRT.anchorMax = Vector2.one;
+            fphRT.offsetMin = new Vector2(4f, 2f); fphRT.offsetMax = new Vector2(-4f, -2f);
+            var fphText = fphGO.AddComponent<Text>();
+            fphText.font = uiFont; fphText.fontSize = 10;
+            fphText.color = PlaceholderCl; fphText.fontStyle = FontStyle.Italic;
+            fphText.text = "holes";
+
+            holeCountInput = fieldContainer.AddComponent<InputField>();
+            holeCountInput.textComponent = ftText;
+            holeCountInput.placeholder   = fphText;
+            holeCountInput.contentType   = InputField.ContentType.IntegerNumber;
+
+            // Flip button
+            var flipGO = MakeEl("FlipBtn", holeRow.transform);
+            flipGO.GetComponent<RectTransform>().sizeDelta = new Vector2(120f, 22f);
+            ApplyPanelImage(flipGO, new Color(0.25f, 0.25f, 0.30f, 1f));
+
+            flipBtnText = MakeEl("FBT", flipGO.transform).AddComponent<Text>();
+            flipBtnText.GetComponent<RectTransform>().anchorMin = Vector2.zero;
+            flipBtnText.GetComponent<RectTransform>().anchorMax = Vector2.one;
+            flipBtnText.GetComponent<RectTransform>().offsetMin = Vector2.zero;
+            flipBtnText.GetComponent<RectTransform>().offsetMax = Vector2.zero;
+            flipBtnText.font = uiFont; flipBtnText.fontSize = 9;
+            flipBtnText.color = Color.white; flipBtnText.alignment = TextAnchor.MiddleCenter;
+            flipBtnText.text = "← left";
+
+            flipBtn = flipGO.AddComponent<Button>();
+            flipBtn.targetGraphic = flipGO.GetComponent<Image>();
+            var cb = new ColorBlock();
+            cb.normalColor      = new Color(0.25f, 0.25f, 0.30f, 1f);
+            cb.highlightedColor = new Color(0.35f, 0.35f, 0.42f, 1f);
+            cb.pressedColor     = new Color(0.20f, 0.20f, 0.25f, 1f);
+            cb.selectedColor    = cb.normalColor;
+            cb.disabledColor    = cb.normalColor;
+            cb.colorMultiplier  = 1f;
+            cb.fadeDuration     = 0.1f;
+            flipBtn.colors = cb;
+
+            holeSection.SetActive(false);
+        }
+
+        /// <summary>
+        /// Called every frame when the panel is visible. Shows the hole section
+        /// only when the selected part has an AluminumResizeData component, and
+        /// keeps the field in sync (unless the user is currently editing it).
+        /// </summary>
+        private void RefreshHoleSection() {
+            var root = RootObject;
+            AluminumResizeData rd = root != null ? root.GetComponent<AluminumResizeData>() : null;
+
+            bool show = rd != null;
+            holeSection.SetActive(show);
+
+            if (!show) {
+                ClearHolePreview();
+                return;
+            }
+
+            // Keep the displayed number in sync unless the user is typing.
+            if (!holeCountInput.isFocused)
+                holeCountInput.SetTextWithoutNotify(rd.holeCount.ToString());
+        }
+
+        // ── Hole-count event handlers ─────────────────────────────────────────────
+
+        private void OnHoleCountChanged(string val) {
+            var root = RootObject;
+            if (root == null) return;
+            var rd = root.GetComponent<AluminumResizeData>();
+            if (rd == null) return;
+
+            if (!int.TryParse(val, out int target)) { ClearHolePreview(); return; }
+            target = Mathf.Clamp(target, rd.minHoleCount, rd.maxHoleCount);
+            if (target == rd.holeCount) { ClearHolePreview(); return; }
+
+            ShowHolePreview(rd, target);
+        }
+
+        private void OnHoleCountEndEdit(string val) {
+            var root = RootObject;
+            if (root == null) return;
+            var rd = root.GetComponent<AluminumResizeData>();
+            if (rd == null) return;
+
+            if (!int.TryParse(val, out int target)) {
+                holeCountInput.SetTextWithoutNotify(rd.holeCount.ToString());
+                ClearHolePreview();
+                return;
+            }
+            target = Mathf.Clamp(target, rd.minHoleCount, rd.maxHoleCount);
+            if (target == rd.holeCount) { ClearHolePreview(); return; }
+
+            ApplyHoleResize(rd, target);
+        }
+
+        private void OnFlipSide() {
+            resizeFromLeft = !resizeFromLeft;
+            flipBtnText.text = resizeFromLeft ? "← left" : "right →";
+
+            // Refresh the preview in the new direction if we're mid-edit.
+            var root = RootObject;
+            if (root == null) return;
+            var rd = root.GetComponent<AluminumResizeData>();
+            if (rd == null) return;
+            if (int.TryParse(holeCountInput.text, out int t) && t != rd.holeCount)
+                ShowHolePreview(rd, Mathf.Clamp(t, rd.minHoleCount, rd.maxHoleCount));
+        }
+
+        // ── Resize apply (with undo) ──────────────────────────────────────────────
+
+        private void ApplyHoleResize(AluminumResizeData rd, int newCount) {
+            // 1. Capture PRE-resize state for undo.
+            Protobot.StateSystems.StateSystem.AddElement(
+                new Protobot.StateSystems.ResizeElement(rd));
+
+            // 2. Move the part so the chosen edge stays world-fixed.
+            rd.transform.position = AluminumResizer.CalcNewPosition(
+                rd.transform, rd.holeCount, newCount, keepRightEdge: resizeFromLeft);
+
+            // 3. Rebuild mesh + holes + metadata.
+            AluminumResizer.ApplyResize(rd, newCount);
+
+            // 4. Push POST-resize snapshot so Ctrl+Y can redo.
+            Protobot.StateSystems.StateSystem.AddState(
+                new Protobot.StateSystems.ResizeElement(rd));
+
+            // 5. Clear the preview — the real mesh is now correct.
+            ClearHolePreview();
+            holeCountInput.SetTextWithoutNotify(newCount.ToString());
+        }
+
+        // ── Preview helpers ───────────────────────────────────────────────────────
+
+        /// <summary>
+        /// Creates (or refreshes) the 3-D red/green ghost mesh and blue edge
+        /// indicator that show which sections will be removed or added.
+        /// </summary>
+        private void ShowHolePreview(AluminumResizeData rd, int targetCount) {
+            ClearHolePreview();
+
+            bool removing   = targetCount < rd.holeCount;
+            int  absDelta   = Mathf.Abs(targetCount - rd.holeCount);
+            Material mat    = removing ? _previewRemoveMat : _previewAddMat;
+
+            // Build a mesh for exactly the changed sections using AluminumSubParts.
+            Mesh deltaMesh = rd.subParts.GetMesh(absDelta);
+
+            // World position for the delta-mesh ghost.
+            Vector3 previewCenter = AluminumResizer.CalcPreviewCenter(
+                rd.transform, rd.holeCount, targetCount, modifyLeft: resizeFromLeft);
+
+            var ghost = new GameObject("ResizePreviewMesh");
+            ghost.transform.position = previewCenter;
+            ghost.transform.rotation = rd.transform.rotation;
+            var mf = ghost.AddComponent<MeshFilter>();
+            var mr = ghost.AddComponent<MeshRenderer>();
+            mf.sharedMesh    = deltaMesh;
+            mr.sharedMaterial = mat;
+            _previewObjs.Add(ghost);
+
+            // Blue sphere indicator at the modified edge.
+            if (_previewArrow == null) {
+                _previewArrow = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                _previewArrow.name = "ResizeEdgeIndicator";
+                Object.Destroy(_previewArrow.GetComponent<Collider>());
+                _previewArrow.GetComponent<MeshRenderer>().material = _previewArrowMat;
+            }
+            _previewArrow.transform.localScale = Vector3.one * 0.18f;
+            _previewArrow.transform.position   =
+                AluminumResizer.CalcArrowPos(rd.transform, rd.holeCount, resizeFromLeft);
+            _previewArrow.SetActive(true);
+        }
+
+        /// <summary>Destroys all 3-D preview objects and hides the edge indicator.</summary>
+        private void ClearHolePreview() {
+            foreach (var obj in _previewObjs)
+                if (obj != null) Object.Destroy(obj);
+            _previewObjs.Clear();
+
+            if (_previewArrow != null)
+                _previewArrow.SetActive(false);
+        }
+
+        // ── Preview material helper ───────────────────────────────────────────────
+
+        /// <summary>Creates a Standard-shader material in Transparent mode.</summary>
+        private static Material MakeTransparentMat(Color color) {
+            var mat = new Material(Shader.Find("Standard"));
+            mat.color = color;
+            mat.SetFloat("_Mode", 3);
+            mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            mat.SetInt("_ZWrite", 0);
+            mat.DisableKeyword("_ALPHATEST_ON");
+            mat.EnableKeyword("_ALPHABLEND_ON");
+            mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            mat.renderQueue = 3000;
+            return mat;
         }
 
         /// <summary>

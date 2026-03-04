@@ -13,6 +13,10 @@ namespace Protobot {
         [SerializeField] private GameObject end;
         [SerializeField] private Material material;
         [SerializeField] private int maxHoleCount = 35;
+
+        /// <summary>Public read-only access to maxHoleCount, used by AluminumResizeData.</summary>
+        public int MaxHoleCount => maxHoleCount;
+
         public Mesh GetMesh(int holeCount) {
             CombineInstance[] combine = new CombineInstance[holeCount];
 

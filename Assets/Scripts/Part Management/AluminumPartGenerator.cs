@@ -103,9 +103,26 @@ namespace Protobot {
                 partName.param2Display = HoleCount + " holes";
             }
 
+            // ── Attach resize metadata for Properties Menu runtime resizing ──────
+            // AluminumResizeData lets the Properties Menu rebuild the mesh, holes,
+            // PartName, and SavedObject.id without going back to this prefab.
+            var resizeData = partObj.AddComponent<AluminumResizeData>();
+            resizeData.subParts    = subParts[param1Options.IndexOf(param1.value)];
+            resizeData.holeCount   = HoleCount;
+            resizeData.maxHoleCount = resizeData.subParts.MaxHoleCount;
+            resizeData.minHoleCount = 2;
+            resizeData.param2Label          = partName.param2Label;
+            resizeData.param2DisplayFormat  = "{0} holes";
+            resizeData.weightPerHole        = HoleCount > 0 ? partName.weightInGrams / HoleCount : 0f;
+            // Extract prefix/suffix from the already-set PartName.name.
+            // Format is always "...(<count>)" so we split on the last '('.
+            int lp = partName.name.LastIndexOf('(');
+            resizeData.namePrefix = lp >= 0 ? partName.name.Substring(0, lp + 1) : partName.name + "(";
+            resizeData.nameSuffix = ")";
+
             RemoveDataScripts(partObj);
             SetId(partObj);
-            
+
             return partObj;
         }
     }
