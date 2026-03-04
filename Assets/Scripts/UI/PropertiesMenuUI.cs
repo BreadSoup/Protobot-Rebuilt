@@ -164,10 +164,10 @@ namespace Protobot.UI {
             // ── Root panel ───────────────────────────────────────────────────
             panel = MakeEl("Properties Menu", canvas.transform);
             var panelRT = panel.GetComponent<RectTransform>();
-            panelRT.anchorMin        = new Vector2(0f, 1f);
-            panelRT.anchorMax        = new Vector2(0f, 1f);
+            panelRT.anchorMin        = new Vector2(0f, 0f); //changes where UI is anchored
+            panelRT.anchorMax        = new Vector2(0f, 0f);
             panelRT.pivot            = new Vector2(0f, 1f);
-            panelRT.anchoredPosition = new Vector2(65.2f, -70.3f); // position set by user
+            panelRT.anchoredPosition = new Vector2(20, 226f); // position set by user
             panelRT.sizeDelta        = new Vector2(210f, 0f);
 
             ApplyPanelImage(panel, PanelBg);
