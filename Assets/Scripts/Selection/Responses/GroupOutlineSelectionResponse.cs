@@ -31,7 +31,10 @@ namespace Protobot.SelectionSystem {
 
         public void ClearDisplay() {
             for (int i = 0; i < outlinedObjs.Count; i++) {
-                outlinedObjs[i].DisableOutline();
+                // Guard against objects destroyed mid-frame (e.g. HoleColliders removed
+                // during AluminumResizer.ApplyResize while the part is outlined).
+                if (outlinedObjs[i] != null)
+                    outlinedObjs[i].DisableOutline();
             }
             outlinedObjs.Clear();
         }
