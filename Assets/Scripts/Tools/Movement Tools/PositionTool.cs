@@ -24,17 +24,17 @@ namespace Protobot.Tools {
         public Vector3 MoveToPos(Vector3 pos)
         {
             // Modifier keys override the snap toggle, mirroring rotation behaviour:
-            //   Shift → 0.25-unit increments
-            //   Ctrl  → 0.10-unit increments
-            //   Toggle ON (no modifier) → 0.125-unit increments
+            //   Shift → 0.50-unit increments
+            //   Ctrl  → 0.25-unit increments
+            //   Toggle ON (no modifier) → 0.25-unit increments
             var kb = Keyboard.current;
             float snapInc = 0f;
             if (kb != null && (kb.leftShiftKey.isPressed || kb.rightShiftKey.isPressed))
-                snapInc = 0.25f;
+                snapInc = 0.5f;
             else if (kb != null && (kb.leftCtrlKey.isPressed || kb.rightCtrlKey.isPressed))
-                snapInc = 0.1f;
+                snapInc = 0.25f;
             else if (snapping)
-                snapInc = 0.125f;
+                snapInc = 0.25f;
 
             if (snapInc > 0f)
             {
