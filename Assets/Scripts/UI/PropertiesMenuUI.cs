@@ -57,8 +57,9 @@ namespace Protobot.UI {
 
         // ── Hole-count resizing ──────────────────────────────────────────────────
         // Shown only for aluminum parts that have an AluminumResizeData component.
-        private GameObject holeSection;      // parent row — hidden when not resizable
+        private GameObject holeSection;      // parent — hidden when part isn't resizable
         private InputField  holeCountInput;  // shows current / target hole count
+        private Button      saveHoleBtn;     // commits the change (✓)
         private Button      flipBtn;         // flips which end is modified
         private Text        flipBtnText;     // label on the flip button
 
@@ -191,8 +192,8 @@ namespace Protobot.UI {
             var panelRT = panel.GetComponent<RectTransform>();
             panelRT.anchorMin        = new Vector2(0f, 0f); //changes where UI is anchored
             panelRT.anchorMax        = new Vector2(0f, 0f);
-            panelRT.pivot            = new Vector2(0f, 1f);
-            panelRT.anchoredPosition = new Vector2(20, 226f); // position set by user
+            panelRT.pivot            = new Vector2(0f, 0f);
+            panelRT.anchoredPosition = new Vector2(20f, 20f); // position set by user
             panelRT.sizeDelta        = new Vector2(210f, 0f);
 
             ApplyPanelImage(panel, PanelBg);
@@ -219,6 +220,10 @@ namespace Protobot.UI {
             // Param rows (hidden when empty)
             param1Row = MakeParamRow(content.transform, out param1LabelText, out param1ValueText);
             param2Row = MakeParamRow(content.transform, out param2LabelText, out param2ValueText);
+
+            // Hole-count editor sits right where the "Length: N holes" param row is.
+            // When a resizable part is selected, param2Row is hidden and holeSection shows.
+            BuildHoleSection(content.transform);
 
             MakeDivider(content.transform);
 
@@ -271,8 +276,6 @@ namespace Protobot.UI {
                 rotHeaderText.text = val ? "LOCAL ROTATION"  : "GLOBAL ROTATION";
             });
 
-            // ── Hole-count section (hidden until a resizable part is selected) ──
-            BuildHoleSection(content.transform);
         }
 
         // ── Listeners ────────────────────────────────────────────────────────────
@@ -334,10 +337,11 @@ namespace Protobot.UI {
                 float d = f - manualEuler.z; manualEuler.z = f; ApplyDelta(0f, 0f, d);
             });
 
-            // Hole count — live preview on every keystroke, apply on EndEdit.
+            // Hole count — preview updates on every keystroke; changes only apply
+            // when the user clicks the green ✓ save button.
             holeCountInput.onValueChanged.AddListener(OnHoleCountChanged);
-            holeCountInput.onEndEdit.AddListener(OnHoleCountEndEdit);
 
+            saveHoleBtn.onClick.AddListener(OnHoleSave);
             flipBtn.onClick.AddListener(OnFlipSide);
         }
 
@@ -671,27 +675,26 @@ namespace Protobot.UI {
         /// The whole block starts hidden and is shown only for resizable parts.
         /// </summary>
         private void BuildHoleSection(Transform parent) {
+            // The hole section replaces param2Row in the UI hierarchy.
+            // It is a single row: [Length:] [count input] [✓] [← left / right →]
+            // widths: label 68 + input 46 + spacing 3 + save 22 + spacing 3 + flip 48 = 190
             holeSection = MakeEl("HoleSection", parent);
-            AddVLayout(holeSection, new RectOffset(0, 0, 0, 0), 3f, autoHeight: true);
+            SetHRow(holeSection, 18f);
 
-            MakeDivider(holeSection.transform);
+            // "Length:" label (matches style of other param labels)
+            var lbl = MakeText("HL", holeSection.transform, "Length:", 10);
+            lbl.color = DimColor;
+            lbl.GetComponent<RectTransform>().sizeDelta = new Vector2(52f, 18f);
 
-            var holeHeader = MakeText("HH", holeSection.transform, "HOLES", 9);
-            holeHeader.color = DimColor;
-
-            // ── Row: [  count field  ]  [← FLIP →] ───────────────────────────
-            var holeRow = MakeEl("HoleRow", holeSection.transform);
-            SetHRow(holeRow, 22f);
-
-            // Integer input field  (72 + spacing3 + 120 = 195, fits within 196px content width)
-            var fieldContainer = MakeEl("HFC", holeRow.transform);
-            fieldContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(72f, 22f);
+            // Integer input field
+            var fieldContainer = MakeEl("HFC", holeSection.transform);
+            fieldContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(46f, 18f);
             ApplyPanelImage(fieldContainer, InputBg);
 
             var ftGO = MakeEl("FT", fieldContainer.transform);
             var ftRT = ftGO.GetComponent<RectTransform>();
             ftRT.anchorMin = Vector2.zero; ftRT.anchorMax = Vector2.one;
-            ftRT.offsetMin = new Vector2(4f, 2f); ftRT.offsetMax = new Vector2(-4f, -2f);
+            ftRT.offsetMin = new Vector2(3f, 1f); ftRT.offsetMax = new Vector2(-2f, -1f);
             var ftText = ftGO.AddComponent<Text>();
             ftText.font = uiFont; ftText.fontSize = 10;
             ftText.color = Color.white; ftText.alignment = TextAnchor.MiddleLeft;
@@ -699,42 +702,58 @@ namespace Protobot.UI {
             var fphGO = MakeEl("FP", fieldContainer.transform);
             var fphRT = fphGO.GetComponent<RectTransform>();
             fphRT.anchorMin = Vector2.zero; fphRT.anchorMax = Vector2.one;
-            fphRT.offsetMin = new Vector2(4f, 2f); fphRT.offsetMax = new Vector2(-4f, -2f);
+            fphRT.offsetMin = new Vector2(3f, 1f); fphRT.offsetMax = new Vector2(-2f, -1f);
             var fphText = fphGO.AddComponent<Text>();
             fphText.font = uiFont; fphText.fontSize = 10;
             fphText.color = PlaceholderCl; fphText.fontStyle = FontStyle.Italic;
-            fphText.text = "holes";
+            fphText.text = "0";
 
             holeCountInput = fieldContainer.AddComponent<InputField>();
             holeCountInput.textComponent = ftText;
             holeCountInput.placeholder   = fphText;
             holeCountInput.contentType   = InputField.ContentType.IntegerNumber;
 
-            // Flip button
-            var flipGO = MakeEl("FlipBtn", holeRow.transform);
-            flipGO.GetComponent<RectTransform>().sizeDelta = new Vector2(120f, 22f);
-            ApplyPanelImage(flipGO, new Color(0.25f, 0.25f, 0.30f, 1f));
+            // ✓ Save button — commits the typed count to the real part
+            var saveGO = MakeEl("SaveBtn", holeSection.transform);
+            saveGO.GetComponent<RectTransform>().sizeDelta = new Vector2(22f, 18f);
+            ApplyPanelImage(saveGO, new Color(0.18f, 0.52f, 0.18f, 1f));
+            var saveTxt = MakeEl("ST", saveGO.transform).AddComponent<Text>();
+            saveTxt.GetComponent<RectTransform>().anchorMin = Vector2.zero;
+            saveTxt.GetComponent<RectTransform>().anchorMax = Vector2.one;
+            saveTxt.GetComponent<RectTransform>().offsetMin = Vector2.zero;
+            saveTxt.GetComponent<RectTransform>().offsetMax = Vector2.zero;
+            saveTxt.font = uiFont; saveTxt.fontSize = 12;
+            saveTxt.color = Color.white; saveTxt.alignment = TextAnchor.MiddleCenter;
+            saveTxt.text = "✓";
+            saveHoleBtn = saveGO.AddComponent<Button>();
+            saveHoleBtn.targetGraphic = saveGO.GetComponent<Image>();
+            var scb = ColorBlock.defaultColorBlock;
+            scb.normalColor      = new Color(0.18f, 0.52f, 0.18f, 1f);
+            scb.highlightedColor = new Color(0.24f, 0.66f, 0.24f, 1f);
+            scb.pressedColor     = new Color(0.13f, 0.38f, 0.13f, 1f);
+            scb.selectedColor    = scb.normalColor;
+            saveHoleBtn.colors   = scb;
 
+            // ← left / right → flip button
+            var flipGO = MakeEl("FlipBtn", holeSection.transform);
+            flipGO.GetComponent<RectTransform>().sizeDelta = new Vector2(64f, 18f);
+            ApplyPanelImage(flipGO, new Color(0.25f, 0.25f, 0.30f, 1f));
             flipBtnText = MakeEl("FBT", flipGO.transform).AddComponent<Text>();
             flipBtnText.GetComponent<RectTransform>().anchorMin = Vector2.zero;
             flipBtnText.GetComponent<RectTransform>().anchorMax = Vector2.one;
             flipBtnText.GetComponent<RectTransform>().offsetMin = Vector2.zero;
             flipBtnText.GetComponent<RectTransform>().offsetMax = Vector2.zero;
-            flipBtnText.font = uiFont; flipBtnText.fontSize = 9;
+            flipBtnText.font = uiFont; flipBtnText.fontSize = 8;
             flipBtnText.color = Color.white; flipBtnText.alignment = TextAnchor.MiddleCenter;
             flipBtnText.text = "← left";
-
             flipBtn = flipGO.AddComponent<Button>();
             flipBtn.targetGraphic = flipGO.GetComponent<Image>();
-            var cb = new ColorBlock();
-            cb.normalColor      = new Color(0.25f, 0.25f, 0.30f, 1f);
-            cb.highlightedColor = new Color(0.35f, 0.35f, 0.42f, 1f);
-            cb.pressedColor     = new Color(0.20f, 0.20f, 0.25f, 1f);
-            cb.selectedColor    = cb.normalColor;
-            cb.disabledColor    = cb.normalColor;
-            cb.colorMultiplier  = 1f;
-            cb.fadeDuration     = 0.1f;
-            flipBtn.colors = cb;
+            var fcb = ColorBlock.defaultColorBlock;
+            fcb.normalColor      = new Color(0.25f, 0.25f, 0.30f, 1f);
+            fcb.highlightedColor = new Color(0.35f, 0.35f, 0.42f, 1f);
+            fcb.pressedColor     = new Color(0.20f, 0.20f, 0.25f, 1f);
+            fcb.selectedColor    = fcb.normalColor;
+            flipBtn.colors       = fcb;
 
             holeSection.SetActive(false);
         }
@@ -750,6 +769,8 @@ namespace Protobot.UI {
 
             bool show = rd != null;
             holeSection.SetActive(show);
+            // When the hole section is visible it replaces the static param2 row.
+            param2Row.SetActive(!show);
 
             if (!show) {
                 ClearHolePreview();
@@ -776,13 +797,14 @@ namespace Protobot.UI {
             ShowHolePreview(rd, target);
         }
 
-        private void OnHoleCountEndEdit(string val) {
+        /// <summary>Called when the user clicks the green ✓ button to commit the typed count.</summary>
+        private void OnHoleSave() {
             var root = RootObject;
             if (root == null) return;
             var rd = root.GetComponent<AluminumResizeData>();
             if (rd == null) return;
 
-            if (!int.TryParse(val, out int target)) {
+            if (!int.TryParse(holeCountInput.text, out int target)) {
                 holeCountInput.SetTextWithoutNotify(rd.holeCount.ToString());
                 ClearHolePreview();
                 return;
@@ -850,8 +872,10 @@ namespace Protobot.UI {
                 rd.transform, rd.holeCount, targetCount, modifyLeft: resizeFromLeft);
 
             var ghost = new GameObject("ResizePreviewMesh");
-            ghost.transform.position = previewCenter;
-            ghost.transform.rotation = rd.transform.rotation;
+            ghost.transform.position   = previewCenter;
+            ghost.transform.rotation   = rd.transform.rotation;
+            // Scale up slightly to prevent Z-fighting with the real part mesh.
+            ghost.transform.localScale = Vector3.one * 1.005f;
             var mf = ghost.AddComponent<MeshFilter>();
             var mr = ghost.AddComponent<MeshRenderer>();
             mf.sharedMesh    = deltaMesh;

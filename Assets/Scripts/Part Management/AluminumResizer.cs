@@ -45,7 +45,18 @@ namespace Protobot {
                     h.detectors[i].RemoveHole(h);
                 Object.Destroy(h.gameObject);
             }
+            // GenerateHoles uses Instantiate(obj, worldPos, worldRot, parent) so it
+            // only places holes correctly when the part is at world origin.  Temporarily
+            // reset the transform before generating, then restore it afterwards.
+            // The new HoleCollider children store their correct LOCAL positions and
+            // will follow the part when the world transform is restored.
+            Vector3    savedPos = part.transform.position;
+            Quaternion savedRot = part.transform.rotation;
+            part.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+
             data.subParts.GenerateHoles(part, newCount);
+
+            part.transform.SetPositionAndRotation(savedPos, savedRot);
 
             // ── Update metadata ───────────────────────────────────────────────
             data.holeCount = newCount;
