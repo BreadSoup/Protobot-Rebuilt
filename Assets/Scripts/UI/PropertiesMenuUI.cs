@@ -41,6 +41,7 @@ namespace Protobot.UI {
         private Text       posHeaderText; // updated to "LOCAL / GLOBAL POSITION" on toggle
         private Text       rotHeaderText; // updated to "LOCAL / GLOBAL ROTATION" on toggle
         private Toggle     localToggle;
+        private Toggle     snapToggle;
 
         // The euler angles WE are managing for the rotation display.
         // We only re-sync from transform.eulerAngles when an EXTERNAL source (ring
@@ -354,7 +355,7 @@ namespace Protobot.UI {
             SetHRow(toggleRow, 18f);
 
             var toggleLabel = MakeEl("TL", toggleRow.transform);
-            toggleLabel.GetComponent<RectTransform>().sizeDelta = new Vector2(120f, 18f);
+            toggleLabel.GetComponent<RectTransform>().sizeDelta = new Vector2(80f, 18f);
             var tlt = toggleLabel.AddComponent<Text>();
             tlt.text = "Local Space"; tlt.font = uiFont; tlt.fontSize = 10;
             tlt.color = Color.white; tlt.alignment = TextAnchor.MiddleLeft;
@@ -376,6 +377,20 @@ namespace Protobot.UI {
                 }
                 posHeaderText.text = val ? "LOCAL POSITION" : "GLOBAL POSITION";
                 rotHeaderText.text = val ? "LOCAL ROTATION"  : "GLOBAL ROTATION";
+            });
+
+            // ── Snap toggle (replaces the old toolbar snap button) ────────────
+            var snapLabel = MakeEl("SL", toggleRow.transform);
+            snapLabel.GetComponent<RectTransform>().sizeDelta = new Vector2(65f, 18f);
+            var slt = snapLabel.AddComponent<Text>();
+            slt.text = "Snapping"; slt.font = uiFont; slt.fontSize = 10;
+            slt.color = Color.white; slt.alignment = TextAnchor.MiddleLeft;
+
+            snapToggle = MakeToggle("SnapToggle", toggleRow.transform);
+            snapToggle.isOn = PositionTool.snapping;
+            snapToggle.onValueChanged.AddListener(val => {
+                PositionTool.snapping = val;
+                RotateRing.snapping   = val;
             });
 
         }

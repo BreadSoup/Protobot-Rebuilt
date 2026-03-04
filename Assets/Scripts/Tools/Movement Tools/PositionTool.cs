@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using Protobot.StateSystems;
 
 namespace Protobot.Tools {
@@ -22,18 +23,31 @@ namespace Protobot.Tools {
         }
         public Vector3 MoveToPos(Vector3 pos)
         {
-            if (snapping)
+            // Modifier keys override the snap toggle, mirroring rotation behaviour:
+            //   Shift → 0.25-unit increments
+            //   Ctrl  → 0.10-unit increments
+            //   Toggle ON (no modifier) → 0.125-unit increments
+            var kb = Keyboard.current;
+            float snapInc = 0f;
+            if (kb != null && (kb.leftShiftKey.isPressed || kb.rightShiftKey.isPressed))
+                snapInc = 0.25f;
+            else if (kb != null && (kb.leftCtrlKey.isPressed || kb.rightCtrlKey.isPressed))
+                snapInc = 0.1f;
+            else if (snapping)
+                snapInc = 0.125f;
+
+            if (snapInc > 0f)
             {
                 var refObj = movementManager.MovingObj;
                 if (refObj != null)
                 {
                     var relativePos = pos - refObj.transform.position;
-                    relativePos = relativePos.Round(0.125f);
+                    relativePos = relativePos.Round(snapInc);
                     pos = refObj.transform.position + relativePos;
                 }
                 else
                 {
-                    pos = pos.Round(0.125f);
+                    pos = pos.Round(snapInc);
                 }
             }
 
