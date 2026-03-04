@@ -38,17 +38,12 @@ namespace Protobot.Tools {
 
             if (snapInc > 0f)
             {
-                var refObj = movementManager.MovingObj;
-                if (refObj != null)
-                {
-                    var relativePos = pos - refObj.transform.position;
-                    relativePos = relativePos.Round(snapInc);
-                    pos = refObj.transform.position + relativePos;
-                }
-                else
-                {
-                    pos = pos.Round(snapInc);
-                }
+                // Snap the absolute world position, not a delta from the object's
+                // current position.  The object is animated by DOTween (0.25 s tween),
+                // so its transform.position changes every frame while it's in motion.
+                // A delta-based round would compute a different grid offset each frame
+                // and produce jitter.  Rounding the raw target position avoids this.
+                pos = pos.Round(snapInc);
             }
 
             movementManager.MoveTo(pos);
