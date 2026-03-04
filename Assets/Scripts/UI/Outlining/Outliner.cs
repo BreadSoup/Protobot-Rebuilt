@@ -30,6 +30,7 @@ namespace Protobot.Outlining {
         }
 
         public static void DisableOutline(this GameObject obj) {
+            if (obj == null) return; // guard against destroyed objects (e.g. HoleColliders removed during resize)
             Outlinable outline = obj.GetComponent<Outlinable>();
 
             if (outline != null) {

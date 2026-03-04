@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Parts_List;
 using UnityEngine;
 using System.Linq;
 
@@ -10,9 +11,32 @@ namespace Protobot {
     public class ChildPartGenerator : PartGenerator {
         public override GameObject Generate(Vector3 position, Quaternion rotation) {
             GameObject newObj = Instantiate(GetChildObj(), position, rotation);
+
+            // Copy the generator's parameter names + the child's PartData values into
+            // PartName so the Properties Menu can show them (e.g. "Size: 1/4in").
+            // This must happen before RemoveDataScripts destroys the PartData component.
+            if (newObj.TryGetComponent(out PartName pn) &&
+                newObj.TryGetComponent(out PartData pd)) {
+                if (UsesParams && !string.IsNullOrEmpty(param1.name)) {
+                    pn.param1Label   = param1.name;
+                    pn.param1Display = pd.param1Value;
+                }
+                if (UsesTwoParams && !string.IsNullOrEmpty(param2.name)) {
+                    pn.param2Label   = param2.name;
+                    pn.param2Display = pd.param2Value;
+                }
+            }
+
             RemoveDataScripts(newObj);
             SetId(newObj);
-            
+
+            // Attach ChildPartResizeData so the Properties Menu can offer a
+            // size-change selector (◄ / ►) to swap this part for another variant.
+            var crd = newObj.AddComponent<ChildPartResizeData>();
+            crd.generator          = this;
+            crd.currentParam1Value = param1.value;
+            if (UsesTwoParams) crd.currentParam2Value = param2.value;
+
             return newObj;
         }
 

@@ -38,6 +38,20 @@ namespace Protobot {
             if (mf != null) mf.sharedMesh = newMesh;
             if (mc != null) mc.sharedMesh = newMesh;
 
+            // ── Break group connections for screws in holes being removed ─────
+            // OnRemoveTargetHole only fires for threaded holes, so normal holes
+            // never auto-ungroup when destroyed.  Break every screw-to-part edge
+            // here explicitly.  Screws that are still inside valid new holes will
+            // re-connect automatically when the new HoleColliders fire OnTriggerEnter
+            // on the next physics step.
+            foreach (var h in part.GetComponentsInChildren<HoleCollider>()) {
+                foreach (var detector in h.detectors) {
+                    var cp = detector.GetComponentInParent<ConnectingPart>();
+                    if (cp != null)
+                        GroupManager.BreakConnection(cp, part);
+                }
+            }
+
             // ── Replace hole colliders ────────────────────────────────────────
             // Disconnect snap connections first so no HoleDetectors are orphaned.
             foreach (var h in part.GetComponentsInChildren<HoleCollider>()) {
