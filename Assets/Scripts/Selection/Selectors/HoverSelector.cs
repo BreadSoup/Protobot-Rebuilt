@@ -10,6 +10,14 @@ namespace Protobot.SelectionSystem {
 
         private GameObject prevObj;
 
+        /// <summary>
+        /// When true, the per-frame clear-event is not fired while the mouse
+        /// is over empty space.  Set by RadialMenuUI to keep a post-mirror
+        /// outline visible for a short hold period without immediately being
+        /// wiped by the hover-nothing path.
+        /// </summary>
+        public static bool SuppressClear { get; set; } = false;
+
         public void Update() {
             GameObject mouseCastObj = mouseCast.gameObject;
 
@@ -23,7 +31,7 @@ namespace Protobot.SelectionSystem {
                     setEvent?.Invoke(selection);
                 }
             }
-            else
+            else if (!SuppressClear)
                 clearEvent?.Invoke();
 
             prevObj = mouseCastObj;

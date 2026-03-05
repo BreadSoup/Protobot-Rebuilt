@@ -31,7 +31,8 @@ namespace Protobot.InputEvents {
             Keyboard.current.rightShiftKey,
             Keyboard.current.leftAltKey,
             Keyboard.current.rightAltKey,
-            Mouse.current.leftButton
+            // Left mouse button is intentionally NOT ignored so players can bind
+            // actions to left click if they want.
         };
         
         private InputControl CancelInput => Keyboard.current.escapeKey;

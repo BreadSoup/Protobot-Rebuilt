@@ -79,6 +79,18 @@ public class ShaftPartGenerator : PartGenerator {
         }
 
         partList.name = float.Parse(param2.value) + shaftType;
+        partList.param1Label   = "Type";
+        partList.param1Display = param1.value;
+        partList.param2Label   = "Length";
+        partList.param2Display = param2.value + "\"";
+
+        // ── Attach ShaftResizeData for runtime length editing ─────────────
+        var srd = newObj.AddComponent<ShaftResizeData>();
+        srd.length        = float.Parse(param2.value);
+        srd.minLength     = 0.5f;
+        srd.maxLength     = param1.value == "High Strength" ? 24f : 12f;
+        srd.weightPerInch = param1.value == "High Strength" ? 6.5f : 1.9f;
+        srd.nameSuffix    = shaftType;
 
         SetId(newObj);
         RemoveDataScripts(newObj);

@@ -53,10 +53,17 @@ namespace Protobot {
         }
 
         public void RemoveDeletedDetectors() {
-            var deleteList = detectors.Where(detector => detector.gameObject.IsDeleted()).ToList();
+            // Guard against detectors that have been fully destroyed (Unity fake-null):
+            // accessing .gameObject on a destroyed MonoBehaviour throws MissingReferenceException.
+            var deleteList = detectors
+                .Where(detector => detector == null || detector.gameObject.IsDeleted())
+                .ToList();
 
             foreach (var detector in deleteList) {
-                detector.RemoveHole(this);
+                if (detector != null)
+                    detector.RemoveHole(this);
+                else
+                    detectors.Remove(detector); // silently discard the dead reference
             }
         }
 
@@ -78,7 +85,8 @@ namespace Protobot {
         private void OnDisable() {
             if (!IsEmpty && gameObject.IsDeleted()) {
                 foreach (var detector in detectors)
-                    detector.RemoveHole(this);
+                    if (detector != null) // guard against destroyed detectors
+                        detector.RemoveHole(this);
             }
         }
     }

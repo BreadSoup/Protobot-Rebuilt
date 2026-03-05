@@ -19,7 +19,8 @@ namespace Protobot.Transformations {
     }
 
     /// <summary>
-    /// Defines an angular displacement
+    /// Defines an angular displacement.
+    /// Orientation is always in world space.
     /// </summary>
     public class Rotation {
         public Quaternion Orientation { get; }
@@ -35,7 +36,12 @@ namespace Protobot.Transformations {
         }
 
         public Tween Rotate(GameObject gameObject, float duration = 0.25f) {
-            return gameObject.transform.DOLocalRotateQuaternion(Orientation, duration);
+            // DORotateQuaternion targets a world-space orientation, which is correct
+            // because Orientation is always computed in world space (e.g. RotateRing
+            // builds it from initRot which is transform.rotation, not localRotation).
+            // The old DOLocalRotateQuaternion only worked because the movement pivot
+            // is always a root-level object (local == world for root objects).
+            return gameObject.transform.DORotateQuaternion(Orientation, duration);
         }
     }
 
