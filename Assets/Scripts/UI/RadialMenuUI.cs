@@ -426,8 +426,8 @@ namespace Protobot {
         }
 
         /// <summary>
-        /// Highlights the mirror-duplicate clones with the selection outline for ~1.5 s
-        /// so the user can see which parts were just created.
+        /// Highlights the mirror-duplicate clones with the selection outline until the
+        /// user hovers over a different part, so they can see which parts were just created.
         ///
         /// Why not SetCurrent?
         ///   HoverSelector fires clearEvent every frame when the mouse is not over any
@@ -448,6 +448,9 @@ namespace Protobot {
 
             if (_sm == null) _sm = FindObjectOfType<SelectionManager>();
 
+            // Clear the previously-selected part's outline so ONLY the clone glows.
+            _sm?.ClearCurrent();
+
             // Suppress HoverSelector's per-frame "mouse over nothing → clear" event so
             // the outline we apply here is not immediately wiped on the next Update().
             HoverSelector.SuppressClear = true;
@@ -455,15 +458,19 @@ namespace Protobot {
             foreach (var c in clones)
                 c.EnableOutline(0, 1, 0.15f);
 
-            // Hold the highlight for up to ~1.5 s.
-            // Exit early if the user hovers over a different part (sm.current changes),
-            // which means SetCurrent has already run for that part.
-            for (int i = 0; i < 90; i++) {
+            // Keep the highlight until the user hovers over a part that is NOT one of
+            // the clones (or a child collider thereof).  A large safety cap (3600 frames
+            // ≈ 60 s) prevents the coroutine from leaking if nothing is ever hovered.
+            for (int i = 0; i < 3600; i++) {
                 yield return null;
                 clones.RemoveAll(c => c == null);
                 if (clones.Count == 0) break;
-                // Another object was selected — user has moved on; stop the hold.
-                if (_sm != null && _sm.current?.gameObject != null) break;
+                // sm.current is set when HoverSelector finds a part under the mouse.
+                // If it's NOT one of our clones (or a child thereof) the user has moved
+                // to something else — stop holding the highlight.
+                if (_sm != null && _sm.current?.gameObject != null
+                    && !IsCloneOrDescendant(clones, _sm.current.gameObject))
+                    break;
             }
 
             // Remove the highlight when the hold ends.
@@ -471,6 +478,17 @@ namespace Protobot {
                 if (c != null) c.DisableOutline();
 
             HoverSelector.SuppressClear = false;
+        }
+
+        /// <summary>
+        /// Returns true if <paramref name="obj"/> is one of <paramref name="clones"/>
+        /// or a child (any depth) of one of them.  Needed because HoverSelector returns
+        /// a child collider object, not the part root.
+        /// </summary>
+        private static bool IsCloneOrDescendant(List<GameObject> clones, GameObject obj) {
+            for (Transform t = obj.transform; t != null; t = t.parent)
+                if (clones.Contains(t.gameObject)) return true;
+            return false;
         }
 
         // ── Shared helpers ────────────────────────────────────────────────────
