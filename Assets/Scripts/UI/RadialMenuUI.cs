@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Protobot.StateSystems;
 using Protobot.Outlining;
 using Protobot.InputEvents;
+using Protobot.SelectionSystem;
 
 namespace Protobot {
     /// <summary>
@@ -281,14 +282,20 @@ namespace Protobot {
             _mirrorSubImgA.gameObject.SetActive(showSplit);
             _mirrorSubImgB.gameObject.SetActive(showSplit);
 
+            // Hide the "Mirror" main label when sub-slices are visible (sub-labels take over)
+            _labelTexts[4].gameObject.SetActive(!showSplit);
+
             if (showSplit) {
                 _mirrorSubLblA.text = SubLabelA(_axis);
                 _mirrorSubLblB.text = SubLabelB(_axis);
             }
         }
 
-        private static string SubLabelA(int axis) => axis == 1 ? "Up"   : "+";
-        private static string SubLabelB(int axis) => axis == 1 ? "Down" : "–";
+        // Y axis: Sub-A (225° CW = lower on screen) = Down = -Y
+        //         Sub-B (255° CW = higher on screen) = Up   = +Y
+        // X/Z:   Sub-A = positive (+), Sub-B = negative (−)
+        private static string SubLabelA(int axis) => axis == 1 ? "Down" : "+";
+        private static string SubLabelB(int axis) => axis == 1 ? "Up"   : "–";
 
         // ═════════════════════════════════════════════════════════════════════
         // Preview planes & ghost
@@ -306,7 +313,9 @@ namespace Protobot {
 
                 case 4:
                     if (_mirrorSide < 0) { _preview.HideAll(); _ghost.HideGhosts(); break; }
-                    int   sign = _mirrorSide == 0 ? 1 : -1;
+                    // Y axis: Sub-A=Down=-Y, Sub-B=Up=+Y → sign is flipped vs X/Z
+                    int   sign = (_axis == 1) ? (_mirrorSide == 0 ? -1 : 1)
+                                              : (_mirrorSide == 0 ?  1 : -1);
                     var   n    = AxisNormal(_axis) * sign;
                     float half = Mathf.Abs(Vector3.Dot(_bounds.extents, n));
                     var   ctr  = _bounds.center + n * (half + MirrorGap * 0.5f);
@@ -384,13 +393,33 @@ namespace Protobot {
         // ── Mirror Duplicate (with ± side from _mirrorSide) ───────────────────
         private void DoMirrorDup() {
             var objs = GetObjs(); if (objs == null) return;
-            int   sign = _mirrorSide == 1 ? -1 : 1;
+            // Y axis: Sub-A=Down=-Y, Sub-B=Up=+Y → sign flipped vs X/Z
+            int   sign = (_axis == 1) ? (_mirrorSide == 0 ? -1 : 1)
+                                      : (_mirrorSide == 0 ?  1 : -1);
             var   n    = AxisNormal(_axis) * sign;
             float half = Mathf.Abs(Vector3.Dot(_bounds.extents, n));
-            MirrorSystem.MirrorDuplicate(
+            var clones = MirrorSystem.MirrorDuplicate(
                 objs,
                 _bounds.center + n * (half + MirrorGap * 0.5f),
                 n);
+            // Select the new mirrored parts so they can be moved immediately
+            TrySelectClones(clones);
+        }
+
+        /// <summary>
+        /// Attempts to make <paramref name="clones"/> the new selection so the user
+        /// can move the mirrored parts right away without clicking on them.
+        /// </summary>
+        private void TrySelectClones(List<GameObject> clones) {
+            if (clones == null || clones.Count == 0) return;
+            var sm = FindObjectOfType<SelectionManager>();
+            if (sm == null) return;
+
+            ISelection sel = clones.Count == 1
+                ? (ISelection)new ObjectSelection { gameObject = clones[0] }
+                : (ISelection)new MultiSelection(null, clones);
+
+            sm.SetCurrent(sel);
         }
 
         // ── Shared helpers ────────────────────────────────────────────────────
@@ -432,8 +461,8 @@ namespace Protobot {
         // ── Axis label helpers ────────────────────────────────────────────────
         private void RefreshAxisLabels() {
             string line = BuildAxisLine();
-            if (N > 0) _labelTexts[0].text = "Flip\n"   + line;
-            if (N > 4) _labelTexts[4].text = "Mirror\n" + line;
+            if (N > 0) _labelTexts[0].text = "Flip\n" + line;
+            // Mirror button (4) has no axis text — the sub-slice labels show the direction
         }
 
         private string BuildAxisLine() {
@@ -502,8 +531,10 @@ namespace Protobot {
             // Mirror is slice 4, centred at 240° CW.
             // Sub-A centred at 225° CW, Sub-B at 255° CW.
             // fillAmount = 1/12  |  rotation = 15 - centreCW
-            BuildMirrorSubSlice(225f, out _mirrorSubImgA, out _mirrorSubLblA, "SubA");
-            BuildMirrorSubSlice(255f, out _mirrorSubImgB, out _mirrorSubLblB, "SubB");
+            // Sub-A "+" label at the 210° outer corner (upper boundary of Mirror wedge)
+            // Sub-B "−" label at the 270° outer corner (lower boundary of Mirror wedge)
+            BuildMirrorSubSlice(225f, 210f, out _mirrorSubImgA, out _mirrorSubLblA, "SubA");
+            BuildMirrorSubSlice(255f, 270f, out _mirrorSubImgB, out _mirrorSubLblB, "SubB");
 
             // Spoke dividers
             for (int i = 0; i < n; i++) {
@@ -519,10 +550,12 @@ namespace Protobot {
 
         /// <summary>
         /// Creates one 30° sub-slice (1/12 fill) centred at <paramref name="centreCW"/>
-        /// degrees clockwise from top, plus a small label.
+        /// degrees clockwise from top, plus a small label positioned at
+        /// <paramref name="cornerCW"/> (the outer boundary of this sub-slice) so the
+        /// +/− sign sits in the wedge corner and is not obscured by the "Mirror" text.
         /// </summary>
-        private void BuildMirrorSubSlice(float centreCW, out Image img, out Text lbl,
-                                         string name) {
+        private void BuildMirrorSubSlice(float centreCW, float cornerCW,
+                                         out Image img, out Text lbl, string name) {
             float outerD = OuterR * 2f;
             var go = CircleGO($"Mirror{name}", _menuRoot.transform, Vector2.zero, outerD, PanelBg);
             var i  = go.GetComponent<Image>();
@@ -536,11 +569,13 @@ namespace Protobot {
                 Quaternion.Euler(0f, 0f, 15f - centreCW);
             img = i;
 
-            // Label at the angular midpoint
-            float stdRad = (90f - centreCW) * Mathf.Deg2Rad;
-            var lp  = new Vector2(Mathf.Cos(stdRad) * LabelR, Mathf.Sin(stdRad) * LabelR);
+            // Label at the outer corner of this sub-slice, ~80 % of OuterR from centre
+            float cornerRad    = (90f - cornerCW) * Mathf.Deg2Rad;
+            float labelRadius  = OuterR * 0.80f;   // ≈ 52 px — just inside outer edge
+            var   lp = new Vector2(Mathf.Cos(cornerRad) * labelRadius,
+                                   Mathf.Sin(cornerRad) * labelRadius);
             var lgo = LabelGO($"Lbl{name}", _menuRoot.transform, lp,
-                              new Vector2(40f, 30f), "", 9, false);
+                              new Vector2(24f, 20f), "", 11, false);
             lbl = lgo.GetComponent<Text>();
 
             go.SetActive(false);

@@ -121,8 +121,9 @@ namespace Protobot {
         /// Registers with StateSystem so Ctrl+Z removes the clones and Ctrl+Y
         /// restores them.
         /// </summary>
-        public static void MirrorDuplicate(List<GameObject> objs, Vector3 center, Vector3 mirrorNormal) {
-            if (objs == null || objs.Count == 0) return;
+        /// <summary>Returns the list of cloned GameObjects so callers can select them.</summary>
+        public static List<GameObject> MirrorDuplicate(List<GameObject> objs, Vector3 center, Vector3 mirrorNormal) {
+            if (objs == null || objs.Count == 0) return new List<GameObject>();
 
             var clones = new List<GameObject>();
 
@@ -156,6 +157,8 @@ namespace Protobot {
             foreach (var clone in clones)
                 postElements.Add(new ObjectElement(clone));
             StateSystem.AddState(new State(postElements));
+
+            return clones;
         }
     }
 }
