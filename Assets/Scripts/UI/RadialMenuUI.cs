@@ -282,8 +282,9 @@ namespace Protobot {
             _mirrorSubImgA.gameObject.SetActive(showSplit);
             _mirrorSubImgB.gameObject.SetActive(showSplit);
 
-            // Hide the "Mirror" main label when sub-slices are visible (sub-labels take over)
-            _labelTexts[4].gameObject.SetActive(!showSplit);
+            // Sub-slice labels are separate GOs — must be toggled independently
+            _mirrorSubLblA.gameObject.SetActive(showSplit);
+            _mirrorSubLblB.gameObject.SetActive(showSplit);
 
             if (showSplit) {
                 _mirrorSubLblA.text = SubLabelA(_axis);
@@ -409,15 +410,25 @@ namespace Protobot {
         /// <summary>
         /// Attempts to make <paramref name="clones"/> the new selection so the user
         /// can move the mirrored parts right away without clicking on them.
+        ///
+        /// We pass the clone's own Selector component as the selector reference.
+        /// Clones are Instantiate copies of the originals, so they carry the same
+        /// Selector MonoBehaviour.  Providing a non-null selector ensures that
+        /// SelectionResponses with RespondOnlyToSelectors = true still fire.
         /// </summary>
         private void TrySelectClones(List<GameObject> clones) {
             if (clones == null || clones.Count == 0) return;
             var sm = FindObjectOfType<SelectionManager>();
             if (sm == null) return;
 
+            // Grab the Selector MonoBehaviour that comes with the cloned part.
+            // Its scene events aren't wired (cloned after Awake), but its presence
+            // is enough to satisfy RespondOnlyToSelectors checks in SelectionManager.
+            var selectorRef = clones[0].GetComponent<Selector>();
+
             ISelection sel = clones.Count == 1
-                ? (ISelection)new ObjectSelection { gameObject = clones[0] }
-                : (ISelection)new MultiSelection(null, clones);
+                ? (ISelection)new ObjectSelection { gameObject = clones[0], selector = selectorRef }
+                : (ISelection)new MultiSelection(selectorRef, clones);
 
             sm.SetCurrent(sel);
         }
@@ -531,10 +542,10 @@ namespace Protobot {
             // Mirror is slice 4, centred at 240° CW.
             // Sub-A centred at 225° CW, Sub-B at 255° CW.
             // fillAmount = 1/12  |  rotation = 15 - centreCW
-            // Sub-A "+" label at the 210° outer corner (upper boundary of Mirror wedge)
-            // Sub-B "−" label at the 270° outer corner (lower boundary of Mirror wedge)
-            BuildMirrorSubSlice(225f, 210f, out _mirrorSubImgA, out _mirrorSubLblA, "SubA");
-            BuildMirrorSubSlice(255f, 270f, out _mirrorSubImgB, out _mirrorSubLblB, "SubB");
+            // Sub-A label centred in its wedge (225° CW), Sub-B centred in its wedge (255° CW).
+            // Using the centre angle keeps labels 15° clear of every spoke line.
+            BuildMirrorSubSlice(225f, out _mirrorSubImgA, out _mirrorSubLblA, "SubA");
+            BuildMirrorSubSlice(255f, out _mirrorSubImgB, out _mirrorSubLblB, "SubB");
 
             // Spoke dividers
             for (int i = 0; i < n; i++) {
@@ -550,11 +561,14 @@ namespace Protobot {
 
         /// <summary>
         /// Creates one 30° sub-slice (1/12 fill) centred at <paramref name="centreCW"/>
-        /// degrees clockwise from top, plus a small label positioned at
-        /// <paramref name="cornerCW"/> (the outer boundary of this sub-slice) so the
-        /// +/− sign sits in the wedge corner and is not obscured by the "Mirror" text.
+        /// degrees clockwise from top, plus a small label at the same angle pushed out
+        /// to ~80 % of OuterR.  Using the centre angle (not a corner) keeps the label
+        /// 15° clear of the nearest spoke line on either side.
+        ///
+        /// Both the slice image and the label start hidden; ApplyMirrorSplitVisual
+        /// shows/hides them together when Mirror is hovered.
         /// </summary>
-        private void BuildMirrorSubSlice(float centreCW, float cornerCW,
+        private void BuildMirrorSubSlice(float centreCW,
                                          out Image img, out Text lbl, string name) {
             float outerD = OuterR * 2f;
             var go = CircleGO($"Mirror{name}", _menuRoot.transform, Vector2.zero, outerD, PanelBg);
@@ -569,14 +583,16 @@ namespace Protobot {
                 Quaternion.Euler(0f, 0f, 15f - centreCW);
             img = i;
 
-            // Label at the outer corner of this sub-slice, ~80 % of OuterR from centre
-            float cornerRad    = (90f - cornerCW) * Mathf.Deg2Rad;
-            float labelRadius  = OuterR * 0.80f;   // ≈ 52 px — just inside outer edge
-            var   lp = new Vector2(Mathf.Cos(cornerRad) * labelRadius,
-                                   Mathf.Sin(cornerRad) * labelRadius);
+            // Label at centre angle, pushed to ~80 % of OuterR — outer half of the wedge,
+            // well clear of any spoke line (spokes sit at the 60° slice boundaries).
+            float stdRad      = (90f - centreCW) * Mathf.Deg2Rad;
+            float labelRadius = OuterR * 0.80f;   // ≈ 52 px
+            var   lp = new Vector2(Mathf.Cos(stdRad) * labelRadius,
+                                   Mathf.Sin(stdRad) * labelRadius);
             var lgo = LabelGO($"Lbl{name}", _menuRoot.transform, lp,
                               new Vector2(24f, 20f), "", 11, false);
             lbl = lgo.GetComponent<Text>();
+            lgo.SetActive(false);   // hidden until Mirror is hovered
 
             go.SetActive(false);
         }
