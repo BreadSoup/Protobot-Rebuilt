@@ -413,73 +413,64 @@ namespace Protobot {
         }
 
         /// <summary>
-        /// Starts a one-frame-deferred coroutine to select <paramref name="clones"/>.
+        /// Starts a one-frame-deferred coroutine to highlight <paramref name="clones"/>
+        /// after a mirror-duplicate operation.
         ///
-        /// Why deferred?  The radial menu is a Canvas overlay.  When the user clicks
-        /// to confirm the mirror, AvoidUISelectionCondition sees MouseInput.overUI=true
-        /// and blocks SetCurrent.  Waiting one frame lets the EventSystem update after
-        /// the canvas is hidden, so overUI is false when we actually call SetCurrent.
+        /// Why deferred?  The radial menu canvas is still active when ExecuteButton runs.
+        /// Waiting one frame lets the EventSystem clear the UI-hover flag so unrelated
+        /// conditions (AvoidUISelectionCondition) do not interfere.
         /// </summary>
         private void TrySelectClones(List<GameObject> clones) {
             if (clones == null || clones.Count == 0) return;
             StartCoroutine(SelectNextFrame(clones));
         }
 
+        /// <summary>
+        /// Highlights the mirror-duplicate clones with the selection outline for ~1.5 s
+        /// so the user can see which parts were just created.
+        ///
+        /// Why not SetCurrent?
+        ///   HoverSelector fires clearEvent every frame when the mouse is not over any
+        ///   collider.  That immediately calls ClearCurrent → DisableOutline, wiping the
+        ///   outline in Frame+1.  We suppress only the per-frame clear (not hover-set)
+        ///   via HoverSelector.SuppressClear so the outline stays visible during the hold
+        ///   period while still allowing normal hover-highlighting of other parts.
+        ///
+        ///   We deliberately do not force-assign sm.current: the clone's tag fails
+        ///   TagSelectionCondition, and if allowClearing=false on that condition, a
+        ///   forced assignment would permanently jam the clearing pipeline.
+        /// </summary>
         private IEnumerator SelectNextFrame(List<GameObject> clones) {
-            yield return null;   // one frame — EventSystem updates overUI after canvas hides
+            yield return null;   // one frame — canvas hidden, EventSystem updates overUI
 
-            Debug.Log($"[RadialMenu] SelectNextFrame start — clones: {clones.Count}, overUI: {MouseInput.overUI}");
-
-            // Guard: clones may have been destroyed by an undo in the same frame
             clones.RemoveAll(c => c == null);
-            if (clones.Count == 0) { Debug.Log("[RadialMenu] All clones were null — aborting"); yield break; }
+            if (clones.Count == 0) yield break;
 
-            // Lazily cache SelectionManager (survives scene reloads via DontDestroyOnLoad)
             if (_sm == null) _sm = FindObjectOfType<SelectionManager>();
-            Debug.Log($"[RadialMenu] SelectionManager found: {_sm != null}");
 
-            if (_sm != null) {
-                Debug.Log($"[RadialMenu] sm.current before clear: {_sm.current?.gameObject?.name ?? "null"}");
+            // Suppress HoverSelector's per-frame "mouse over nothing → clear" event so
+            // the outline we apply here is not immediately wiped on the next Update().
+            HoverSelector.SuppressClear = true;
 
-                // Step 1: clear old selection properly
-                _sm.ClearCurrent();
-                Debug.Log($"[RadialMenu] sm.current after ClearCurrent: {_sm.current?.gameObject?.name ?? "null"}");
-
-                // Step 2: build ObjectSelection using a real registered Selector
-                var realSelector = _sm.GetComponent<Selector>();
-                Debug.Log($"[RadialMenu] realSelector: {realSelector?.GetType().Name ?? "null"}");
-                Debug.Log($"[RadialMenu] clone[0]: {clones[0].name}, tag: {clones[0].tag}");
-
-                var sel = new ObjectSelection { gameObject = clones[0], selector = realSelector };
-                _sm.SetCurrent(sel);
-                Debug.Log($"[RadialMenu] sm.current after SetCurrent: {_sm.current?.gameObject?.name ?? "null"}");
-
-                // Step 3: direct-assign fallback if conditions blocked SetCurrent
-                if (_sm.current?.gameObject != clones[0]) {
-                    Debug.Log("[RadialMenu] SetCurrent was blocked — using direct assignment fallback");
-                    _sm.current = sel;
-                    Debug.Log($"[RadialMenu] sm.current after direct assign: {_sm.current?.gameObject?.name ?? "null"}");
-                }
-            }
-
-            // Step 4: enable outline on every clone and log its state immediately
-            foreach (var c in clones) {
+            foreach (var c in clones)
                 c.EnableOutline(0, 1, 0.15f);
-                var outlinable = c.GetComponent("Outlinable") as Behaviour;
-                var hasRenderer = c.GetComponent<Renderer>() != null;
-                Debug.Log($"[RadialMenu] {c.name} — hasRenderer: {hasRenderer}, " +
-                          $"outlinable: {outlinable != null}, outlineEnabled: {outlinable?.enabled}, " +
-                          $"childCount: {c.transform.childCount}");
+
+            // Hold the highlight for up to ~1.5 s.
+            // Exit early if the user hovers over a different part (sm.current changes),
+            // which means SetCurrent has already run for that part.
+            for (int i = 0; i < 90; i++) {
+                yield return null;
+                clones.RemoveAll(c => c == null);
+                if (clones.Count == 0) break;
+                // Another object was selected — user has moved on; stop the hold.
+                if (_sm != null && _sm.current?.gameObject != null) break;
             }
 
-            // Watch the next 5 frames to see if something clears the selection
-            for (int i = 1; i <= 5; i++) {
-                yield return null;
-                var cur = _sm?.current?.gameObject;
-                var outlinable = clones[0].GetComponent("Outlinable") as Behaviour;
-                Debug.Log($"[RadialMenu] Frame+{i}: sm.current={cur?.name ?? "null"}, " +
-                          $"outlineEnabled={outlinable?.enabled}");
-            }
+            // Remove the highlight when the hold ends.
+            foreach (var c in clones)
+                if (c != null) c.DisableOutline();
+
+            HoverSelector.SuppressClear = false;
         }
 
         // ── Shared helpers ────────────────────────────────────────────────────
