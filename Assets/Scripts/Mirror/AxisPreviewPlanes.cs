@@ -3,72 +3,64 @@ using UnityEngine.Rendering;
 
 namespace Protobot {
     /// <summary>
-    /// Creates three world-space translucent quad planes that visualise the
-    /// X, Y, and Z mirror axes around the current selection's bounding box.
+    /// Creates translucent world-space quad planes that preview mirror axes.
     ///
-    /// Colour convention (matching Unity's gizmo colours):
-    ///   X plane  →  red    (the YZ plane, normal = Vector3.right)
-    ///   Y plane  →  green  (the XZ plane, normal = Vector3.up)
-    ///   Z plane  →  blue   (the XY plane, normal = Vector3.forward)
+    /// Two display modes:
     ///
-    /// Usage:
-    ///   ShowAll(bounds)       — show all three planes sized to the given bounds
-    ///   HighlightAxis(0..2)   — brighten one plane, dim the others
-    ///   HideAll()             — hide all three planes
+    ///   ShowFlipPlane(bounds, axis)
+    ///     One plane through the bounding-box CENTRE — previews where a flip-in-place
+    ///     will reflect the selection.
+    ///
+    ///   ShowMirrorPlane(bounds, axis)
+    ///     One plane at the bounding-box EDGE + padding — previews where a mirror-
+    ///     duplicate will be placed so the copy sits just outside the original.
+    ///
+    ///   HideAll() — hides all planes.
+    ///
+    /// Bug fix: materials now use CullMode.Off so planes are visible from both sides.
     /// </summary>
     public class AxisPreviewPlanes : MonoBehaviour {
 
-        // ── Configuration ──────────────────────────────────────────────────────
-
+        // ── Config ────────────────────────────────────────────────────────────
         /// <summary>Extra world-units added to each edge of the bounding box.</summary>
-        private const float Padding = 2f;
+        private const float EdgePadding   = 0.5f;   // gap between object and mirror plane (Unity units)
+        private const float PlanePadding  = 2.0f;   // extra size added to the quad so it extends beyond the object
 
-        // Dim alpha when all three are shown together
-        private const float AlphaNormal = 0.18f;
-        // Bright alpha when an axis is focused in the sub-menu
-        private const float AlphaHighlight = 0.45f;
+        private const float AlphaNormal   = 0.22f;
+        private const float AlphaHighlight= 0.50f;
 
-        private static readonly Color[] BaseColors = {
-            new Color(1.0f, 0.20f, 0.20f, AlphaNormal), // X — red
-            new Color(0.2f, 1.00f, 0.30f, AlphaNormal), // Y — green
-            new Color(0.2f, 0.45f, 1.00f, AlphaNormal), // Z — blue
+        // Axis colour convention (X=red, Y=green, Z=blue — matches Protobot's ColorX/Y/Z)
+        private static readonly Color[] BaseCol = {
+            new Color(0.75f, 0.22f, 0.22f, AlphaNormal),  // X — red
+            new Color(0.20f, 0.65f, 0.20f, AlphaNormal),  // Y — green
+            new Color(0.20f, 0.40f, 0.80f, AlphaNormal),  // Z — blue
+        };
+        private static readonly Color[] HighCol = {
+            new Color(0.75f, 0.22f, 0.22f, AlphaHighlight),
+            new Color(0.20f, 0.65f, 0.20f, AlphaHighlight),
+            new Color(0.20f, 0.40f, 0.80f, AlphaHighlight),
         };
 
-        private static readonly Color[] HighlightColors = {
-            new Color(1.0f, 0.20f, 0.20f, AlphaHighlight),
-            new Color(0.2f, 1.00f, 0.30f, AlphaHighlight),
-            new Color(0.2f, 0.45f, 1.00f, AlphaHighlight),
-        };
-
-        // ── Internal state ────────────────────────────────────────────────────
-
+        // ── Internal ──────────────────────────────────────────────────────────
         private readonly GameObject[] _quads = new GameObject[3];
         private readonly Material[]   _mats  = new Material[3];
 
-        // ── Unity Lifecycle ───────────────────────────────────────────────────
-
+        // ── Lifecycle ─────────────────────────────────────────────────────────
         private void Awake() {
             for (int i = 0; i < 3; i++) {
                 _quads[i] = GameObject.CreatePrimitive(PrimitiveType.Quad);
                 _quads[i].name = i == 0 ? "MirrorPlane_X"
-                               : i == 1 ? "MirrorPlane_Y"
-                                        : "MirrorPlane_Z";
-
-                // Parent to this GameObject so it moves with it (though we keep it
-                // at origin — planes are repositioned each ShowAll call)
+                               : i == 1 ? "MirrorPlane_Y" : "MirrorPlane_Z";
                 _quads[i].transform.SetParent(transform);
-
-                // Remove the auto-created collider so it doesn't intercept clicks
                 Destroy(_quads[i].GetComponent<MeshCollider>());
 
-                _mats[i] = MakeTransparentMaterial(BaseColors[i]);
+                _mats[i] = MakeTransparentMat(BaseCol[i]);
                 _quads[i].GetComponent<Renderer>().material = _mats[i];
                 _quads[i].SetActive(false);
             }
         }
 
         private void OnDestroy() {
-            // Clean up runtime materials to avoid memory leaks
             for (int i = 0; i < 3; i++)
                 if (_mats[i] != null) Destroy(_mats[i]);
         }
@@ -76,27 +68,31 @@ namespace Protobot {
         // ── Public API ────────────────────────────────────────────────────────
 
         /// <summary>
-        /// Shows all three planes, sized and centred on <paramref name="bounds"/>.
-        /// All planes use their normal (dim) alpha.
+        /// Shows one plane through the bounding-box CENTRE for the given axis.
+        /// Used for "Flip" (mirror in-place) preview.
         /// </summary>
-        public void ShowAll(Bounds bounds) {
-            UpdatePlanes(bounds);
-            for (int i = 0; i < 3; i++) {
-                _quads[i].SetActive(true);
-                _mats[i].color = BaseColors[i];
-            }
+        public void ShowFlipPlane(Bounds bounds, int axis) {
+            HideAll();
+            PositionPlane(axis, bounds.center, bounds);
+            _quads[axis].SetActive(true);
+            _mats[axis].color = HighCol[axis];
         }
 
         /// <summary>
-        /// Highlights the plane for <paramref name="axis"/> (0=X, 1=Y, 2=Z)
-        /// while dimming the others.  Call <see cref="ShowAll"/> first to
-        /// ensure the planes are positioned correctly.
+        /// Shows one plane at the bounding-box EDGE (+ EdgePadding) for the given axis.
+        /// Used for "Mirror Duplicate" preview — the plane is where the copy will be
+        /// placed, which is just outside the original object.
         /// </summary>
-        public void HighlightAxis(int axis) {
-            for (int i = 0; i < 3; i++) {
-                _quads[i].SetActive(true);
-                _mats[i].color = (i == axis) ? HighlightColors[i] : BaseColors[i];
-            }
+        public void ShowMirrorPlane(Bounds bounds, int axis) {
+            HideAll();
+            Vector3 axisDir = AxisDir(axis);
+            float   halfExt = Mathf.Abs(Vector3.Dot(bounds.extents, axisDir));
+            // Place the plane at the edge of the bounding box + half of EdgePadding
+            // (the copy's inner edge ends up EdgePadding away from the original)
+            Vector3 planePos = bounds.center + axisDir * (halfExt + EdgePadding * 0.5f);
+            PositionPlane(axis, planePos, bounds);
+            _quads[axis].SetActive(true);
+            _mats[axis].color = HighCol[axis];
         }
 
         /// <summary>Hides all three planes.</summary>
@@ -105,71 +101,61 @@ namespace Protobot {
                 _quads[i].SetActive(false);
         }
 
-        // ── Plane Positioning ──────────────────────────────────────────────────
-
+        // ── Plane positioning ─────────────────────────────────────────────────
         /// <summary>
-        /// Repositions and rescales each quad to cover the given bounds + padding.
+        /// Positions and sizes a single quad plane.
         ///
-        /// Unity Quad primitives are 1×1 in local XY and face their local +Z.
-        ///
-        ///   Plane 0 (X, normal = right):
-        ///     Rotate 90° around Y so local +Z → world +X.
-        ///     After this rotation: local X = world -Z, local Y = world Y.
-        ///     Scale: x = sz, y = sy.
-        ///
-        ///   Plane 1 (Y, normal = up):
-        ///     Rotate 90° around X so local +Z → world -Y, but we want +Y,
-        ///     so rotate –90° (or use Euler(-90,0,0) → local +Z → world +Y).
-        ///     After this rotation: local X = world X, local Y = world Z.
-        ///     Scale: x = sx, y = sz.
-        ///
-        ///   Plane 2 (Z, normal = forward):
-        ///     Default orientation, local +Z = world +Z.
-        ///     Scale: x = sx, y = sy.
+        /// Rotation notes (Unity Quad faces +Z by default):
+        ///   X-plane (YZ plane, normal = right):   Euler(0, 90, 0)  → local X = world -Z, local Y = world Y
+        ///   Y-plane (XZ plane, normal = up):      Euler(-90, 0, 0) → local X = world X,  local Y = world Z
+        ///   Z-plane (XY plane, normal = forward): Euler(0, 0, 0)   → local X = world X,  local Y = world Y
         /// </summary>
-        private void UpdatePlanes(Bounds bounds) {
-            Vector3 c  = bounds.center;
-            float   sx = bounds.size.x + Padding;
-            float   sy = bounds.size.y + Padding;
-            float   sz = bounds.size.z + Padding;
+        private void PositionPlane(int axis, Vector3 worldPos, Bounds bounds) {
+            Vector3 s = bounds.size;
+            float sx = s.x + PlanePadding;
+            float sy = s.y + PlanePadding;
+            float sz = s.z + PlanePadding;
 
-            // X mirror plane (the YZ plane)
-            _quads[0].transform.position   = c;
-            _quads[0].transform.rotation   = Quaternion.Euler(0f, 90f, 0f);
-            _quads[0].transform.localScale = new Vector3(sz, sy, 1f);
+            var t = _quads[axis].transform;
+            t.position = worldPos;
 
-            // Y mirror plane (the XZ plane)
-            _quads[1].transform.position   = c;
-            _quads[1].transform.rotation   = Quaternion.Euler(-90f, 0f, 0f);
-            _quads[1].transform.localScale = new Vector3(sx, sz, 1f);
-
-            // Z mirror plane (the XY plane)
-            _quads[2].transform.position   = c;
-            _quads[2].transform.rotation   = Quaternion.identity;
-            _quads[2].transform.localScale = new Vector3(sx, sy, 1f);
+            switch (axis) {
+                case 0:  // X — normal = right, quad faces right
+                    t.rotation   = Quaternion.Euler(0f, 90f, 0f);
+                    t.localScale = new Vector3(sz, sy, 1f);
+                    break;
+                case 1:  // Y — normal = up, quad faces up
+                    t.rotation   = Quaternion.Euler(-90f, 0f, 0f);
+                    t.localScale = new Vector3(sx, sz, 1f);
+                    break;
+                default: // Z — normal = forward, default quad orientation
+                    t.rotation   = Quaternion.identity;
+                    t.localScale = new Vector3(sx, sy, 1f);
+                    break;
+            }
         }
 
-        // ── Material Factory ───────────────────────────────────────────────────
+        // ── Helpers ───────────────────────────────────────────────────────────
+        private static Vector3 AxisDir(int axis) =>
+            axis == 0 ? Vector3.right : axis == 1 ? Vector3.up : Vector3.forward;
 
         /// <summary>
-        /// Creates a Standard-shader material configured for alpha-blended
-        /// transparency.  This is the correct approach for runtime material
-        /// creation in Unity's built-in render pipeline.
+        /// Creates a Standard-shader material in Transparent mode.
+        /// CullMode.Off makes both faces visible (fixes the one-sided plane bug).
         /// </summary>
-        private Material MakeTransparentMaterial(Color color) {
+        private static Material MakeTransparentMat(Color color) {
             var mat = new Material(Shader.Find("Standard"));
-
-            // Set the Standard shader to Transparent rendering mode
             mat.SetFloat("_Mode", 3f);
             mat.SetInt("_SrcBlend",  (int)BlendMode.SrcAlpha);
             mat.SetInt("_DstBlend",  (int)BlendMode.OneMinusSrcAlpha);
             mat.SetInt("_ZWrite",    0);
+            // ← Fix for single-sided bug: disable backface culling
+            mat.SetInt("_Cull",      (int)CullMode.Off);
             mat.DisableKeyword("_ALPHATEST_ON");
             mat.EnableKeyword("_ALPHABLEND_ON");
             mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
             mat.renderQueue = 3000;
             mat.color = color;
-
             return mat;
         }
     }
