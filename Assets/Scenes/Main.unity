@@ -8545,7 +8545,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 926006024}
   m_HandleRect: {fileID: 926006023}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -28325,6 +28325,7 @@ GameObject:
   - component: {fileID: 1236292078}
   - component: {fileID: 1236292077}
   - component: {fileID: 1236292076}
+  - component: {fileID: 1236292080}
   m_Layer: 5
   m_Name: Preferences Canvas
   m_TagString: Untagged
@@ -28416,6 +28417,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1236292080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236292074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462e21469be9054458c7dc640a66d16d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1237757116
 GameObject:
   m_ObjectHideFlags: 0
@@ -28881,7 +28894,7 @@ GameObject:
   - component: {fileID: 1269144740}
   - component: {fileID: 1269144739}
   m_Layer: 0
-  m_Name: Radial Menu
+  m_Name: Radial Menu Key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32093,7 +32106,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 0
   outlineTargets:
-  - IsVisible: 1
+  - IsVisible: 0
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
