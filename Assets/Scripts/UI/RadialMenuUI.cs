@@ -14,7 +14,12 @@ namespace Protobot {
     /// Circular 6-button radial context menu.
     ///
     /// Open/close: configurable keybind (default X).  Left-click executes,
-    /// X or Escape closes without action.
+    /// pressing the keybind again or Escape closes without action.
+    ///
+    /// Requires a scene GameObject named <b>"Radial Menu Key"</b> with an
+    /// <see cref="InputEvent"/> component whose defaultAction is bound to X by default.
+    /// The same InputEvent is referenced by <see cref="RadialMenuKeybindRow"/> in
+    /// Preferences → Selection so the user can rebind it.
     ///
     /// Button layout (6 equal 60° slices, clockwise from top):
     ///   0 = Flip       — 12 o'clock  — mirror selection in-place along chosen axis
@@ -67,12 +72,12 @@ namespace Protobot {
         private static readonly string[] AxisHex   = { "BF3838", "33A633", "3366CC" };
         private static readonly string[] AxisNames  = { "X", "Y", "Z" };
 
-        // ── Keybind (shared with RadialMenuKeybindRow) ─────────────────────────
-        /// <summary>
-        /// Shared RebindAction so the keybind settings row can read/update the binding.
-        /// Default: X key.  Persisted via PlayerPrefs key "RadialMenu.Open".
-        /// </summary>
-        public static RebindAction SharedRebind { get; private set; }
+        // ── Keybind ───────────────────────────────────────────────────────────
+        // Driven by an InputEvent scene object named "Radial Menu Key".
+        // RadialMenuUI.Awake finds it by name and subscribes to .performed.
+        // The keybind row in Preferences > Selection uses the matching
+        // RadialMenuKeybindRow (or RebindUI) component pointing to the same object.
+        private InputEvent _radialMenuInput;
 
         // ── UI References ─────────────────────────────────────────────────────
         private Canvas     _canvas;
@@ -121,10 +126,16 @@ namespace Protobot {
         // ═════════════════════════════════════════════════════════════════════
 
         private void Awake() {
-            // Set up configurable keybind (persisted via PlayerPrefs)
-            SharedRebind = new RebindAction("RadialMenu.Open");
-            if (SharedRebind.IsEmpty)
-                SharedRebind.ManuelRebind("<Keyboard>/x");   // default: X key
+            // Find the InputEvent that controls the open/close keybind.
+            // The scene must contain an object named exactly "Radial Menu Key"
+            // with an InputEvent component whose defaultAction is bound to the
+            // desired key (X by default).  RuntimeInitializeLoadType.AfterSceneLoad
+            // guarantees that scene objects (and their Awake) have already run by
+            // now, so the InputEvent and its RebindAction are fully initialised.
+            var inputGO = GameObject.Find("Radial Menu Key");
+            _radialMenuInput = inputGO != null ? inputGO.GetComponent<InputEvent>() : null;
+            if (_radialMenuInput != null)
+                _radialMenuInput.performed += ToggleMenu;
 
             BuildCanvas();
             BuildMenu();
@@ -138,17 +149,15 @@ namespace Protobot {
             _ghost = gg.AddComponent<GhostPreview>();
         }
 
+        // Called by InputEvent.performed — fires once per key press.
+        private void ToggleMenu() {
+            if (_open) CloseMenu(false);
+            else       OpenMenu();
+        }
+
         private void Update() {
             if (Keyboard.current == null) return;
-
-            // Check the configured keybind (falls back to X if no rebind saved)
-            bool menuKeyDown = SharedRebind.action.WasPressedThisFrame();
-
-            if (menuKeyDown) {
-                if (_open) CloseMenu(false);
-                else       OpenMenu();
-                return;
-            }
+            // Open/close is handled by ToggleMenu() via InputEvent.performed callback.
 
             if (!_open) return;
 
