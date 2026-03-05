@@ -427,11 +427,18 @@ namespace Protobot {
         /// <summary>
         /// Transfers selection to the mirror-duplicate clones:
         ///   1. Clears all SelectionManagers so the original part's outlines go away.
-        ///   2. Direct-assigns the clone to the "tool SM" (no HoverSelector) so the
-        ///      transform gizmo follows the clone.  Direct-assign bypasses SetCurrent
-        ///      because TagSelectionCondition blocks it for freshly-instantiated objects.
-        ///   3. Outlines the clone's connected group to match normal selection visuals.
-        ///   4. Holds until the user selects something else (or a 60 s safety cap).
+        ///   2. For multiple clones, creates a Pivot and parents them all to it so the
+        ///      gizmo moves the group as a whole.  For a single clone, no pivot is needed.
+        ///   3. Direct-assigns the selection (pivot or single clone) to every SM so the
+        ///      gizmo follows it.  Direct-assign bypasses SetCurrent because
+        ///      TagSelectionCondition blocks freshly-instantiated objects.
+        ///   4. Outlines every clone root every frame (counteracts HoverSelector's
+        ///      setEvent path which can call ClearCurrent → DisableOutline).
+        ///   5. Re-asserts sm.current every frame so HoverSelector cannot overwrite
+        ///      the selection with a clone-child object (which would make the gizmo
+        ///      track only that child, breaking group movement).
+        ///   6. Holds until the user selects something that is not part of the clone
+        ///      group, or a 60 s safety cap expires.
         /// </summary>
         private IEnumerator SelectNextFrame(List<GameObject> clones) {
             yield return null;   // one frame — canvas hidden, EventSystem updates overUI
@@ -443,34 +450,48 @@ namespace Protobot {
             var allSMs = FindObjectsOfType<SelectionManager>();
             if (allSMs.Length == 0) yield break;
 
-            // Collect HoverSelectors from every SM.  Prefer the SM without one as the
-            // "tool SM" whose current SelectionObjectLink → MovingObj reads.
+            // Identify the "tool SM" (no HoverSelector) as the exit-condition anchor.
+            // All SMs still receive the selection so the gizmo works regardless of
+            // which SM the scene's SelectionObjectLink reads from.
             var allHoverSels = new List<HoverSelector>();
             SelectionManager toolSM = null;
             foreach (var sm in allSMs) {
                 var hs = sm.GetComponent<HoverSelector>();
                 if (hs != null) allHoverSels.Add(hs);
-                else if (toolSM == null) toolSM = sm;   // no HoverSelector → likely the gizmo SM
+                else if (toolSM == null) toolSM = sm;
             }
             if (toolSM == null) toolSM = allSMs[0];   // single-SM fallback
 
             // ── Clear every SM ─────────────────────────────────────────────────────
-            // Fires OutlineSelectionResponse.OnClear + GroupOutlineSelectionResponse.OnClear
-            // on all SMs, removing the original part's outlines.
             foreach (var sm in allSMs) sm.ClearCurrent();
 
             // ── Phase 1: freeze all HoverSelectors for two frames (~33 ms) ─────────
-            // Without this, HoverSelector.Update() fires setEvent for whatever collider
-            // is under the cursor, which triggers SetCurrent → ClearCurrent(clone)
-            // and undoes the assignment below before SuppressClear takes effect.
+            // Prevents HoverSelector.Update() from firing setEvent immediately and
+            // overwriting the assignment below before SuppressClear takes effect.
             foreach (var hs in allHoverSels) hs.enabled = false;
 
-            // ── Assign clone to every SM ───────────────────────────────────────────
-            // Assigning to all SMs ensures the gizmo follows the clone regardless of
-            // which SM SelectionObjectLink happens to reference in this scene.
-            // Direct-assign bypasses SetCurrent (TagSelectionCondition blocks it for
-            // freshly-instantiated objects whose tag does not match targetTags).
-            var sel = new ObjectSelection { gameObject = clones[0], selector = null };
+            // ── Build selection object ─────────────────────────────────────────────
+            // For multiple clones, create a Pivot and parent every clone to it so the
+            // gizmo moves the whole group together.
+            //
+            // We deliberately use a plain ObjectSelection (not MultiSelection) because
+            // ObjectSelection.Deselect() is a no-op.  MultiSelection.Deselect() calls
+            // pivot.DetachObjects(), which would be triggered every time HoverSelector
+            // fires setEvent → SetCurrent → ClearCurrent, silently breaking the group.
+            Pivot pivot = null;
+            ISelection sel;
+            if (clones.Count > 1) {
+                pivot = Pivot.Create("MirrorClonePivot");
+                // checkGroups:false — clones are fresh roots, skip group-parent lookup
+                pivot.AddObjects(clones, false);
+                pivot.Center();
+                sel = new ObjectSelection { gameObject = pivot.gameObject, selector = null };
+            }
+            else {
+                sel = new ObjectSelection { gameObject = clones[0], selector = null };
+            }
+
+            // ── Assign selection to every SM ───────────────────────────────────────
             foreach (var sm in allSMs) sm.current = sel;
 
             // ── Apply outline ──────────────────────────────────────────────────────
@@ -481,10 +502,8 @@ namespace Protobot {
             yield return null;   // frame 2 with all HoverSelectors frozen
             foreach (var hs in allHoverSels) hs.enabled = true;
 
-            // Suppress the hover-clear path (mouse over nothing → clearEvent) globally
-            // so the clone does not get deselected when the cursor is over empty space.
-            // The hover-set path (mouse over a part → setEvent → SetCurrent) is NOT
-            // suppressed: hovering another part correctly transfers selection away.
+            // Suppress the hover-clear path (mouse over nothing → clearEvent) so the
+            // clone does not deselect when the cursor moves over empty space.
             HoverSelector.SuppressClear = true;
 
             // ── Watch loop ─────────────────────────────────────────────────────────
@@ -493,32 +512,56 @@ namespace Protobot {
                 clones.RemoveAll(c => c == null);
                 if (clones.Count == 0) break;
 
-                // Re-apply the outline every frame.  HoverSelector's setEvent path
-                // (mouse over a part) still reaches ClearCurrent → DisableOutline even
-                // with SuppressClear=true (SuppressClear only blocks the clearEvent
-                // path).  Re-enabling here restores it within one frame (~16 ms).
-                foreach (var c in clones) if (c != null) c.EnableOutline(0, 1, 0.15f);
-
-                // Exit when the tool SM's current has moved to a non-clone, meaning the
-                // user has selected something else via hover (single-SM scene) or click
-                // (dual-SM scene).
+                // Check exit BEFORE re-asserting so we see what the SM was set to by
+                // external actors (hover/click selectors) this frame.
                 var cur = toolSM.current?.gameObject;
-                if (cur != null && !IsCloneOrDescendant(clones, cur)) break;
+                bool stillOurs = (pivot != null)
+                    ? IsDescendantOrSelf(pivot.gameObject, cur)   // pivot or any clone child
+                    : (cur != null && IsCloneOrDescendant(clones, cur));
+                if (!stillOurs) break;
+
+                // Re-assert selection on every SM each frame.  HoverSelector's setEvent
+                // path (mouse over a clone child) can reach SetCurrent → sm.current =
+                // child ObjectSelection, shifting the gizmo to that child.  Reasserting
+                // here (after the exit check, so we don't miss a genuine deselect) keeps
+                // the gizmo anchored to the pivot / single clone root.
+                foreach (var sm in allSMs) sm.current = sel;
+
+                // Re-apply outlines.  The setEvent path also triggers ClearCurrent →
+                // OutlineSelectionResponse.OnClear → DisableOutline.  Re-enabling each
+                // frame restores the outline within one frame (~16 ms).
+                foreach (var c in clones) if (c != null) c.EnableOutline(0, 1, 0.15f);
             }
 
             // ── Cleanup ────────────────────────────────────────────────────────────
             foreach (var c in clones) if (c != null) c.DisableOutline();
             HoverSelector.SuppressClear = false;
+
+            // Detach clones from the pivot (so they keep their world positions) and
+            // destroy the now-empty pivot GameObject.
+            if (pivot != null) pivot.Destroy();
         }
 
         /// <summary>
         /// Returns true if <paramref name="obj"/> is one of <paramref name="clones"/>
-        /// or a child (any depth) of one of them.  Needed because HoverSelector returns
-        /// a child collider object, not the part root.
+        /// or a child (any depth) of one of them.  Used for single-clone exit detection
+        /// because HoverSelector returns a child collider object, not the part root.
         /// </summary>
         private static bool IsCloneOrDescendant(List<GameObject> clones, GameObject obj) {
             for (Transform t = obj.transform; t != null; t = t.parent)
                 if (clones.Contains(t.gameObject)) return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Returns true if <paramref name="obj"/> is <paramref name="root"/> or any
+        /// child/grandchild of it.  Used for multi-clone exit detection: all clones are
+        /// parented to the Pivot, so any collider hit inside the group walks up to root.
+        /// </summary>
+        private static bool IsDescendantOrSelf(GameObject root, GameObject obj) {
+            if (obj == null || root == null) return false;
+            for (Transform t = obj.transform; t != null; t = t.parent)
+                if (t.gameObject == root) return true;
             return false;
         }
 
