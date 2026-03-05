@@ -425,23 +425,41 @@ namespace Protobot {
         }
 
         private IEnumerator SelectNextFrame(List<GameObject> clones) {
-            yield return null;   // wait one frame — EventSystem now sees no radial-menu UI
+            yield return null;   // wait one frame — EventSystem clears overUI after canvas hides
 
             // Guard: clones may have been destroyed by an undo in the same frame
             clones.RemoveAll(c => c == null);
             if (clones.Count == 0) yield break;
 
             var sm = FindObjectOfType<SelectionManager>();
-            if (sm == null) yield break;
 
-            // Pass the clone's own Selector so RespondOnlyToSelectors responses fire.
-            var selectorRef = clones[0].GetComponent<Selector>();
+            // ── Why direct assignment instead of sm.SetCurrent() ──────────────
+            // SetCurrent() runs all SelectionConditions (TagSelectionCondition,
+            // AvoidUISelectionCondition, etc.).  MultiSelection uses a Pivot as
+            // its gameObject which has tag "Untagged" — TagSelectionCondition
+            // blocks it.  Bypassing SetCurrent is safe here because:
+            //   • We are deliberately selecting a known-good object we just created.
+            //   • MovingObj = selectionManager.current?.gameObject  (read-through),
+            //     so setting current directly is all the movement system needs.
+            //   • We apply the outline manually below.
 
-            ISelection sel = clones.Count == 1
-                ? (ISelection)new ObjectSelection { gameObject = clones[0], selector = selectorRef }
-                : (ISelection)new MultiSelection(selectorRef, clones);
+            // Remove outline from the previously selected object, if any.
+            sm?.current?.gameObject?.DisableOutline();
 
-            sm.SetCurrent(sel);
+            // Directly install first clone as the new selection.
+            // (Movement tools, tools panel, etc. all read MovingObj which reads
+            // selectionManager.current.gameObject — this is enough.)
+            if (sm != null) {
+                sm.current = new ObjectSelection {
+                    gameObject = clones[0],
+                    selector   = clones[0].GetComponent<Selector>()
+                };
+            }
+
+            // Apply the selection outline (colorIndex 0 = blue, layer 1, fill 0.15)
+            // to every clone so they all light up, not just the first one.
+            foreach (var c in clones)
+                c.EnableOutline(0, 1, 0.15f);
         }
 
         // ── Shared helpers ────────────────────────────────────────────────────
