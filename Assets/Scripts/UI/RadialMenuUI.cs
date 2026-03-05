@@ -99,6 +99,7 @@ namespace Protobot {
 
         // ── Scene refs ────────────────────────────────────────────────────────
         private MovementManager   _mm;
+        private SelectionManager  _sm;
         private AxisPreviewPlanes _preview;
         private GhostPreview      _ghost;
 
@@ -425,39 +426,42 @@ namespace Protobot {
         }
 
         private IEnumerator SelectNextFrame(List<GameObject> clones) {
-            yield return null;   // wait one frame — EventSystem clears overUI after canvas hides
+            yield return null;   // one frame — EventSystem updates overUI after canvas hides
 
             // Guard: clones may have been destroyed by an undo in the same frame
             clones.RemoveAll(c => c == null);
             if (clones.Count == 0) yield break;
 
-            var sm = FindObjectOfType<SelectionManager>();
+            // Lazily cache SelectionManager (survives scene reloads via DontDestroyOnLoad)
+            if (_sm == null) _sm = FindObjectOfType<SelectionManager>();
 
-            // ── Why direct assignment instead of sm.SetCurrent() ──────────────
-            // SetCurrent() runs all SelectionConditions (TagSelectionCondition,
-            // AvoidUISelectionCondition, etc.).  MultiSelection uses a Pivot as
-            // its gameObject which has tag "Untagged" — TagSelectionCondition
-            // blocks it.  Bypassing SetCurrent is safe here because:
-            //   • We are deliberately selecting a known-good object we just created.
-            //   • MovingObj = selectionManager.current?.gameObject  (read-through),
-            //     so setting current directly is all the movement system needs.
-            //   • We apply the outline manually below.
+            if (_sm != null) {
+                // ── Step 1: clear old selection properly ──────────────────────
+                // ClearCurrent runs OnClear responses (removes group outlines on
+                // connected parts, etc.).  In frame N+1 the canvas is hidden so
+                // overUI=false and AvoidUISelectionCondition no longer blocks this.
+                _sm.ClearCurrent();
 
-            // Remove outline from the previously selected object, if any.
-            sm?.current?.gameObject?.DisableOutline();
+                // ── Step 2: select first clone through the normal pipeline ────
+                // Selector components live on the SelectionManager GameObject, NOT
+                // on individual part GameObjects — so we get one from there.
+                // Passing a real registered Selector ensures responses with
+                // RespondOnlyToSelectors=true (e.g. StateSystemSelectionResponse) fire.
+                var realSelector = _sm.GetComponent<Selector>();
+                var sel = new ObjectSelection { gameObject = clones[0], selector = realSelector };
 
-            // Directly install first clone as the new selection.
-            // (Movement tools, tools panel, etc. all read MovingObj which reads
-            // selectionManager.current.gameObject — this is enough.)
-            if (sm != null) {
-                sm.current = new ObjectSelection {
-                    gameObject = clones[0],
-                    selector   = clones[0].GetComponent<Selector>()
-                };
+                _sm.SetCurrent(sel);
+
+                // ── Step 3: fallback if a SelectionCondition still blocked it ─
+                // (e.g. TagSelectionCondition misconfigured, or GetLatestResponseSelector
+                // redirected to a different object)
+                if (_sm.current?.gameObject != clones[0])
+                    _sm.current = sel;   // bypass conditions — we know this object is valid
             }
 
-            // Apply the selection outline (colorIndex 0 = blue, layer 1, fill 0.15)
-            // to every clone so they all light up, not just the first one.
+            // ── Step 4: ensure every clone lights up blue ─────────────────────
+            // OutlineSelectionResponse only outlines clones[0] via RunSetResponses.
+            // Manually apply to all so multi-part mirrors all highlight.
             foreach (var c in clones)
                 c.EnableOutline(0, 1, 0.15f);
         }
