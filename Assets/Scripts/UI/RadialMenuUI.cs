@@ -99,7 +99,6 @@ namespace Protobot {
 
         // ── Scene refs ────────────────────────────────────────────────────────
         private MovementManager   _mm;
-        private SelectionManager  _sm;
         private AxisPreviewPlanes _preview;
         private GhostPreview      _ghost;
 
@@ -426,19 +425,13 @@ namespace Protobot {
         }
 
         /// <summary>
-        /// Highlights the mirror-duplicate clones with the selection outline until the
-        /// user hovers over a different part, so they can see which parts were just created.
-        ///
-        /// Why not SetCurrent?
-        ///   HoverSelector fires clearEvent every frame when the mouse is not over any
-        ///   collider.  That immediately calls ClearCurrent → DisableOutline, wiping the
-        ///   outline in Frame+1.  We suppress only the per-frame clear (not hover-set)
-        ///   via HoverSelector.SuppressClear so the outline stays visible during the hold
-        ///   period while still allowing normal hover-highlighting of other parts.
-        ///
-        ///   We deliberately do not force-assign sm.current: the clone's tag fails
-        ///   TagSelectionCondition, and if allowClearing=false on that condition, a
-        ///   forced assignment would permanently jam the clearing pipeline.
+        /// Transfers selection to the mirror-duplicate clones:
+        ///   1. Clears all SelectionManagers so the original part's outlines go away.
+        ///   2. Direct-assigns the clone to the "tool SM" (no HoverSelector) so the
+        ///      transform gizmo follows the clone.  Direct-assign bypasses SetCurrent
+        ///      because TagSelectionCondition blocks it for freshly-instantiated objects.
+        ///   3. Outlines the clone's connected group to match normal selection visuals.
+        ///   4. Holds until the user selects something else (or a 60 s safety cap).
         /// </summary>
         private IEnumerator SelectNextFrame(List<GameObject> clones) {
             yield return null;   // one frame — canvas hidden, EventSystem updates overUI
@@ -446,37 +439,84 @@ namespace Protobot {
             clones.RemoveAll(c => c == null);
             if (clones.Count == 0) yield break;
 
-            if (_sm == null) _sm = FindObjectOfType<SelectionManager>();
+            // ── Classify SelectionManagers ─────────────────────────────────────────
+            // The scene likely has two SMs:
+            //   • hover SM  — HoverSelector; fires set/clear every frame based on
+            //                 mouse position; drives the blue hover-highlight
+            //   • tool SM   — ClickSelector; fires only on click; its current drives
+            //                 SelectionObjectLink → MovementManager.MovingObj → the gizmo
+            // We must clear both and assign the clone to the tool SM so the gizmo
+            // moves to the clone.  If there is only one SM it fills both roles.
+            var allSMs = FindObjectsOfType<SelectionManager>();
+            SelectionManager toolSM  = null;   // the SM whose current the gizmo reads
+            SelectionManager hoverSM = null;   // the SM driven by HoverSelector
+            HoverSelector    hoverSel = null;
+            foreach (var sm in allSMs) {
+                var hs = sm.GetComponent<HoverSelector>();
+                if (hs != null && hoverSM == null) { hoverSM = sm; hoverSel = hs; }
+                else if (toolSM == null)              toolSM  = sm;
+            }
+            if (toolSM == null) toolSM = hoverSM;   // single-SM fallback
+            bool singleSM = (toolSM == hoverSM);
 
-            // Clear the previously-selected part's outline so ONLY the clone glows.
-            _sm?.ClearCurrent();
+            // ── Clear every SM ─────────────────────────────────────────────────────
+            // This removes the original part's outline (OutlineSelectionResponse and
+            // GroupOutlineSelectionResponse both fire OnClear, disabling all outlines).
+            foreach (var sm in allSMs) sm.ClearCurrent();
 
-            // Suppress HoverSelector's per-frame "mouse over nothing → clear" event so
-            // the outline we apply here is not immediately wiped on the next Update().
-            HoverSelector.SuppressClear = true;
+            // ── Phase 1 (single-SM only): freeze HoverSelector for two frames ──────
+            // In a single-SM scene, HoverSelector's Update() can fire setEvent in the
+            // very next frame if the mouse is still over the original part.  That calls
+            // SetCurrent(original) → ClearCurrent(clone) which would immediately undo
+            // the assignment below.  Disabling the component for two frames is
+            // imperceptible (~33 ms) and prevents this race.
+            if (singleSM && hoverSel != null) hoverSel.enabled = false;
 
-            foreach (var c in clones)
-                c.EnableOutline(0, 1, 0.15f);
+            // ── Assign clone to tool SM ────────────────────────────────────────────
+            // Direct-assign bypasses SetCurrent (which TagSelectionCondition blocks for
+            // freshly-instantiated objects).  The assignment is enough for
+            // SelectionObjectLink.obj → MovementManager.MovingObj to point at the clone.
+            var sel = new ObjectSelection { gameObject = clones[0], selector = null };
+            if (toolSM != null) toolSM.current = sel;
 
-            // Keep the highlight until the user hovers over a part that is NOT one of
-            // the clones (or a child collider thereof).  A large safety cap (3600 frames
-            // ≈ 60 s) prevents the coroutine from leaking if nothing is ever hovered.
+            // ── Apply outline to the full connected group ──────────────────────────
+            // GroupOutlineSelectionResponse normally outlines every connected object;
+            // mimic that so the visual matches normal selection.
+            var outlined = new List<GameObject>();
+            foreach (var c in clones) {
+                var group = c.GetConnectedObjects(false);
+                foreach (var obj in group) {
+                    obj.EnableOutline(1);      // color 1 matches GroupOutlineSelectionResponse
+                    outlined.Add(obj);
+                }
+            }
+
+            // ── Phase 1 finish ─────────────────────────────────────────────────────
+            if (singleSM) {
+                yield return null;   // frame 1 with HoverSelector frozen
+                yield return null;   // frame 2 with HoverSelector frozen
+                if (hoverSel != null) hoverSel.enabled = true;
+                // Allow hover-set (so moving the mouse to another part works normally)
+                // but suppress hover-clear (so the outline does not vanish when the
+                // mouse moves over empty space).
+                HoverSelector.SuppressClear = true;
+            }
+
+            // ── Watch loop ─────────────────────────────────────────────────────────
+            // Hold the selection until the tool SM's current changes to something that
+            // is NOT one of the clones or their children (i.e. the user has chosen a
+            // different object).  A large cap (~60 s) prevents the coroutine leaking.
             for (int i = 0; i < 3600; i++) {
                 yield return null;
                 clones.RemoveAll(c => c == null);
                 if (clones.Count == 0) break;
-                // sm.current is set when HoverSelector finds a part under the mouse.
-                // If it's NOT one of our clones (or a child thereof) the user has moved
-                // to something else — stop holding the highlight.
-                if (_sm != null && _sm.current?.gameObject != null
-                    && !IsCloneOrDescendant(clones, _sm.current.gameObject))
-                    break;
+                var cur = toolSM?.current?.gameObject;
+                if (cur != null && !IsCloneOrDescendant(clones, cur)) break;
             }
 
-            // Remove the highlight when the hold ends.
-            foreach (var c in clones)
-                if (c != null) c.DisableOutline();
-
+            // ── Cleanup ────────────────────────────────────────────────────────────
+            foreach (var obj in outlined)
+                if (obj != null) obj.DisableOutline();
             HoverSelector.SuppressClear = false;
         }
 
