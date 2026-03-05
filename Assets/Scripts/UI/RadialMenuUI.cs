@@ -428,42 +428,46 @@ namespace Protobot {
         private IEnumerator SelectNextFrame(List<GameObject> clones) {
             yield return null;   // one frame — EventSystem updates overUI after canvas hides
 
+            Debug.Log($"[RadialMenu] SelectNextFrame start — clones: {clones.Count}, overUI: {MouseInput.overUI}");
+
             // Guard: clones may have been destroyed by an undo in the same frame
             clones.RemoveAll(c => c == null);
-            if (clones.Count == 0) yield break;
+            if (clones.Count == 0) { Debug.Log("[RadialMenu] All clones were null — aborting"); yield break; }
 
             // Lazily cache SelectionManager (survives scene reloads via DontDestroyOnLoad)
             if (_sm == null) _sm = FindObjectOfType<SelectionManager>();
+            Debug.Log($"[RadialMenu] SelectionManager found: {_sm != null}");
 
             if (_sm != null) {
-                // ── Step 1: clear old selection properly ──────────────────────
-                // ClearCurrent runs OnClear responses (removes group outlines on
-                // connected parts, etc.).  In frame N+1 the canvas is hidden so
-                // overUI=false and AvoidUISelectionCondition no longer blocks this.
+                Debug.Log($"[RadialMenu] sm.current before clear: {_sm.current?.gameObject?.name ?? "null"}");
+
+                // Step 1: clear old selection properly
                 _sm.ClearCurrent();
+                Debug.Log($"[RadialMenu] sm.current after ClearCurrent: {_sm.current?.gameObject?.name ?? "null"}");
 
-                // ── Step 2: select first clone through the normal pipeline ────
-                // Selector components live on the SelectionManager GameObject, NOT
-                // on individual part GameObjects — so we get one from there.
-                // Passing a real registered Selector ensures responses with
-                // RespondOnlyToSelectors=true (e.g. StateSystemSelectionResponse) fire.
+                // Step 2: build ObjectSelection using a real registered Selector
                 var realSelector = _sm.GetComponent<Selector>();
+                Debug.Log($"[RadialMenu] realSelector: {realSelector?.GetType().Name ?? "null"}");
+                Debug.Log($"[RadialMenu] clone[0]: {clones[0].name}, tag: {clones[0].tag}");
+
                 var sel = new ObjectSelection { gameObject = clones[0], selector = realSelector };
-
                 _sm.SetCurrent(sel);
+                Debug.Log($"[RadialMenu] sm.current after SetCurrent: {_sm.current?.gameObject?.name ?? "null"}");
 
-                // ── Step 3: fallback if a SelectionCondition still blocked it ─
-                // (e.g. TagSelectionCondition misconfigured, or GetLatestResponseSelector
-                // redirected to a different object)
-                if (_sm.current?.gameObject != clones[0])
-                    _sm.current = sel;   // bypass conditions — we know this object is valid
+                // Step 3: direct-assign fallback if conditions blocked SetCurrent
+                if (_sm.current?.gameObject != clones[0]) {
+                    Debug.Log("[RadialMenu] SetCurrent was blocked — using direct assignment fallback");
+                    _sm.current = sel;
+                    Debug.Log($"[RadialMenu] sm.current after direct assign: {_sm.current?.gameObject?.name ?? "null"}");
+                }
             }
 
-            // ── Step 4: ensure every clone lights up blue ─────────────────────
-            // OutlineSelectionResponse only outlines clones[0] via RunSetResponses.
-            // Manually apply to all so multi-part mirrors all highlight.
-            foreach (var c in clones)
+            // Step 4: enable outline on every clone
+            foreach (var c in clones) {
+                Debug.Log($"[RadialMenu] Calling EnableOutline on: {c.name}");
                 c.EnableOutline(0, 1, 0.15f);
+            }
+            Debug.Log("[RadialMenu] SelectNextFrame complete");
         }
 
         // ── Shared helpers ────────────────────────────────────────────────────
