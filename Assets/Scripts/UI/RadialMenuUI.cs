@@ -465,7 +465,7 @@ namespace Protobot {
             // Step 4: enable outline on every clone and log its state immediately
             foreach (var c in clones) {
                 c.EnableOutline(0, 1, 0.15f);
-                var outlinable = c.GetComponent<Outlinable>();
+                var outlinable = c.GetComponent("Outlinable") as Behaviour;
                 var hasRenderer = c.GetComponent<Renderer>() != null;
                 Debug.Log($"[RadialMenu] {c.name} — hasRenderer: {hasRenderer}, " +
                           $"outlinable: {outlinable != null}, outlineEnabled: {outlinable?.enabled}, " +
@@ -476,7 +476,7 @@ namespace Protobot {
             for (int i = 1; i <= 5; i++) {
                 yield return null;
                 var cur = _sm?.current?.gameObject;
-                var outlinable = clones[0].GetComponent<Outlinable>();
+                var outlinable = clones[0].GetComponent("Outlinable") as Behaviour;
                 Debug.Log($"[RadialMenu] Frame+{i}: sm.current={cur?.name ?? "null"}, " +
                           $"outlineEnabled={outlinable?.enabled}");
             }
