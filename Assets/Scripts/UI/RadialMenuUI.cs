@@ -7,460 +7,441 @@ using Protobot.Outlining;
 
 namespace Protobot {
     /// <summary>
-    /// Self-spawning right-click radial context menu providing:
-    ///   • Duplicate         — identical clone at the same position
-    ///   • Mirror Duplicate  — mirrored clone (axis chosen via sub-menu)
-    ///   • Mirror / Flip     — mirrors selection in place (axis via sub-menu)
+    /// Circular pie-slice radial menu that opens on a short right-click tap.
     ///
-    /// Items are greyed out when nothing is selected; active when a selection
-    /// exists.  Hovering a mirror item opens its X / Y / Z axis sub-menu.
-    /// Three translucent preview planes show the available mirror axes in 3D.
+    /// Two slices:
+    ///   RIGHT → "Copy"  — duplicates the selection in place.
+    ///   LEFT  → "Flip"  — mirrors the selection along the chosen axis.
+    ///                      Scroll wheel while hovering cycles X / Y / Z.
     ///
-    /// No Inspector wiring is required — this component bootstraps itself via
-    /// [RuntimeInitializeOnLoadMethod] after every scene load.
+    /// Visual behaviour:
+    ///   • Hovered slice smoothly pops outward (away from centre).
+    ///   • Hover colour: blue accent.
+    ///   • Greyed out when nothing is selected.
+    ///   • Short right-click tap opens; another tap, Escape, or left-click
+    ///     outside the ring closes.
+    ///   • Long right-drags (camera orbit) are ignored.
     ///
-    /// Right-click opens the menu (short tap only — so camera-orbit right-drags
-    /// are not intercepted).  Left-clicking a greyed item, pressing Escape, or
-    /// right-clicking again closes the menu.
+    /// Self-spawning — no scene wiring needed.
     /// </summary>
     public class RadialMenuUI : MonoBehaviour {
 
-        // ── Constants ──────────────────────────────────────────────────────────
+        // ── Geometry ──────────────────────────────────────────────────────────
+        private const float OuterR   = 130f; // outer radius of the pie disc (px)
+        private const float CentreR  =  16f; // radius of the small centre circle
+        private const float LabelR   =  82f; // radial distance to the label centres
+        private const float PopDist  =  16f; // max pop-out distance on hover (px)
+        private const float PopSpeed =  10f; // lerp speed for pop animation
+        private const float MaxTap   = 0.20f;// right-click tap threshold (seconds)
+        private const float ScrollCd = 0.20f;// minimum seconds between axis changes
 
-        private static readonly string[] MainLabels = { "Duplicate", "Mirror Dup", "Mirror / Flip" };
-        private static readonly string[] AxisLabels = { "X Axis", "Y Axis", "Z Axis" };
+        // ── Colours ───────────────────────────────────────────────────────────
+        private static readonly Color CBack    = new Color(0.05f, 0.05f, 0.07f, 0.97f); // very dark bg
+        private static readonly Color CSlice   = new Color(0.17f, 0.17f, 0.23f, 0.97f); // resting slice
+        private static readonly Color CHover   = new Color(0.18f, 0.36f, 0.76f, 0.97f); // hovered slice
+        private static readonly Color CDim     = new Color(0.09f, 0.09f, 0.12f, 0.97f); // no-selection
+        private static readonly Color CSpoke   = new Color(0.03f, 0.03f, 0.04f, 1.00f); // divider line
+        private static readonly Color CDot     = new Color(0.72f, 0.72f, 0.78f, 1.00f); // centre dot
+        private static readonly Color CTextOn  = new Color(0.93f, 0.93f, 0.96f, 1.00f); // label enabled
+        private static readonly Color CTextOff = new Color(0.32f, 0.32f, 0.36f, 1.00f); // label disabled
 
-        /// <summary>World-space mirror normals for X, Y, Z.</summary>
-        private static readonly Vector3[] MirrorNormals = {
-            Vector3.right,
-            Vector3.up,
-            Vector3.forward
-        };
+        // ── Axis colours (rich-text hex, no '#') ─────────────────────────────
+        private static readonly string[] AxisHex  = { "FF4444", "44DD44", "4488FF" };
+        private static readonly string[] AxisName = { "x", "y", "z" };
 
-        // Pixel offsets of the three main buttons from the menu-open cursor position
-        private static readonly Vector2[] ItemOffsets = {
-            new Vector2(-90f, 55f),  // Duplicate   (left)
-            new Vector2(  0f, 90f),  // Mirror Dup  (centre-top)
-            new Vector2( 90f, 55f),  // Mirror/Flip (right)
-        };
+        // ── UI references ─────────────────────────────────────────────────────
+        private Canvas        _canvas;
+        private GameObject    _menuRoot;
+        private Image         _imgRight, _imgLeft;       // the two pie-slice Images
+        private RectTransform _rtRight,  _rtLeft;        // their RectTransforms (for pop)
+        private Text          _lblRight, _lblLeft;       // labels
+        private RectTransform _rtLblR,   _rtLblL;        // label RTs (follow the slice)
 
-        // Pixel offsets of the three axis sub-buttons relative to their parent item
-        private static readonly Vector2[] SubOffsets = {
-            new Vector2(0f,  34f),  // X Axis
-            new Vector2(0f,  65f),  // Y Axis
-            new Vector2(0f,  96f),  // Z Axis
-        };
+        // ── Runtime state ─────────────────────────────────────────────────────
+        private bool    _open         = false;
+        private Vector2 _center;                         // screen-space menu centre
+        private float   _tapStart     = -1f;
+        private int     _hovered      = -1;              // -1=none, 0=right, 1=left
+        private float   _popR         = 0f;              // animated pop amounts
+        private float   _popL         = 0f;
+        private int     _axis         = 0;               // 0=X, 1=Y, 2=Z
+        private float   _scrollTimer  = 0f;
 
-        // Button dimensions
-        private const float ItemW    = 112f;
-        private const float ItemH    =  30f;
-        private const float SubItemW =  84f;
-        private const float SubItemH =  26f;
-
-        // Colour palette
-        private static readonly Color BgDisabled   = new Color(0.18f, 0.18f, 0.18f, 0.88f);
-        private static readonly Color BgEnabled     = new Color(0.28f, 0.28f, 0.28f, 0.92f);
-        private static readonly Color BgHover       = new Color(0.42f, 0.42f, 0.42f, 0.95f);
-        private static readonly Color BgPressed     = new Color(0.18f, 0.44f, 0.95f, 1.00f);
-        private static readonly Color BgSubNormal   = new Color(0.12f, 0.12f, 0.12f, 0.90f);
-        private static readonly Color BgSubHover    = new Color(0.30f, 0.30f, 0.30f, 0.95f);
-        private static readonly Color TextEnabled   = Color.white;
-        private static readonly Color TextDisabled  = new Color(0.45f, 0.45f, 0.45f, 1.00f);
-
-        /// <summary>
-        /// Maximum time (seconds) a right-click may be held before it is treated
-        /// as a camera-orbit drag rather than a tap to open the menu.
-        /// </summary>
-        private const float MaxTapSeconds = 0.20f;
-
-        // ── UI References ─────────────────────────────────────────────────────
-
-        private Canvas       _canvas;
-        private GameObject   _menuRoot;
-
-        private Image[]      _mainBg;     // [3] — one per main item
-        private Text[]       _mainLabel;  // [3]
-
-        // [itemIndex][axisIndex] — only populated for items 1 and 2 (mirror items)
-        private Image[][]    _subBg;
-        private Text[][]     _subLabel;
-        private GameObject[] _subRoot;    // [3] sub-menu containers
-
-        // ── Runtime State ─────────────────────────────────────────────────────
-
-        private bool    _isOpen;
-        private Vector2 _openPos;
-        private float   _rightPressTime = -1f;
-
-        // ── Scene References (lazily found) ──────────────────────────────────
-
+        // ── Scene refs ────────────────────────────────────────────────────────
         private MovementManager   _mm;
         private AxisPreviewPlanes _previews;
-        private Bounds            _boundsAtOpen;
+        private Bounds            _bounds;
+
+        // ── Shared sprite (generated once) ────────────────────────────────────
+        private static Sprite _spr;
 
         // ── Bootstrap ─────────────────────────────────────────────────────────
 
-        /// <summary>
-        /// Creates a single persistent RadialMenuUI instance after every scene load.
-        /// DontDestroyOnLoad keeps it alive across scene transitions.
-        /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-        static void Create() {
+        static void Spawn() {
             var go = new GameObject("[RadialMenu]");
             DontDestroyOnLoad(go);
             go.AddComponent<RadialMenuUI>();
         }
 
-        // ── Unity Lifecycle ───────────────────────────────────────────────────
+        // ── Unity lifecycle ───────────────────────────────────────────────────
 
         private void Awake() {
             BuildCanvas();
             BuildMenu();
 
-            // Create the preview planes object once; keep it alive with this script
-            var planesGo = new GameObject("AxisPreviewPlanes");
-            planesGo.transform.SetParent(transform);
-            _previews = planesGo.AddComponent<AxisPreviewPlanes>();
+            var pg = new GameObject("AxisPreviews");
+            pg.transform.SetParent(transform);
+            _previews = pg.AddComponent<AxisPreviewPlanes>();
         }
 
         private void Update() {
             if (Mouse.current == null) return;
 
-            // ── Track right-press duration to distinguish tap from orbit-drag ──
+            // Track right-button press time to separate "tap" from "orbit-drag"
             if (Mouse.current.rightButton.wasPressedThisFrame)
-                _rightPressTime = Time.unscaledTime;
+                _tapStart = Time.unscaledTime;
 
             if (Mouse.current.rightButton.wasReleasedThisFrame) {
-                float held = (_rightPressTime >= 0f) ? (Time.unscaledTime - _rightPressTime) : float.MaxValue;
-                _rightPressTime = -1f;
-
-                if (held <= MaxTapSeconds) {
-                    // Short tap → toggle the menu
-                    if (_isOpen) CloseMenu();
-                    else         OpenMenu(Mouse.current.position.ReadValue());
+                float held = (_tapStart >= 0f) ? Time.unscaledTime - _tapStart : 99f;
+                _tapStart = -1f;
+                if (held <= MaxTap) {
+                    if (_open) CloseMenu();
+                    else       OpenMenu(Mouse.current.position.ReadValue());
                     return;
                 }
-                // Long hold (camera orbit) → ignore
             }
 
-            if (!_isOpen) return;
+            if (!_open) return;
 
-            // Escape closes the menu
             if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) {
                 CloseMenu();
                 return;
             }
 
-            UpdateMenuState();
+            UpdateHover();
+            UpdateScroll();
+            AnimatePop();
+            PaintSlices();
+
+            if (Mouse.current.leftButton.wasPressedThisFrame) OnClick();
         }
 
         // ── Open / Close ──────────────────────────────────────────────────────
 
         private void OpenMenu(Vector2 screenPos) {
-            // Lazily locate the MovementManager in the scene
-            if (_mm == null)
-                _mm = FindObjectOfType<MovementManager>();
+            if (_mm == null) _mm = FindObjectOfType<MovementManager>();
 
-            // Snapshot the selection bounds now so they don't drift if the user
-            // moves something while the menu is open
-            var selObjs      = MirrorSystem.GetSelectedObjects(_mm);
-            _boundsAtOpen    = (selObjs != null && selObjs.Count > 0)
-                             ? MirrorSystem.GetBounds(selObjs)
-                             : new Bounds();
+            var sel = MirrorSystem.GetSelectedObjects(_mm);
+            _bounds = (sel != null && sel.Count > 0)
+                    ? MirrorSystem.GetBounds(sel)
+                    : new Bounds();
 
-            _isOpen  = true;
-            _openPos = screenPos;
+            _open    = true;
+            _center  = screenPos;
+            _hovered = -1;
+            _popR = _popL = 0f;
 
-            // Anchor the menu root to the click position
-            var rootRect = _menuRoot.GetComponent<RectTransform>();
-            rootRect.anchorMin        = Vector2.zero;
-            rootRect.anchorMax        = Vector2.zero;
-            rootRect.pivot            = new Vector2(0.5f, 0f);
-            rootRect.anchoredPosition = screenPos;
-
+            // Anchor the root to the click position in canvas/screen space
+            var rt              = _menuRoot.GetComponent<RectTransform>();
+            rt.anchorMin        = Vector2.zero;
+            rt.anchorMax        = Vector2.zero;
+            rt.pivot            = new Vector2(0.5f, 0.5f);
+            rt.anchoredPosition = screenPos;
             _menuRoot.SetActive(true);
 
-            // Hide all sub-menus on open
-            for (int i = 0; i < 3; i++)
-                _subRoot[i].SetActive(false);
+            if (sel != null && sel.Count > 0)
+                _previews.ShowAll(_bounds);
 
-            // Show preview planes if there is a selection
-            if (selObjs != null && selObjs.Count > 0)
-                _previews.ShowAll(_boundsAtOpen);
-
-            RefreshMainColors(HasSelection());
+            SetFlipText();
+            PaintSlices();
         }
 
         private void CloseMenu() {
-            _isOpen = false;
+            _open = false;
             _menuRoot.SetActive(false);
             _previews.HideAll();
         }
 
-        // ── Per-Frame Menu Logic ──────────────────────────────────────────────
+        // ── Per-frame ─────────────────────────────────────────────────────────
 
-        private void UpdateMenuState() {
-            Vector2 mp         = Mouse.current.position.ReadValue();
-            bool    hasSel     = HasSelection();
-            int     hovMain    = HoveredMain(mp);
-            int     hovSub     = -1;
-
-            // Show sub-menu only when hovering a mirror item AND there is a selection
-            for (int i = 0; i < 3; i++) {
-                bool showSub = (i > 0) && (hovMain == i) && hasSel;
-                _subRoot[i].SetActive(showSub);
-            }
-
-            // Detect sub-item hover and update preview highlight
-            for (int i = 1; i < 3; i++) {
-                if (!_subRoot[i].activeSelf) continue;
-                for (int j = 0; j < 3; j++) {
-                    if (_subBg[i][j] == null) continue;
-                    if (IsHovering(_subBg[i][j].rectTransform, mp)) {
-                        hovSub = j;
-                        _previews.HighlightAxis(j);
-                        break;
-                    }
-                }
-            }
-
-            // If not hovering any sub-item, restore all-planes view
-            if (hovSub < 0 && hasSel && _boundsAtOpen.size != Vector3.zero)
-                _previews.ShowAll(_boundsAtOpen);
-
-            // ── Main item colours ──
-            for (int i = 0; i < 3; i++) {
-                bool hov = (hovMain == i);
-                _mainBg[i].color    = !hasSel  ? BgDisabled
-                                    : hov       ? BgHover
-                                                : BgEnabled;
-                _mainLabel[i].color = hasSel ? TextEnabled : TextDisabled;
-            }
-
-            // ── Sub-item colours ──
-            for (int i = 1; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    if (_subBg[i][j] == null) continue;
-                    _subBg[i][j].color = (hovMain == i && hovSub == j)
-                                       ? BgSubHover
-                                       : BgSubNormal;
-                }
-            }
-
-            // ── Click handling ──
-            if (!Mouse.current.leftButton.wasPressedThisFrame) return;
-
-            if (hovMain == 0 && hasSel) {
-                // Duplicate — no axis needed
-                PerformDuplicate();
-                CloseMenu();
-            } else if (hovMain > 0 && hovSub >= 0 && hasSel) {
-                // Mirror action with the chosen axis
-                if (hovMain == 1) PerformMirrorDuplicate(hovSub);
-                if (hovMain == 2) PerformMirror(hovSub);
-                CloseMenu();
-            } else if (hovMain >= 0 && !hasSel) {
-                // Clicked a greyed item — just close (nothing to do)
-                CloseMenu();
-            } else if (hovMain < 0) {
-                // Clicked outside the menu
-                CloseMenu();
-            }
+        private void UpdateHover() {
+            Vector2 d    = Mouse.current.position.ReadValue() - _center;
+            float   dist = d.magnitude;
+            // Consider the menu hittable even slightly beyond the outer edge
+            // (so the popped-out slice is still hoverable)
+            _hovered = (dist < CentreR || dist > OuterR + PopDist + 6f)
+                     ? -1
+                     : (d.x >= 0f ? 0 : 1);
         }
 
-        // ── Helpers ───────────────────────────────────────────────────────────
+        private void UpdateScroll() {
+            _scrollTimer -= Time.deltaTime;
+            if (_hovered != 1 || _scrollTimer > 0f) return;
 
-        private bool HasSelection() {
-            if (_mm == null) _mm = FindObjectOfType<MovementManager>();
-            return _mm != null && _mm.MovingObj != null;
+            float s = Mouse.current.scroll.ReadValue().y;
+            if (Mathf.Abs(s) < 0.01f) return;
+
+            _axis        = (_axis + 3 + (s > 0f ? 1 : -1)) % 3;
+            _scrollTimer = ScrollCd;
+            SetFlipText();
+
+            if (_bounds.size != Vector3.zero)
+                _previews.HighlightAxis(_axis);
         }
 
-        /// <summary>Returns the index (0..2) of the main item the cursor is over, or -1.</summary>
-        private int HoveredMain(Vector2 screenPos) {
-            for (int i = 0; i < 3; i++)
-                if (_mainBg[i] != null && IsHovering(_mainBg[i].rectTransform, screenPos))
-                    return i;
-            return -1;
+        private void AnimatePop() {
+            bool hasSel = HasSel();
+            _popR = Mathf.Lerp(_popR, (hasSel && _hovered == 0) ? PopDist : 0f, Time.deltaTime * PopSpeed);
+            _popL = Mathf.Lerp(_popL, (hasSel && _hovered == 1) ? PopDist : 0f, Time.deltaTime * PopSpeed);
+
+            // Move slices outward from centre
+            _rtRight.anchoredPosition = new Vector2( _popR, 0f);
+            _rtLeft.anchoredPosition  = new Vector2(-_popL, 0f);
+
+            // Labels ride with their slice
+            _rtLblR.anchoredPosition  = new Vector2( LabelR + _popR, 0f);
+            _rtLblL.anchoredPosition  = new Vector2(-LabelR - _popL, 0f);
         }
 
-        private static bool IsHovering(RectTransform rect, Vector2 screenPos) {
-            // null camera = correct for Screen Space Overlay
-            return RectTransformUtility.RectangleContainsScreenPoint(rect, screenPos, null);
+        private void PaintSlices() {
+            bool hasSel = HasSel();
+
+            _imgRight.color = !hasSel      ? CDim
+                            : _hovered == 0 ? CHover
+                                            : CSlice;
+
+            _imgLeft.color  = !hasSel      ? CDim
+                            : _hovered == 1 ? CHover
+                                           : CSlice;
+
+            _lblRight.color = hasSel ? CTextOn : CTextOff;
+            _lblLeft.color  = hasSel ? CTextOn : CTextOff;
         }
 
-        private void RefreshMainColors(bool hasSel) {
-            for (int i = 0; i < 3; i++) {
-                _mainBg[i].color    = hasSel ? BgEnabled : BgDisabled;
-                _mainLabel[i].color = hasSel ? TextEnabled : TextDisabled;
-            }
+        private void OnClick() {
+            if (!HasSel() || _hovered < 0) { CloseMenu(); return; }
+            if (_hovered == 0) DoCopy();
+            else               DoFlip();
+            CloseMenu();
         }
 
         // ── Actions ───────────────────────────────────────────────────────────
 
-        /// <summary>
-        /// Duplicates the current selection in place (no mirror).
-        /// Follows the same pattern as ObjectDuplicator.
-        /// </summary>
-        private void PerformDuplicate() {
+        private void DoCopy() {
             if (_mm == null) return;
             var objs = MirrorSystem.GetSelectedObjects(_mm);
             if (objs == null || objs.Count == 0) return;
 
             var clones = new List<GameObject>();
             foreach (var obj in objs) {
-                var clone = Instantiate(obj, obj.transform.position, obj.transform.rotation);
-                clone.DisableOutline();
-
-                var rend     = clone.GetComponent<Renderer>();
-                var origRend = obj.GetComponent<Renderer>();
-                if (rend != null && origRend != null)
-                    rend.material = new Material(origRend.material);
-
-                clones.Add(clone);
+                var c = Instantiate(obj, obj.transform.position, obj.transform.rotation);
+                c.DisableOutline();
+                var r  = c.GetComponent<Renderer>();
+                var or = obj.GetComponent<Renderer>();
+                if (r != null && or != null) r.material = new Material(or.material);
+                clones.Add(c);
             }
-
-            // Pre-state: record clones as "not yet existing" so UNDO hides them
-            var preElems = new List<IElement>();
-            foreach (var clone in clones) {
-                var pre = new ObjectElement(clone);
-                pre.existing = false;
-                preElems.Add(pre);
-            }
-            StateSystem.AddElements(preElems);
-
-            // Post-state: clones exist at their current positions
-            var postElems = new List<IElement>();
-            foreach (var clone in clones)
-                postElems.Add(new ObjectElement(clone));
-            StateSystem.AddState(new State(postElems));
+            var pre = new List<IElement>();
+            foreach (var c in clones) { var e = new ObjectElement(c); e.existing = false; pre.Add(e); }
+            StateSystem.AddElements(pre);
+            var post = new List<IElement>();
+            foreach (var c in clones) post.Add(new ObjectElement(c));
+            StateSystem.AddState(new State(post));
         }
 
-        private void PerformMirrorDuplicate(int axisIndex) {
+        private void DoFlip() {
             if (_mm == null) return;
             var objs = MirrorSystem.GetSelectedObjects(_mm);
             if (objs == null || objs.Count == 0) return;
-            MirrorSystem.MirrorDuplicate(objs, _boundsAtOpen.center, MirrorNormals[axisIndex]);
+            Vector3 n = _axis == 0 ? Vector3.right : _axis == 1 ? Vector3.up : Vector3.forward;
+            MirrorSystem.MirrorObjects(objs, _bounds.center, n);
         }
 
-        private void PerformMirror(int axisIndex) {
-            if (_mm == null) return;
-            var objs = MirrorSystem.GetSelectedObjects(_mm);
-            if (objs == null || objs.Count == 0) return;
-            MirrorSystem.MirrorObjects(objs, _boundsAtOpen.center, MirrorNormals[axisIndex]);
+        private bool HasSel() {
+            if (_mm == null) _mm = FindObjectOfType<MovementManager>();
+            return _mm != null && _mm.MovingObj != null;
+        }
+
+        private void SetFlipText() {
+            var p = new string[3];
+            for (int i = 0; i < 3; i++)
+                p[i] = i == _axis
+                     ? $"<b><color=#{AxisHex[i]}>{AxisName[i]}</color></b>"
+                     : $"<color=#484850>{AxisName[i]}</color>";
+            _lblLeft.text = "Flip\n" + p[0] + ",  " + p[1] + ",  " + p[2];
         }
 
         // ── UI Construction ───────────────────────────────────────────────────
 
         private void BuildCanvas() {
-            var canvasGo = new GameObject("RadialCanvas");
-            canvasGo.transform.SetParent(transform);
-
-            _canvas = canvasGo.AddComponent<Canvas>();
+            var cg            = new GameObject("RadialCanvas");
+            cg.transform.SetParent(transform);
+            _canvas           = cg.AddComponent<Canvas>();
             _canvas.renderMode   = RenderMode.ScreenSpaceOverlay;
-            _canvas.sortingOrder = 999;   // render on top of everything
-
-            canvasGo.AddComponent<CanvasScaler>();
-            canvasGo.AddComponent<GraphicRaycaster>();
+            _canvas.sortingOrder = 999;
+            cg.AddComponent<CanvasScaler>();
+            cg.AddComponent<GraphicRaycaster>();
         }
 
         private void BuildMenu() {
-            // Invisible root used only to show/hide the whole menu and to anchor
-            // all items relative to the cursor click position
-            _menuRoot = new GameObject("MenuRoot");
-            _menuRoot.transform.SetParent(_canvas.transform, false);
-            var rootRect = _menuRoot.AddComponent<RectTransform>();
-            rootRect.sizeDelta = Vector2.zero;
+            float d = OuterR * 2f; // full disc diameter (260 px)
+
+            // Root positioned at the cursor when the menu opens.
+            // It has zero size; all children use it as their anchor.
+            var rootGO         = new GameObject("MenuRoot");
+            rootGO.transform.SetParent(_canvas.transform, false);
+            var rootRT         = rootGO.AddComponent<RectTransform>();
+            rootRT.sizeDelta   = Vector2.zero;
+            rootRT.anchorMin   = rootRT.anchorMax = new Vector2(0.5f, 0.5f);
+            _menuRoot          = rootGO;
             _menuRoot.SetActive(false);
 
-            _mainBg    = new Image[3];
-            _mainLabel = new Text[3];
-            _subRoot   = new GameObject[3];
-            _subBg     = new Image[3][];
-            _subLabel  = new Text[3][];
+            // ── Layer 1: dark background disc ────────────────────────────────
+            // Slightly larger than the slices so a thin dark ring shows around them.
+            MakeCircle("Bg", _menuRoot.transform, Vector2.zero, d + 6f, CBack);
 
-            // Background panel behind the menu items (slight dark shade)
-            var panelGo   = new GameObject("Panel");
-            panelGo.transform.SetParent(_menuRoot.transform, false);
-            var panelRect  = panelGo.AddComponent<RectTransform>();
-            panelRect.anchoredPosition = new Vector2(0f, 62f);
-            panelRect.sizeDelta        = new Vector2(310f, 128f);
-            var panelImg  = panelGo.AddComponent<Image>();
-            panelImg.color = new Color(0.08f, 0.08f, 0.08f, 0.70f);
+            // ── Layer 2: pie slices ───────────────────────────────────────────
+            // Each is a full 260×260 circle image, filled as a half-wedge via
+            // Radial360.  Origin=Top means filling starts at 12 o'clock.
+            //   clockwise=true  → right half (Copy)
+            //   clockwise=false → left  half (Flip)
+            var rightGO    = MakeCircle("SliceR", _menuRoot.transform, Vector2.zero, d, CSlice);
+            _imgRight      = rightGO.GetComponent<Image>();
+            _imgRight.type          = Image.Type.Filled;
+            _imgRight.fillMethod    = Image.FillMethod.Radial360;
+            _imgRight.fillOrigin    = (int)Image.Origin360.Top;
+            _imgRight.fillClockwise = true;
+            _imgRight.fillAmount    = 0.5f;
+            _rtRight       = rightGO.GetComponent<RectTransform>();
 
-            var font = GetFont();
+            var leftGO     = MakeCircle("SliceL", _menuRoot.transform, Vector2.zero, d, CSlice);
+            _imgLeft       = leftGO.GetComponent<Image>();
+            _imgLeft.type          = Image.Type.Filled;
+            _imgLeft.fillMethod    = Image.FillMethod.Radial360;
+            _imgLeft.fillOrigin    = (int)Image.Origin360.Top;
+            _imgLeft.fillClockwise = false;
+            _imgLeft.fillAmount    = 0.5f;
+            _rtLeft        = leftGO.GetComponent<RectTransform>();
 
-            for (int i = 0; i < 3; i++) {
-                // ── Main item button ──
-                var itemGo = MakeButton($"Main_{i}", _menuRoot.transform,
-                                        ItemOffsets[i], ItemW, ItemH,
-                                        BgDisabled, font, MainLabels[i],
-                                        out _mainBg[i], out _mainLabel[i]);
+            // ── Layer 3: spoke divider (vertical line between slices) ─────────
+            MakeRect("Spoke", _menuRoot.transform, Vector2.zero, new Vector2(3f, d + 8f), CSpoke);
 
-                // ── Sub-menu container (hidden by default) ──
-                var subGo   = new GameObject($"Sub_{i}");
-                subGo.transform.SetParent(itemGo.transform, false);
-                subGo.AddComponent<RectTransform>().sizeDelta = Vector2.zero;
-                _subRoot[i] = subGo;
-                _subRoot[i].SetActive(false);
+            // ── Layer 4: centre circle (covers the middle, gives "pie" look) ──
+            MakeCircle("Centre", _menuRoot.transform, Vector2.zero, CentreR * 2f, CDot);
 
-                _subBg[i]    = new Image[3];
-                _subLabel[i] = new Text[3];
+            // ── Layer 5: labels (children of root, not of slices) ─────────────
+            // They are moved manually in AnimatePop() to follow their slice.
+            var lr         = MakeLabel("LblR", _menuRoot.transform,
+                                       new Vector2(LabelR, 0f), new Vector2(108f, 58f),
+                                       "Copy", 14);
+            _lblRight      = lr.GetComponent<Text>();
+            _rtLblR        = lr.GetComponent<RectTransform>();
 
-                // Only mirror items (1 and 2) have axis sub-menus
-                if (i > 0) {
-                    for (int j = 0; j < 3; j++) {
-                        MakeButton($"Sub_{i}_{j}", subGo.transform,
-                                   SubOffsets[j], SubItemW, SubItemH,
-                                   BgSubNormal, font, AxisLabels[j],
-                                   out _subBg[i][j], out _subLabel[i][j]);
-                    }
-                }
-            }
+            var ll         = MakeLabel("LblL", _menuRoot.transform,
+                                       new Vector2(-LabelR, 0f), new Vector2(108f, 58f),
+                                       "", 12);
+            _lblLeft       = ll.GetComponent<Text>();
+            _lblLeft.supportRichText = true;
+            _rtLblL        = ll.GetComponent<RectTransform>();
+            SetFlipText();
         }
 
-        /// <summary>
-        /// Creates a labelled rectangular button and returns the parent GameObject.
-        /// </summary>
-        private static GameObject MakeButton(string name, Transform parent,
-                                             Vector2 offset, float w, float h,
-                                             Color bgColor, Font font, string label,
-                                             out Image bg, out Text text) {
-            var go   = new GameObject(name);
-            go.transform.SetParent(parent, false);
+        // ── UI helpers ────────────────────────────────────────────────────────
 
-            var rect = go.AddComponent<RectTransform>();
-            rect.sizeDelta        = new Vector2(w, h);
-            rect.anchoredPosition = offset;
+        /// <summary>Creates a centred circular Image GameObject.</summary>
+        private static GameObject MakeCircle(string name, Transform parent,
+                                             Vector2 pos, float diameter, Color col) {
+            var go  = MakeGO(name, parent, pos, Vector2.one * diameter);
+            var img = go.AddComponent<Image>();
+            img.sprite = GetCircleSprite();
+            img.color  = col;
+            img.type   = Image.Type.Simple;
+            return go;
+        }
 
-            bg       = go.AddComponent<Image>();
-            bg.color = bgColor;
+        /// <summary>Creates a centred plain (non-circular) Image GameObject.</summary>
+        private static void MakeRect(string name, Transform parent,
+                                     Vector2 pos, Vector2 size, Color col) {
+            var go  = MakeGO(name, parent, pos, size);
+            var img = go.AddComponent<Image>();
+            img.color = col;
+        }
 
-            var textGo   = new GameObject("Label");
-            textGo.transform.SetParent(go.transform, false);
-
-            var textRect          = textGo.AddComponent<RectTransform>();
-            textRect.anchorMin    = Vector2.zero;
-            textRect.anchorMax    = Vector2.one;
-            textRect.offsetMin    = new Vector2(3f, 0f);
-            textRect.offsetMax    = new Vector2(-3f, 0f);
-
-            text           = textGo.AddComponent<Text>();
-            text.text      = label;
-            text.font      = font;
-            text.fontSize  = 11;
-            text.color     = TextDisabled;
-            text.alignment = TextAnchor.MiddleCenter;
-
+        /// <summary>Creates a centred Text label GameObject.</summary>
+        private static GameObject MakeLabel(string name, Transform parent,
+                                            Vector2 pos, Vector2 size,
+                                            string text, int fontSize) {
+            var go = MakeGO(name, parent, pos, size);
+            var t  = go.AddComponent<Text>();
+            t.text            = text;
+            t.font            = GetFont();
+            t.fontSize        = fontSize;
+            t.color           = CTextOff;
+            t.alignment       = TextAnchor.MiddleCenter;
+            t.supportRichText = true;
             return go;
         }
 
         /// <summary>
-        /// Returns a built-in Unity font, trying the names used in Unity 2021.3.
+        /// Creates a RectTransform GameObject centred under <paramref name="parent"/>.
         /// </summary>
+        private static GameObject MakeGO(string name, Transform parent,
+                                         Vector2 pos, Vector2 size) {
+            var go              = new GameObject(name);
+            go.transform.SetParent(parent, false);
+            var rt              = go.AddComponent<RectTransform>();
+            rt.anchorMin        = new Vector2(0.5f, 0.5f);
+            rt.anchorMax        = new Vector2(0.5f, 0.5f);
+            rt.pivot            = new Vector2(0.5f, 0.5f);
+            rt.anchoredPosition = pos;
+            rt.sizeDelta        = size;
+            return go;
+        }
+
+        // ── Circle sprite ─────────────────────────────────────────────────────
+
+        /// <summary>
+        /// Generates a smooth anti-aliased white circle sprite (256×256) once.
+        /// All circular UI elements share this sprite; colour is applied via Image.color.
+        ///
+        /// When used with Image.fillMethod = Radial360, the sprite becomes a pie-wedge.
+        /// </summary>
+        private static Sprite GetCircleSprite() {
+            if (_spr != null) return _spr;
+
+            const int   N  = 256;
+            const float R  = N * 0.5f;
+            var tex = new Texture2D(N, N, TextureFormat.ARGB32, false);
+            tex.wrapMode = TextureWrapMode.Clamp;
+
+            for (int y = 0; y < N; y++) {
+                for (int x = 0; x < N; x++) {
+                    float dx = x - R + 0.5f;
+                    float dy = y - R + 0.5f;
+                    float d  = Mathf.Sqrt(dx * dx + dy * dy);
+                    // Smooth anti-aliased edge over 2 pixels
+                    float a  = Mathf.Clamp01(1f - (d - (R - 2f)) / 2f);
+                    tex.SetPixel(x, y, new Color(1f, 1f, 1f, a));
+                }
+            }
+            tex.Apply();
+
+            _spr = Sprite.Create(
+                tex,
+                new Rect(0f, 0f, N, N),
+                new Vector2(0.5f, 0.5f),
+                100f);   // 100 px per unit — standard for UI sprites
+            return _spr;
+        }
+
+        // ── Font ─────────────────────────────────────────────────────────────
+
         private static Font GetFont() {
-            var f = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            if (f == null)
-                f = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            // Try Unity 2021.3's built-in font; fall back to Arial for other versions.
+            // Note: using explicit null check because Unity overrides == but not ??.
+            Font f = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            if (f == null) f = Resources.GetBuiltinResource<Font>("Arial.ttf");
             return f;
         }
     }
