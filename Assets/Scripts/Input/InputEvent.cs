@@ -14,6 +14,14 @@ namespace Protobot.InputEvents {
         public Action canceled;
         public bool IsPressed = false;
 
+        /// <summary>
+        /// When true, all InputEvents stop firing <see cref="performed"/> and
+        /// <see cref="canceled"/> callbacks.  Set this to true while UI panels
+        /// that should not trigger in-scene actions are open (e.g. Preferences).
+        /// Use <see cref="PreferencesSuppressor"/> to toggle this automatically.
+        /// </summary>
+        public static bool SuppressAll { get; set; }
+
         private bool prevPressStatus = false;
 
         public void Awake() {
@@ -38,8 +46,15 @@ namespace Protobot.InputEvents {
         }
 
         public void Update() {
-            if (RebindAction.Rebinding) return;
-            
+            if (SuppressAll || RebindAction.Rebinding) {
+                // Keep prevPressStatus tracking the real key state so we don't
+                // fire a spurious performed/canceled event the frame suppression ends.
+                prevPressStatus = defaultAction.AllControlsPressed()
+                                  || rebindAction.action.AllControlsPressed();
+                IsPressed = false;
+                return;
+            }
+
             IsPressed = defaultAction.AllControlsPressed() || rebindAction.action.AllControlsPressed();
 
             if (IsPressed != prevPressStatus) {
