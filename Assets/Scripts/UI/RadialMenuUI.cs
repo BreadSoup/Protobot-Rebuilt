@@ -479,17 +479,13 @@ namespace Protobot {
             var sel = new ObjectSelection { gameObject = clones[0], selector = null };
             if (toolSM != null) toolSM.current = sel;
 
-            // ── Apply outline to the full connected group ──────────────────────────
-            // GroupOutlineSelectionResponse normally outlines every connected object;
-            // mimic that so the visual matches normal selection.
-            var outlined = new List<GameObject>();
-            foreach (var c in clones) {
-                var group = c.GetConnectedObjects(false);
-                foreach (var obj in group) {
-                    obj.EnableOutline(1);      // color 1 matches GroupOutlineSelectionResponse
-                    outlined.Add(obj);
-                }
-            }
+            // ── Apply outline to each clone root ──────────────────────────────────
+            // EnableOutline(colorIndex, layer, width) — parameters confirmed working
+            // in earlier debug sessions.  GetConnectedObjects is intentionally skipped
+            // here: a freshly-instantiated clone has no established connections yet,
+            // so that call returns an empty list and nothing gets outlined.
+            foreach (var c in clones)
+                c.EnableOutline(0, 1, 0.15f);
 
             // ── Phase 1 finish ─────────────────────────────────────────────────────
             if (singleSM) {
@@ -515,8 +511,8 @@ namespace Protobot {
             }
 
             // ── Cleanup ────────────────────────────────────────────────────────────
-            foreach (var obj in outlined)
-                if (obj != null) obj.DisableOutline();
+            foreach (var c in clones)
+                if (c != null) c.DisableOutline();
             HoverSelector.SuppressClear = false;
         }
 
