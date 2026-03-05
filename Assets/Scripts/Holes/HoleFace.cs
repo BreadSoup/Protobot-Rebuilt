@@ -52,6 +52,12 @@ namespace Protobot {
             // hole.position, hole.rotation, and hole.forward are kept current every frame
             // by HoleCollider.Update(), so using them here tracks the hole as the part moves.
             direction = hole.forward * dirSign;
+
+            // Guard: LookRotation requires a non-zero forward vector.
+            // If hole.forward is zero (e.g. during initialisation or a degenerate state)
+            // skip this frame rather than spamming "Look rotation viewing vector is zero".
+            if (direction == Vector3.zero) return;
+
             transform.rotation = Quaternion.LookRotation(-direction, hole.rotation * Vector3.up);
             transform.position  = hole.position + (direction * (hole.depth / 2));
         }
