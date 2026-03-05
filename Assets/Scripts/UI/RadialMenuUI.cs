@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -192,11 +193,14 @@ namespace Protobot {
         }
 
         private void CloseMenu(bool fireAction) {
-            if (fireAction) ExecuteButton(_hovered);
+            // Hide the UI first so AvoidUISelectionCondition sees overUI=false
+            // when ExecuteButton → TrySelectClones runs.
             _open = false;
             _menuRoot.SetActive(false);
             _preview.HideAll();
             _ghost.HideGhosts();
+
+            if (fireAction) ExecuteButton(_hovered);
         }
 
         // ═════════════════════════════════════════════════════════════════════
@@ -408,22 +412,29 @@ namespace Protobot {
         }
 
         /// <summary>
-        /// Attempts to make <paramref name="clones"/> the new selection so the user
-        /// can move the mirrored parts right away without clicking on them.
+        /// Starts a one-frame-deferred coroutine to select <paramref name="clones"/>.
         ///
-        /// We pass the clone's own Selector component as the selector reference.
-        /// Clones are Instantiate copies of the originals, so they carry the same
-        /// Selector MonoBehaviour.  Providing a non-null selector ensures that
-        /// SelectionResponses with RespondOnlyToSelectors = true still fire.
+        /// Why deferred?  The radial menu is a Canvas overlay.  When the user clicks
+        /// to confirm the mirror, AvoidUISelectionCondition sees MouseInput.overUI=true
+        /// and blocks SetCurrent.  Waiting one frame lets the EventSystem update after
+        /// the canvas is hidden, so overUI is false when we actually call SetCurrent.
         /// </summary>
         private void TrySelectClones(List<GameObject> clones) {
             if (clones == null || clones.Count == 0) return;
-            var sm = FindObjectOfType<SelectionManager>();
-            if (sm == null) return;
+            StartCoroutine(SelectNextFrame(clones));
+        }
 
-            // Grab the Selector MonoBehaviour that comes with the cloned part.
-            // Its scene events aren't wired (cloned after Awake), but its presence
-            // is enough to satisfy RespondOnlyToSelectors checks in SelectionManager.
+        private IEnumerator SelectNextFrame(List<GameObject> clones) {
+            yield return null;   // wait one frame — EventSystem now sees no radial-menu UI
+
+            // Guard: clones may have been destroyed by an undo in the same frame
+            clones.RemoveAll(c => c == null);
+            if (clones.Count == 0) yield break;
+
+            var sm = FindObjectOfType<SelectionManager>();
+            if (sm == null) yield break;
+
+            // Pass the clone's own Selector so RespondOnlyToSelectors responses fire.
             var selectorRef = clones[0].GetComponent<Selector>();
 
             ISelection sel = clones.Count == 1
