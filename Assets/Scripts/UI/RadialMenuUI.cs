@@ -1,44 +1,53 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Protobot.StateSystems;
 using Protobot.Outlining;
+using Protobot.InputEvents;
 
 namespace Protobot {
     /// <summary>
-    /// Circular radial context menu — press M to open, left-click to execute, M or Escape to close.
+    /// Circular 6-button radial context menu.
+    ///
+    /// Open/close: configurable keybind (default X).  Left-click executes,
+    /// X or Escape closes without action.
     ///
     /// Button layout (6 equal 60° slices, clockwise from top):
-    ///   0 = Flip       — 12 o'clock  — mirrors selection in-place along chosen axis
-    ///   1 = Copy       —  2 o'clock  — stores selection in clipboard
-    ///   2 = Paste      —  4 o'clock  — instantiates clipboard (greyed when empty)
-    ///   3 = Duplicate  —  6 o'clock  — clones selection in-place
-    ///   4 = Mirror     —  8 o'clock  — mirror-duplicate, offset so clone doesn't overlap
-    ///   5 = —          — 10 o'clock  — placeholder (always disabled)
+    ///   0 = Flip       — 12 o'clock  — mirror selection in-place along chosen axis
+    ///   1 = Copy       —  2 o'clock  — store selection in clipboard
+    ///   2 = Paste      —  4 o'clock  — instantiate clipboard at cursor (greyed when empty)
+    ///   3 = —          —  6 o'clock  — placeholder
+    ///   4 = Mirror     —  8 o'clock  — mirror-duplicate; button splits into ±side sub-halves
+    ///   5 = —          — 10 o'clock  — placeholder
     ///
-    /// To add more buttons:
-    ///   1. Append a string to <see cref="ButtonLabels"/> — geometry auto-adjusts.
-    ///   2. Add a matching case to <see cref="ExecuteButton"/>.
+    /// Mirror sub-halves (shown when hovering Mirror, based on current axis):
+    ///   X axis: + / −   Y axis: Up / Down   Z axis: + / −
+    ///   Hovering each half shows the preview plane and ghost on the corresponding side.
     ///
-    /// Self-spawning via RuntimeInitializeOnLoadMethod — no scene wiring needed.
+    /// To add more buttons: append to ButtonLabels, add a case to ExecuteButton.
+    /// Geometry auto-adjusts to the array length.
+    ///
+    /// Self-spawning — no scene wiring needed.
     /// </summary>
     public class RadialMenuUI : MonoBehaviour {
 
         // ── Geometry ──────────────────────────────────────────────────────────
-        private const float OuterR    = 65f;   // outer radius (pixels)
-        private const float InnerR    = 16f;   // dead-zone radius (pixels)
-        private const float LabelR    = 44f;   // distance from centre to label midpoint
-        private const float MirrorGap = 0.5f;  // world-units gap between original and mirror copy
+        private const float OuterR    = 65f;
+        private const float InnerR    = 16f;
+        private const float LabelR    = 44f;
+        private const float MirrorGap = 0.5f;   // world-units gap between original and mirror copy
 
-        // ── Button definitions — extend this array to add buttons ─────────────
+        // ── Button definitions ────────────────────────────────────────────────
+        // Append here to add buttons; geometry auto-adjusts. Add a case to ExecuteButton.
         private static readonly string[] ButtonLabels = {
-            "Flip",       // 0  top
-            "Copy",       // 1  top-right
-            "Paste",      // 2  bottom-right
-            "Duplicate",  // 3  bottom
-            "Mirror",     // 4  bottom-left
-            "—",          // 5  top-left (placeholder)
+            "Flip",    // 0
+            "Copy",    // 1
+            "Paste",   // 2
+            "—",       // 3  placeholder (was Duplicate)
+            "Mirror",  // 4
+            "—",       // 5  placeholder
         };
 
         private static int N => ButtonLabels.Length;
@@ -52,23 +61,36 @@ namespace Protobot {
         private static readonly Color TextOn     = new Color(0.92f, 0.92f, 0.95f, 1.00f);
         private static readonly Color TextOff    = new Color(0.35f, 0.35f, 0.38f, 1.00f);
 
-        // Axis accent colours (match Protobot's ColorX/Y/Z)
+        // Axis accent colours (match Protobot ColorX/Y/Z)
         private static readonly string[] AxisHex   = { "BF3838", "33A633", "3366CC" };
         private static readonly string[] AxisNames  = { "X", "Y", "Z" };
 
-        // ── UI references ─────────────────────────────────────────────────────
+        // ── Keybind (shared with RadialMenuKeybindRow) ─────────────────────────
+        /// <summary>
+        /// Shared RebindAction so the keybind settings row can read/update the binding.
+        /// Default: X key.  Persisted via PlayerPrefs key "RadialMenu.Open".
+        /// </summary>
+        public static RebindAction SharedRebind { get; private set; }
+
+        // ── UI References ─────────────────────────────────────────────────────
         private Canvas     _canvas;
         private GameObject _menuRoot;
         private Image[]    _sliceImgs;
         private Text[]     _labelTexts;
 
+        // Mirror sub-slice UI (shown when hovering Mirror to pick ± side)
+        private Image _mirrorSubImgA, _mirrorSubImgB;
+        private Text  _mirrorSubLblA, _mirrorSubLblB;
+
         // ── State ─────────────────────────────────────────────────────────────
         private bool    _open    = false;
         private Vector2 _openPos;
         private int     _hovered = -1;
-        private int     _axis    = 0;          // 0=X  1=Y  2=Z
+        private int     _mirrorSide = -1;    // -1=none  0=positive side  1=negative side
+        private int     _axis    = 0;        // 0=X  1=Y  2=Z
         private float   _scrollCd = 0f;
         private Bounds  _bounds;
+        private List<GameObject> _selectedAtOpen;   // captured at OpenMenu for ghost preview
 
         // ── Clipboard ─────────────────────────────────────────────────────────
         private static readonly List<GameObject> _clipboard = new List<GameObject>();
@@ -76,6 +98,7 @@ namespace Protobot {
         // ── Scene refs ────────────────────────────────────────────────────────
         private MovementManager   _mm;
         private AxisPreviewPlanes _preview;
+        private GhostPreview      _ghost;
 
         // ── Shared sprite ─────────────────────────────────────────────────────
         private static Sprite _spr;
@@ -96,18 +119,30 @@ namespace Protobot {
         // ═════════════════════════════════════════════════════════════════════
 
         private void Awake() {
+            // Set up configurable keybind (persisted via PlayerPrefs)
+            SharedRebind = new RebindAction("RadialMenu.Open");
+            if (SharedRebind.IsEmpty)
+                SharedRebind.ManuelRebind("<Keyboard>/x");   // default: X key
+
             BuildCanvas();
             BuildMenu();
+
             var pg = new GameObject("AxisPreviews");
             pg.transform.SetParent(transform);
             _preview = pg.AddComponent<AxisPreviewPlanes>();
+
+            var gg = new GameObject("GhostPreview");
+            gg.transform.SetParent(transform);
+            _ghost = gg.AddComponent<GhostPreview>();
         }
 
         private void Update() {
             if (Keyboard.current == null) return;
 
-            // M key: toggle menu
-            if (Keyboard.current.mKey.wasPressedThisFrame) {
+            // Check the configured keybind (falls back to X if no rebind saved)
+            bool menuKeyDown = SharedRebind.action.WasPressedThisFrame();
+
+            if (menuKeyDown) {
                 if (_open) CloseMenu(false);
                 else       OpenMenu();
                 return;
@@ -121,7 +156,6 @@ namespace Protobot {
             UpdateScrollAxis();
             RefreshColors();
 
-            // Left-click to execute
             if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
                 CloseMenu(_hovered >= 0 && IsEnabled(_hovered, HasSel()));
         }
@@ -135,13 +169,15 @@ namespace Protobot {
 
             var sel  = MirrorSystem.GetSelectedObjects(_mm);
             bool has = sel != null && sel.Count > 0;
-            _bounds  = has ? MirrorSystem.GetBounds(sel) : new Bounds();
+            _bounds         = has ? MirrorSystem.GetBounds(sel) : new Bounds();
+            _selectedAtOpen = has ? sel : null;
 
-            _open    = true;
-            _hovered = -1;
-            _openPos = Mouse.current != null
-                     ? Mouse.current.position.ReadValue()
-                     : new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+            _open       = true;
+            _hovered    = -1;
+            _mirrorSide = -1;
+            _openPos    = Mouse.current != null
+                        ? Mouse.current.position.ReadValue()
+                        : new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
 
             var rt = _menuRoot.GetComponent<RectTransform>();
             rt.anchorMin = rt.anchorMax = Vector2.zero;
@@ -149,6 +185,7 @@ namespace Protobot {
             rt.anchoredPosition = _openPos;
             _menuRoot.SetActive(true);
 
+            ApplyMirrorSplitVisual();
             RefreshAxisLabels();
             RefreshColors();
         }
@@ -158,6 +195,7 @@ namespace Protobot {
             _open = false;
             _menuRoot.SetActive(false);
             _preview.HideAll();
+            _ghost.HideGhosts();
         }
 
         // ═════════════════════════════════════════════════════════════════════
@@ -172,19 +210,32 @@ namespace Protobot {
 
             if (dist < InnerR || dist > OuterR + 12f) { SetHovered(-1); return; }
 
-            // Convert screen angle → clockwise degrees from top → slice index.
             float angleDeg  = Mathf.Atan2(local.y, local.x) * Mathf.Rad2Deg;
             float cwFromTop = (90f - angleDeg + 360f) % 360f;
             float sliceDeg  = 360f / N;
-            // +half-slice offset centres each slice at i*sliceDeg rather than i*sliceDeg+sliceDeg/2
             int   idx = (int)((cwFromTop + sliceDeg * 0.5f) % 360f / sliceDeg);
-
             SetHovered(idx);
+
+            // If hovering Mirror, also track which sub-half
+            if (idx == 4) {
+                // Mirror slice spans 210-270° CW; split at 240°
+                int newSide = (cwFromTop < 240f) ? 0 : 1;
+                if (newSide != _mirrorSide) {
+                    _mirrorSide = newSide;
+                    ApplyMirrorSplitVisual();
+                    ApplyPreview(4);
+                }
+            }
         }
 
         private void SetHovered(int idx) {
             if (idx == _hovered) return;
+            int prev = _hovered;
             _hovered = idx;
+            if (idx != 4) {
+                _mirrorSide = -1;
+                if (prev == 4) ApplyMirrorSplitVisual();
+            }
             ApplyPreview(idx);
         }
 
@@ -192,7 +243,7 @@ namespace Protobot {
             if (Mouse.current == null) return;
             _scrollCd -= Time.deltaTime;
             if (_scrollCd > 0f) return;
-            if (_hovered != 0 && _hovered != 4) return;   // only Flip/Mirror use axis
+            if (_hovered != 0 && _hovered != 4) return;
 
             float scroll = Mouse.current.scroll.ReadValue().y;
             if (Mathf.Abs(scroll) < 0.01f) return;
@@ -200,6 +251,7 @@ namespace Protobot {
             _axis = (_axis + 3 + (scroll > 0f ? 1 : -1)) % 3;
             _scrollCd = 0.15f;
             RefreshAxisLabels();
+            ApplyMirrorSplitVisual();   // update sub-slice labels for new axis
             ApplyPreview(_hovered);
         }
 
@@ -212,20 +264,61 @@ namespace Protobot {
                                                      : PanelBg;
                 _labelTexts[i].color = enabled ? TextOn : TextOff;
             }
+
+            // Sub-slice colours
+            if (_hovered == 4 && HasSel()) {
+                _mirrorSubImgA.color = _mirrorSide == 0 ? HoverCol : PanelBg;
+                _mirrorSubImgB.color = _mirrorSide == 1 ? HoverCol : PanelBg;
+            }
         }
 
+        // ── Mirror sub-slice visual ────────────────────────────────────────────
+        private void ApplyMirrorSplitVisual() {
+            bool showSplit = _open && _hovered == 4;
+
+            // Toggle: main Mirror slice vs. two sub-slices
+            _sliceImgs[4].gameObject.SetActive(!showSplit);
+            _mirrorSubImgA.gameObject.SetActive(showSplit);
+            _mirrorSubImgB.gameObject.SetActive(showSplit);
+
+            if (showSplit) {
+                _mirrorSubLblA.text = SubLabelA(_axis);
+                _mirrorSubLblB.text = SubLabelB(_axis);
+            }
+        }
+
+        private static string SubLabelA(int axis) => axis == 1 ? "Up"   : "+";
+        private static string SubLabelB(int axis) => axis == 1 ? "Down" : "–";
+
         // ═════════════════════════════════════════════════════════════════════
-        // Preview planes
+        // Preview planes & ghost
         // ═════════════════════════════════════════════════════════════════════
 
         private void ApplyPreview(int btn) {
             bool hasBounds = _open && _bounds.size != Vector3.zero;
-            if (!hasBounds || btn < 0) { _preview.HideAll(); return; }
+            if (!hasBounds || btn < 0) { _preview.HideAll(); _ghost.HideGhosts(); return; }
 
             switch (btn) {
-                case 0: _preview.ShowFlipPlane(_bounds, _axis);   break;
-                case 4: _preview.ShowMirrorPlane(_bounds, _axis); break;
-                default: _preview.HideAll();                      break;
+                case 0:
+                    _ghost.HideGhosts();
+                    _preview.ShowFlipPlane(_bounds, _axis);
+                    break;
+
+                case 4:
+                    if (_mirrorSide < 0) { _preview.HideAll(); _ghost.HideGhosts(); break; }
+                    int   sign = _mirrorSide == 0 ? 1 : -1;
+                    var   n    = AxisNormal(_axis) * sign;
+                    float half = Mathf.Abs(Vector3.Dot(_bounds.extents, n));
+                    var   ctr  = _bounds.center + n * (half + MirrorGap * 0.5f);
+                    _preview.ShowMirrorPlaneAt(ctr, _bounds, _axis);
+                    if (_selectedAtOpen != null)
+                        _ghost.ShowGhosts(_selectedAtOpen, ctr, n);
+                    break;
+
+                default:
+                    _preview.HideAll();
+                    _ghost.HideGhosts();
+                    break;
             }
         }
 
@@ -234,8 +327,8 @@ namespace Protobot {
         // ═════════════════════════════════════════════════════════════════════
 
         private static bool IsEnabled(int btn, bool hasSel) {
-            if (btn == 5) return false;                  // placeholder
-            if (btn == 2) return _clipboard.Count > 0;  // Paste needs clipboard
+            if (btn == 3 || btn == 5) return false;          // placeholders
+            if (btn == 2) return _clipboard.Count > 0;       // Paste: needs clipboard
             return hasSel;
         }
 
@@ -245,9 +338,7 @@ namespace Protobot {
                 case 0: DoFlip();      break;
                 case 1: DoCopy();      break;
                 case 2: DoPaste();     break;
-                case 3: DoDuplicate(); break;
                 case 4: DoMirrorDup(); break;
-                // 5 = placeholder, no-op
             }
         }
 
@@ -264,31 +355,45 @@ namespace Protobot {
             _clipboard.AddRange(objs);
         }
 
-        // ── Paste ─────────────────────────────────────────────────────────────
+        // ── Paste at cursor (world position where menu was opened) ─────────────
         private void DoPaste() {
             _clipboard.RemoveAll(o => o == null);
             if (_clipboard.Count == 0) return;
-            RegisterWithUndo(Clones(_clipboard));
+
+            var clones = Clones(_clipboard);
+
+            // Project the screen position where M was pressed onto a horizontal world
+            // plane at the average Y of the clipboard items, then offset clones there.
+            var cam = Camera.main;
+            if (cam != null) {
+                float avgY = _clipboard.Average(o => o.transform.position.y);
+                var worldPlane = new Plane(Vector3.up, new Vector3(0f, avgY, 0f));
+                Ray ray = cam.ScreenPointToRay(_openPos);
+                if (worldPlane.Raycast(ray, out float t)) {
+                    Vector3 pasteCenter = ray.GetPoint(t);
+                    Vector3 srcCenter   = MirrorSystem.GetBounds(_clipboard).center;
+                    Vector3 offset      = new Vector3(
+                        pasteCenter.x - srcCenter.x, 0f,
+                        pasteCenter.z - srcCenter.z);
+                    foreach (var c in clones) c.transform.position += offset;
+                }
+            }
+            RegisterWithUndo(clones);
         }
 
-        // ── Duplicate ─────────────────────────────────────────────────────────
-        private void DoDuplicate() {
-            var objs = GetObjs(); if (objs == null) return;
-            RegisterWithUndo(Clones(objs));
-        }
-
-        // ── Mirror Duplicate ──────────────────────────────────────────────────
-        // Places the mirror plane at the bounding-box edge + half of MirrorGap,
-        // so the cloned copy ends up exactly MirrorGap units away from the original.
+        // ── Mirror Duplicate (with ± side from _mirrorSide) ───────────────────
         private void DoMirrorDup() {
             var objs = GetObjs(); if (objs == null) return;
-            Vector3 n       = AxisNormal(_axis);
-            float   halfExt = Mathf.Abs(Vector3.Dot(_bounds.extents, n));
-            Vector3 center  = _bounds.center + n * (halfExt + MirrorGap * 0.5f);
-            MirrorSystem.MirrorDuplicate(objs, center, n);
+            int   sign = _mirrorSide == 1 ? -1 : 1;
+            var   n    = AxisNormal(_axis) * sign;
+            float half = Mathf.Abs(Vector3.Dot(_bounds.extents, n));
+            MirrorSystem.MirrorDuplicate(
+                objs,
+                _bounds.center + n * (half + MirrorGap * 0.5f),
+                n);
         }
 
-        // ── Helpers ───────────────────────────────────────────────────────────
+        // ── Shared helpers ────────────────────────────────────────────────────
         private List<GameObject> GetObjs() {
             if (_mm == null) _mm = FindObjectOfType<MovementManager>();
             return MirrorSystem.GetSelectedObjects(_mm);
@@ -359,7 +464,6 @@ namespace Protobot {
             float deg  = 360f / n;
             float outerD = OuterR * 2f;
 
-            // Root — zero-size anchor, repositioned each time the menu opens
             var rootGO = new GameObject("MenuRoot");
             rootGO.transform.SetParent(_canvas.transform, false);
             var rootRT = rootGO.AddComponent<RectTransform>();
@@ -368,19 +472,15 @@ namespace Protobot {
             _menuRoot = rootGO;
             _menuRoot.SetActive(false);
 
-            // Background disc (6 px wider = dark ring visible between slices)
+            // Background disc
             CircleGO("Bg", _menuRoot.transform, Vector2.zero, outerD + 6f, RingBg);
 
-            // Pie slices — one full-circle Radial360 image per button, rotated to position
+            // Main pie slices
             _sliceImgs  = new Image[n];
             _labelTexts = new Text[n];
 
             for (int i = 0; i < n; i++) {
-                // Standard-math angle for this slice's centre (CCW from right)
                 float stdRad = (90f - i * deg) * Mathf.Deg2Rad;
-
-                // Slice image: full circle, Radial360 fill = 1/N
-                // Rotating by (30 - i*deg)° centres the filled wedge at i*deg CW from top
                 var sg  = CircleGO($"Slice{i}", _menuRoot.transform, Vector2.zero, outerD, PanelBg);
                 var img = sg.GetComponent<Image>();
                 img.type          = Image.Type.Filled;
@@ -391,24 +491,59 @@ namespace Protobot {
                 sg.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0f, 0f, 30f - i * deg);
                 _sliceImgs[i] = img;
 
-                // Label centred on this slice
                 var lp  = new Vector2(Mathf.Cos(stdRad) * LabelR, Mathf.Sin(stdRad) * LabelR);
-                bool rt = i == 0 || i == 4;   // Flip and Mirror need rich text for axis colours
+                bool rt = i == 0 || i == 4;
                 var lgo = LabelGO($"Lbl{i}", _menuRoot.transform, lp,
                                   new Vector2(60f, 42f), ButtonLabels[i], 10, rt);
                 _labelTexts[i] = lgo.GetComponent<Text>();
             }
 
-            // Thin spoke dividers at each slice boundary
+            // Mirror sub-slices (each 30°, hidden until Mirror is hovered)
+            // Mirror is slice 4, centred at 240° CW.
+            // Sub-A centred at 225° CW, Sub-B at 255° CW.
+            // fillAmount = 1/12  |  rotation = 15 - centreCW
+            BuildMirrorSubSlice(225f, out _mirrorSubImgA, out _mirrorSubLblA, "SubA");
+            BuildMirrorSubSlice(255f, out _mirrorSubImgB, out _mirrorSubLblB, "SubB");
+
+            // Spoke dividers
             for (int i = 0; i < n; i++) {
-                float cwBound = i * deg + deg * 0.5f;   // boundary between slice i and i+1
+                float cwBound = i * deg + deg * 0.5f;
                 SpokeGO($"Spoke{i}", _menuRoot.transform, OuterR, 1.5f, RingBg, cwBound);
             }
 
-            // Centre cap over the dead zone
+            // Centre cap
             CircleGO("Centre", _menuRoot.transform, Vector2.zero, InnerR * 2f + 4f, CentreCol);
 
             RefreshAxisLabels();
+        }
+
+        /// <summary>
+        /// Creates one 30° sub-slice (1/12 fill) centred at <paramref name="centreCW"/>
+        /// degrees clockwise from top, plus a small label.
+        /// </summary>
+        private void BuildMirrorSubSlice(float centreCW, out Image img, out Text lbl,
+                                         string name) {
+            float outerD = OuterR * 2f;
+            var go = CircleGO($"Mirror{name}", _menuRoot.transform, Vector2.zero, outerD, PanelBg);
+            var i  = go.GetComponent<Image>();
+            i.type          = Image.Type.Filled;
+            i.fillMethod    = Image.FillMethod.Radial360;
+            i.fillOrigin    = (int)Image.Origin360.Top;
+            i.fillClockwise = true;
+            i.fillAmount    = 1f / 12f;
+            // rotation = 15 - centreCW  (15° is natural offset for a 30° slice)
+            go.GetComponent<RectTransform>().localRotation =
+                Quaternion.Euler(0f, 0f, 15f - centreCW);
+            img = i;
+
+            // Label at the angular midpoint
+            float stdRad = (90f - centreCW) * Mathf.Deg2Rad;
+            var lp  = new Vector2(Mathf.Cos(stdRad) * LabelR, Mathf.Sin(stdRad) * LabelR);
+            var lgo = LabelGO($"Lbl{name}", _menuRoot.transform, lp,
+                              new Vector2(40f, 30f), "", 9, false);
+            lbl = lgo.GetComponent<Text>();
+
+            go.SetActive(false);
         }
 
         // ── UI element factories ──────────────────────────────────────────────
@@ -423,14 +558,13 @@ namespace Protobot {
             return go;
         }
 
-        // Spoke: pivots from the menu centre outward, so rotation is around the centre.
         private static void SpokeGO(string name, Transform parent,
                                     float length, float width, Color col, float cwDeg) {
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
             var rt = go.AddComponent<RectTransform>();
             rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 0.5f);
-            rt.pivot            = new Vector2(0.5f, 0f);   // pivot at bottom = menu centre
+            rt.pivot            = new Vector2(0.5f, 0f);
             rt.anchoredPosition = Vector2.zero;
             rt.sizeDelta        = new Vector2(width, length);
             rt.localRotation    = Quaternion.Euler(0f, 0f, -cwDeg);
@@ -484,7 +618,7 @@ namespace Protobot {
         // ── Font ──────────────────────────────────────────────────────────────
 
         private static Font GetFont() {
-            // Explicit null check — ?? doesn't work with Unity's overridden == operator.
+            // Explicit null check — ?? does not work with Unity's overridden == operator.
             Font f = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             if (f == null) f = Resources.GetBuiltinResource<Font>("Arial.ttf");
             return f;
