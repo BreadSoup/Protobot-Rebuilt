@@ -439,80 +439,75 @@ namespace Protobot {
             clones.RemoveAll(c => c == null);
             if (clones.Count == 0) yield break;
 
-            // ── Classify SelectionManagers ─────────────────────────────────────────
-            // The scene likely has two SMs:
-            //   • hover SM  — HoverSelector; fires set/clear every frame based on
-            //                 mouse position; drives the blue hover-highlight
-            //   • tool SM   — ClickSelector; fires only on click; its current drives
-            //                 SelectionObjectLink → MovementManager.MovingObj → the gizmo
-            // We must clear both and assign the clone to the tool SM so the gizmo
-            // moves to the clone.  If there is only one SM it fills both roles.
+            // ── Gather scene refs ──────────────────────────────────────────────────
             var allSMs = FindObjectsOfType<SelectionManager>();
-            SelectionManager toolSM  = null;   // the SM whose current the gizmo reads
-            SelectionManager hoverSM = null;   // the SM driven by HoverSelector
-            HoverSelector    hoverSel = null;
+            if (allSMs.Length == 0) yield break;
+
+            // Collect HoverSelectors from every SM.  Prefer the SM without one as the
+            // "tool SM" whose current SelectionObjectLink → MovingObj reads.
+            var allHoverSels = new List<HoverSelector>();
+            SelectionManager toolSM = null;
             foreach (var sm in allSMs) {
                 var hs = sm.GetComponent<HoverSelector>();
-                if (hs != null && hoverSM == null) { hoverSM = sm; hoverSel = hs; }
-                else if (toolSM == null)              toolSM  = sm;
+                if (hs != null) allHoverSels.Add(hs);
+                else if (toolSM == null) toolSM = sm;   // no HoverSelector → likely the gizmo SM
             }
-            if (toolSM == null) toolSM = hoverSM;   // single-SM fallback
-            bool singleSM = (toolSM == hoverSM);
+            if (toolSM == null) toolSM = allSMs[0];   // single-SM fallback
 
             // ── Clear every SM ─────────────────────────────────────────────────────
-            // This removes the original part's outline (OutlineSelectionResponse and
-            // GroupOutlineSelectionResponse both fire OnClear, disabling all outlines).
+            // Fires OutlineSelectionResponse.OnClear + GroupOutlineSelectionResponse.OnClear
+            // on all SMs, removing the original part's outlines.
             foreach (var sm in allSMs) sm.ClearCurrent();
 
-            // ── Phase 1 (single-SM only): freeze HoverSelector for two frames ──────
-            // In a single-SM scene, HoverSelector's Update() can fire setEvent in the
-            // very next frame if the mouse is still over the original part.  That calls
-            // SetCurrent(original) → ClearCurrent(clone) which would immediately undo
-            // the assignment below.  Disabling the component for two frames is
-            // imperceptible (~33 ms) and prevents this race.
-            if (singleSM && hoverSel != null) hoverSel.enabled = false;
+            // ── Phase 1: freeze all HoverSelectors for two frames (~33 ms) ─────────
+            // Without this, HoverSelector.Update() fires setEvent for whatever collider
+            // is under the cursor, which triggers SetCurrent → ClearCurrent(clone)
+            // and undoes the assignment below before SuppressClear takes effect.
+            foreach (var hs in allHoverSels) hs.enabled = false;
 
-            // ── Assign clone to tool SM ────────────────────────────────────────────
-            // Direct-assign bypasses SetCurrent (which TagSelectionCondition blocks for
-            // freshly-instantiated objects).  The assignment is enough for
-            // SelectionObjectLink.obj → MovementManager.MovingObj to point at the clone.
+            // ── Assign clone to every SM ───────────────────────────────────────────
+            // Assigning to all SMs ensures the gizmo follows the clone regardless of
+            // which SM SelectionObjectLink happens to reference in this scene.
+            // Direct-assign bypasses SetCurrent (TagSelectionCondition blocks it for
+            // freshly-instantiated objects whose tag does not match targetTags).
             var sel = new ObjectSelection { gameObject = clones[0], selector = null };
-            if (toolSM != null) toolSM.current = sel;
+            foreach (var sm in allSMs) sm.current = sel;
 
-            // ── Apply outline to each clone root ──────────────────────────────────
-            // EnableOutline(colorIndex, layer, width) — parameters confirmed working
-            // in earlier debug sessions.  GetConnectedObjects is intentionally skipped
-            // here: a freshly-instantiated clone has no established connections yet,
-            // so that call returns an empty list and nothing gets outlined.
-            foreach (var c in clones)
-                c.EnableOutline(0, 1, 0.15f);
+            // ── Apply outline ──────────────────────────────────────────────────────
+            foreach (var c in clones) c.EnableOutline(0, 1, 0.15f);
 
             // ── Phase 1 finish ─────────────────────────────────────────────────────
-            if (singleSM) {
-                yield return null;   // frame 1 with HoverSelector frozen
-                yield return null;   // frame 2 with HoverSelector frozen
-                if (hoverSel != null) hoverSel.enabled = true;
-                // Allow hover-set (so moving the mouse to another part works normally)
-                // but suppress hover-clear (so the outline does not vanish when the
-                // mouse moves over empty space).
-                HoverSelector.SuppressClear = true;
-            }
+            yield return null;   // frame 1 with all HoverSelectors frozen
+            yield return null;   // frame 2 with all HoverSelectors frozen
+            foreach (var hs in allHoverSels) hs.enabled = true;
+
+            // Suppress the hover-clear path (mouse over nothing → clearEvent) globally
+            // so the clone does not get deselected when the cursor is over empty space.
+            // The hover-set path (mouse over a part → setEvent → SetCurrent) is NOT
+            // suppressed: hovering another part correctly transfers selection away.
+            HoverSelector.SuppressClear = true;
 
             // ── Watch loop ─────────────────────────────────────────────────────────
-            // Hold the selection until the tool SM's current changes to something that
-            // is NOT one of the clones or their children (i.e. the user has chosen a
-            // different object).  A large cap (~60 s) prevents the coroutine leaking.
             for (int i = 0; i < 3600; i++) {
                 yield return null;
                 clones.RemoveAll(c => c == null);
                 if (clones.Count == 0) break;
-                var cur = toolSM?.current?.gameObject;
+
+                // Re-apply the outline every frame.  HoverSelector's setEvent path
+                // (mouse over a part) still reaches ClearCurrent → DisableOutline even
+                // with SuppressClear=true (SuppressClear only blocks the clearEvent
+                // path).  Re-enabling here restores it within one frame (~16 ms).
+                foreach (var c in clones) if (c != null) c.EnableOutline(0, 1, 0.15f);
+
+                // Exit when the tool SM's current has moved to a non-clone, meaning the
+                // user has selected something else via hover (single-SM scene) or click
+                // (dual-SM scene).
+                var cur = toolSM.current?.gameObject;
                 if (cur != null && !IsCloneOrDescendant(clones, cur)) break;
             }
 
             // ── Cleanup ────────────────────────────────────────────────────────────
-            foreach (var c in clones)
-                if (c != null) c.DisableOutline();
+            foreach (var c in clones) if (c != null) c.DisableOutline();
             HoverSelector.SuppressClear = false;
         }
 
