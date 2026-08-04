@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using Models;
 using Proyecto26;
 using System.Collections.Generic;

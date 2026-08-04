@@ -11,6 +11,7 @@ namespace Protobot.Builds.Windows {
 
             string fileLocation = GetFileLocation(buildData);
 
+            Directory.CreateDirectory(WindowsSavingConfig.saveDirectoryPath);
             FileStream file = File.Create(fileLocation);
             bf.Serialize(file, buildData);
             file.Close();
@@ -22,7 +23,10 @@ namespace Protobot.Builds.Windows {
         }
 
         public string GetFileLocation(BuildData buildData) {
-            return WindowsSavingConfig.saveDirectoryPath + "/" + buildData.fileName + WindowsSavingConfig.saveFileType;
+            return Path.Combine(
+                WindowsSavingConfig.saveDirectoryPath,
+                buildData.fileName + WindowsSavingConfig.saveFileType
+            );
         }
 
         public DateTime GetExactWriteTime(BuildData buildData) {

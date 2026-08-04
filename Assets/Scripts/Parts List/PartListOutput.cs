@@ -91,6 +91,12 @@ public class PartListOutput : MonoBehaviour
 
             if (!string.IsNullOrEmpty(fileLocation))
             {
+                string directoryPath = System.IO.Path.GetDirectoryName(fileLocation);
+                if (!string.IsNullOrEmpty(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
                 File.WriteAllText(fileLocation, partsList);
             }
         }
