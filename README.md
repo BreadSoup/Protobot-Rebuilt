@@ -17,7 +17,7 @@ https://github.com/user-attachments/assets/7b37e938-61f8-463c-8c47-1981fb4ccd90
 Pull requests are welcome and very much appreciated. You can also contribute by submitting issues for problems you find in the software.
 
 #### Notes
-- This version of Protobot uses Unity **2021.3.45f2** please have all changes support this version and have [`ProjectVersion.txt`](https://github.com/BreadSoup/Protobot-Rebuilt/blob/main/ProjectSettings/ProjectVersion.txt) `m_EditorVersion:` be `2021.3.45f2`
+- The `1.3.7` branch uses Unity **2021.3.45f2**. Please use this version for changes to this branch; [`ProjectVersion.txt`](https://github.com/BreadSoup/Protobot-Rebuilt/blob/1.3.7/ProjectSettings/ProjectVersion.txt) should list `m_EditorVersion: 2021.3.45f2`.
 - Documentation for the code itself is limited and there may be unused sections of code, this should be expected.
 Used code sections are well commented and organized modularly to be easily understood and used.
  
