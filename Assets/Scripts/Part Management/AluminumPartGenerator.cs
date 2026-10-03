@@ -25,7 +25,11 @@ namespace Protobot {
         public override Mesh GetMesh() => subParts[param1Options.IndexOf(param1.value)].GetMesh(HoleCount);
 
         public override GameObject Generate(Vector3 position, Quaternion rotation) {
-            //This check should *NEVER* return true but somehow Michael was able to create a 2x35x24 which triggers this????
+            if (gameObject.name == "Rails")
+            {
+                param1.value = "Rail";
+            }
+            //Leaving this in for now but should not be triggered in/after 1.3.7
             if (param1Options.IndexOf(param1.value) == -1)
             {
                 print(param1.value);
@@ -37,7 +41,7 @@ namespace Protobot {
                     notfication.gameObject.name = "Error";
                     var text = notfication.AddComponent<TextMeshPro>();
                     text.text =
-                        "Please send this save to @breadsoup on discord or breadsoup64@gmail.com as it contains an error I cannot replicate " +
+                        "Please send this save to @breadsoup on discord or drakedavidcross@gmail.com as it contains an error I cannot replicate " +
                         "This should never be seen under normal circumstances. To remove click on the red text and press delete.";
                     text.color = Color.red;
                     text.rectTransform.sizeDelta = new Vector2(187, 5);

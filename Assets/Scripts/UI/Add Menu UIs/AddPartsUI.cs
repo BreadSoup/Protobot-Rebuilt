@@ -25,6 +25,7 @@ namespace Protobot.UI {
         public ToggleGroup partDisplayToggleGroup;
         private int toggleCount => partDisplayToggleGroup.ActiveToggles().Count<Toggle>();
         private int prevToggleCount;
+        private bool started;
 
         [Space(10)]
 
@@ -32,10 +33,32 @@ namespace Protobot.UI {
         public UnityEvent OnDeselectPartDisplay;
         
 
+        void OnEnable() {
+            GameElementPreferences.Changed += RefreshDisplayedParts;
+            if (started) RefreshDisplayedParts();
+        }
+
+        void OnDisable() {
+            GameElementPreferences.Changed -= RefreshDisplayedParts;
+        }
+
+        void OnDestroy() {
+            PartDisplayUI.OnChangeSelected -= SelectPartDisplay;
+        }
+
+        void SelectPartDisplay(PartDisplayUI display) {
+            OnSelectPartDisplay?.Invoke();
+        }
+
+        void RefreshDisplayedParts() {
+            DeslectSelected();
+            string group = groupDropdown.options[groupDropdown.value].text;
+            if (searchToggle.isOn || group == "None") DisplaySearchResults();
+            else DisplayListGroup(group);
+        }
+
         void Start() {
-            PartDisplayUI.OnChangeSelected += _ => {
-                OnSelectPartDisplay?.Invoke();
-            };
+            PartDisplayUI.OnChangeSelected += SelectPartDisplay;
 
             groupDropdown.onValueChanged.AddListener(index => {
                 string group = groupDropdown.options[index].text;
@@ -49,6 +72,7 @@ namespace Protobot.UI {
             });
             
             DisplaySearchResults();
+            started = true;
         }
         
         void Update() {
@@ -65,7 +89,7 @@ namespace Protobot.UI {
         }
 
         public void DeslectSelected() {
-            if (toggleCount != 0)
+            if (toggleCount != 0 && PartDisplayUI.selected != null)
                 PartDisplayUI.selected.GetComponent<Toggle>().isOn = false;
         }
 
@@ -88,8 +112,6 @@ namespace Protobot.UI {
                 
             UpdateDisplayedParts(searchList);
 
-            if (searchList.Count == 0)
-                SetEmptyListText(EmptySearchMessage);
         }
 
         public bool CompareSearch(string search, string compare) {
@@ -100,12 +122,16 @@ namespace Protobot.UI {
         public void DestroyDisplayedParts() {
             int prevListLength = partUIsContainer.childCount;
 
-            for (int c = 1; c < prevListLength; c++)
-                Destroy(partUIsContainer.GetChild(c).gameObject);
+            for (int c = 1; c < prevListLength; c++) {
+                GameObject item = partUIsContainer.GetChild(c).gameObject;
+                item.SetActive(false);
+                Destroy(item);
+            }
         }
 
         //updates list of objects shown given a list of PartPackets
         public void UpdateDisplayedParts(List<PartType> partsToDisplay) {
+            partsToDisplay = partsToDisplay.Where(GameElementPreferences.IsVisible).ToList();
             EmptyListText.gameObject.SetActive(false);
 
             DestroyDisplayedParts();
@@ -124,7 +150,9 @@ namespace Protobot.UI {
                 Toggle newToggle = newItem.GetComponent<Toggle>();
                 newToggle.group = partDisplayToggleGroup;
             }
-            partUIsContainer.sizeDelta = new Vector2(partUIsContainer.sizeDelta.x, (partsToDisplay.Count) * (partUI.GetComponent<RectTransform>().sizeDelta.y + spacing) - spacing);
+            partUIsContainer.sizeDelta = new Vector2(partUIsContainer.sizeDelta.x, Mathf.Max(0, partsToDisplay.Count * (partUI.GetComponent<RectTransform>().sizeDelta.y + spacing) - spacing));
+            if (partsToDisplay.Count == 0)
+                SetEmptyListText(searchToggle.isOn ? EmptySearchMessage : "No parts to display.");
         }
     }
 }
