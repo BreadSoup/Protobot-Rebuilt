@@ -3,10 +3,8 @@ name: Unity Build
 on:
   push:
     branches:
-      - main # or your main branch
-  pull_request:
-    branches:
-      - main # or your main branch
+      - main
+  workflow_dispatch:
 
 jobs:
   build-windows:
