@@ -2,16 +2,22 @@
 using System.IO;
 
 namespace Protobot.Builds.Windows {
+    // Retain the existing type name so scene and code references remain compatible.
+    // The implementation is shared by Windows and macOS players.
     public static class WindowsSavingConfig {
-        public static string saveDirectoryPath => Application.dataPath + "/Builds";
+        public static string saveDirectoryPath {
+            get {
+                var directoryPath = Path.Combine(Application.persistentDataPath, "Builds");
+                Directory.CreateDirectory(directoryPath);
+                return directoryPath;
+            }
+        }
+
         public static string saveFileType => ".Build";
-        private static bool OnWindows => Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer;
         
         [RuntimeInitializeOnLoadMethod]
         private static void Init() {
-            if (OnWindows && !Directory.Exists(saveDirectoryPath)) {
-                Directory.CreateDirectory(saveDirectoryPath);
-            }
+            _ = saveDirectoryPath;
         }
     }
 }

@@ -9,6 +9,7 @@ using SFB;
 
 using Protobot.UI;
 using Protobot.InputEvents;
+using Protobot.Builds.Windows;
 using UnityEngine.SceneManagement;
 
 namespace Protobot.Builds {
@@ -83,7 +84,7 @@ namespace Protobot.Builds {
 
         public string GetFileName() => PathToFileName(buildPath);
         
-        public static string PathToFileName(string path) => (path.Length > 0) ? path.Split('\\')[^1] : "";
+        public static string PathToFileName(string path) => string.IsNullOrEmpty(path) ? "" : Path.GetFileName(path);
         
         public void Save() {
             if (buildPath == "") {
@@ -95,6 +96,7 @@ namespace Protobot.Builds {
             
             BinaryFormatter bf = new BinaryFormatter();
 
+            EnsureParentDirectoryExists(buildPath);
             FileStream file = File.Create(buildPath);
             bf.Serialize(file, sceneBuildData);
             file.Close();
@@ -104,7 +106,7 @@ namespace Protobot.Builds {
         }
 
         public void SaveAs() {
-            var path = StandaloneFileBrowser.SaveFilePanel("Save Build File", "", "", "pbb");
+            var path = StandaloneFileBrowser.SaveFilePanel("Save Build File", WindowsSavingConfig.saveDirectoryPath, "", "pbb");
 
             if (path == "") return;
 
@@ -137,7 +139,7 @@ namespace Protobot.Builds {
         }
 
         public void OpenBuild() {
-            var paths = StandaloneFileBrowser.OpenFilePanel("Open Build File", "", "pbb", false);
+            var paths = StandaloneFileBrowser.OpenFilePanel("Open Build File", WindowsSavingConfig.saveDirectoryPath, "pbb", false);
 
             if (paths.Length == 0 || paths[0] == "") return;
 
@@ -160,6 +162,13 @@ namespace Protobot.Builds {
             file.Close();
 
             return build;
+        }
+
+        private static void EnsureParentDirectoryExists(string filePath) {
+            var directoryPath = Path.GetDirectoryName(filePath);
+            if (!string.IsNullOrEmpty(directoryPath)) {
+                Directory.CreateDirectory(directoryPath);
+            }
         }
         
         /// <summary>
